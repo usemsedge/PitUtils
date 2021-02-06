@@ -1,0 +1,16 @@
+[
+{
+  "modid": "PitUtils",
+  "name": "Pit Utilities",
+  "description": "QOL mod for The Hypixel Pit",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["usemsedge"],
+  "credits": "usemsedge",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
