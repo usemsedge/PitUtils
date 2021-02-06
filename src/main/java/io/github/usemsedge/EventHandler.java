@@ -54,7 +54,7 @@ public class EventHandler {
 
 
             PitUtils.saveLogInfo(name + "\n");
-            if (name.equalsIgnoreCase("AAA-Rated Steak")) {
+            if (name.contains("AAA-Rated Steak")) {
                 PitUtils.saveLogInfo("Steak Used\n");
                 if (PitUtils.currentSteakCooldownInTicks < PitUtils.steakCooldownInTicks) {
                     PitUtils.chat(player, EnumChatFormatting.RED + "Steak on cooldown!");
@@ -65,7 +65,7 @@ public class EventHandler {
                 }
 
             }
-            else if (name.equalsIgnoreCase("Aura of Protection")) {
+            else if (name.contains("Aura of Protection")) {
                 PitUtils.saveLogInfo("Aura Used");
                 if (PitUtils.currentAuraCooldownInTicks < PitUtils.auraCooldownInTicks) {
                     //Aura cooldown
@@ -76,7 +76,7 @@ public class EventHandler {
                 }
 
             }
-            else if (name.equalsIgnoreCase("First-Aid Egg")) {
+            else if (name.contains("First-Aid Egg")) {
                 PitUtils.saveLogInfo("Egg Used");
                 if (PitUtils.currentEggCooldownInTicks < PitUtils.eggCooldownInTicks) {
                     //First aid egg
