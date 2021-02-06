@@ -39,16 +39,14 @@ public class PitUtilsCommand extends CommandBase {
         if (ics instanceof EntityPlayer && PitUtils.isInPit) {
             final EntityPlayer player = (EntityPlayer) ics;
             if (args[0].equalsIgnoreCase("myst")) {
-                if (args.length == 1 && args[1].equalsIgnoreCase("toggle")) {
+                if (args.length == 2 && args[1].equalsIgnoreCase("toggle")) {
                     PitUtils.toggledMyst ^= true;
                     chat(player, EnumChatFormatting.GREEN +
                             "Mystic Drop Counter has been toggled " +
                             EnumChatFormatting.DARK_GREEN +
                             (PitUtils.toggledMyst ? "on" : "off"));
                 }
-                else if (args.length == 3 && args[1].equalsIgnoreCase("align")) {
-                    PitUtils.align = (args[2].equalsIgnoreCase("right")) ? "right": "left";
-                }
+
 
                 else if (args.length == 2 && args[1].equalsIgnoreCase("count")) {
                     chat(player, "Mystic Drops: " + (int)PitUtils.mysticDrops);
@@ -60,7 +58,7 @@ public class PitUtilsCommand extends CommandBase {
                     chat(player, EnumChatFormatting.LIGHT_PURPLE + "Tracks amounts of kills per mystic drop");
                     chat(player, EnumChatFormatting.LIGHT_PURPLE + "/pitutils myst [command] [arguments]");
                     chat(player, EnumChatFormatting.LIGHT_PURPLE + "/pitutils myst toggle  (turns the display on or off)");
-                    chat(player, EnumChatFormatting.LIGHT_PURPLE + "/pitutils myst align (right|left)  (sets the alignment of the display)");
+
                     chat(player, EnumChatFormatting.LIGHT_PURPLE + "/pitutils myst count  (prints the numbers to the chat)");
                 }
 
@@ -97,6 +95,10 @@ public class PitUtilsCommand extends CommandBase {
                 }
             }
 
+            else if (args.length == 2 && args[1].equalsIgnoreCase("align")) {
+                PitUtils.align = (args[2].equalsIgnoreCase("right")) ? "right": "left";
+            }
+
 
             else if (args[0].equalsIgnoreCase("tips")) {
                 chat(player, EnumChatFormatting.DARK_GREEN + "PIT TIPS FOR NONS (not unranked players, think skyblock terminology)");
@@ -117,6 +119,7 @@ public class PitUtilsCommand extends CommandBase {
                 chat(player, EnumChatFormatting.LIGHT_PURPLE + "/pitutils [subsection] for more information");
                 chat(player, EnumChatFormatting.LIGHT_PURPLE + "myst  (Mystic Counter)");
                 chat(player, EnumChatFormatting.LIGHT_PURPLE + "cd  (Item Cooldowns)");
+                chat(player, EnumChatFormatting.LIGHT_PURPLE + "align (right|left)  (sets the alignment of the display)");
                 chat(player, EnumChatFormatting.LIGHT_PURPLE + "tips");
 
             }

@@ -209,11 +209,11 @@ public class EventHandler {
         }
         else {
             eggCD = "First-Aid Egg cool down: " + PitUtils.currentEggCooldownInTicks / 20 + " seconds";
-            steakCD = "AAA-Rated Steak cool down: " + PitUtils.currentSteakCooldownInTicks / 20 + "seconds";
-            auraCD = "Aura Of Protection Cool down: " + PitUtils.currentAuraCooldownInTicks / 20+ "seconds";
+            steakCD = "AAA-Rated Steak cool down: " + PitUtils.currentSteakCooldownInTicks / 20 + " seconds";
+            auraCD = "Aura Of Protection Cool down: " + PitUtils.currentAuraCooldownInTicks / 20+ " seconds";
         }
 
-        PitUtils.saveLogInfo("\n\n" + eggCD + "\n" + auraCD + "\n" + steakCD + "\n\n");
+        //PitUtils.saveLogInfo("\n\n" + eggCD + "\n" + auraCD + "\n" + steakCD + "\n\n");
 
         String longest = auraCD;
         //auraCD is the longest string, because you are not getting a 20 digit number of kills
