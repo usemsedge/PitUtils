@@ -41,7 +41,17 @@ public class EventHandler {
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             //if (player.getHeldItem().toString())
             //PitUtils.saveLogInfo(player.getHeldItem().toString() + "\n");
-            String name = player.getHeldItem().getDisplayName();
+
+            String name;
+            try {
+                name = player.getHeldItem().getDisplayName();
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
+                return;
+            }
+
+
             PitUtils.saveLogInfo(name + "\n");
             if (name.equalsIgnoreCase("AAA-Rated Steak")) {
                 PitUtils.saveLogInfo("Steak Used\n");
