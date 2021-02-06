@@ -10,7 +10,6 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 
-
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -36,7 +35,7 @@ public class EventHandler {
     private int tick = 0;
 
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public void onPlayerClick(PlayerInteractEvent e) {
+    public void onPlayerClick(PlayerInteractEvent e) throws IOException {
         if (PitUtils.toggledCooldown) {
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             //if (player.getHeldItem().toString())
@@ -47,7 +46,9 @@ public class EventHandler {
                 name = player.getHeldItem().getDisplayName();
             }
             catch (Exception ex) {
-                ex.printStackTrace();
+                FileWriter fw = new FileWriter("exception.txt", false);
+                PrintWriter pw = new PrintWriter(fw);
+                ex.printStackTrace(pw);
                 return;
             }
 
