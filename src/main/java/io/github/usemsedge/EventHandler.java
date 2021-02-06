@@ -135,6 +135,9 @@ public class EventHandler {
             if (PitUtils.currentSteakCooldownInTicks > 0) {
                 PitUtils.currentSteakCooldownInTicks--;
             }
+            if (PitUtils.currentEggCooldownInTicks > 0) {
+                PitUtils.currentEggCooldownInTicks--;
+            }
         }
     }
 
@@ -189,32 +192,34 @@ public class EventHandler {
         int width = res.getScaledWidth();
         int height = res.getScaledHeight();
 
-        if (PitUtils.toggledCooldown) {
 
+
+        String killsPerMystic =
+                "Kills/Mystic: " + ((PitUtils.mysticDrops == 0) ? PitUtils.mysticDrops
+                        : new DecimalFormat("#.##")
+                .format(PitUtils.killCount / (PitUtils.mysticDrops * 1.0d)));
+        String kills = "Kills: " + (int)PitUtils.killCount;
+        String mystics = "Mystic Drops: " + (int)PitUtils.mysticDrops;
+        String lastMystic = "Kills since last Mystic Drop: " + (int)PitUtils.sinceLastMysticDrop;
+        String eggCD, steakCD, auraCD;
+        if (PitUtils.displayCooldownInTicks) {
+            eggCD = "First-Aid Egg cool down: " + PitUtils.currentEggCooldownInTicks + " ticks";
+            steakCD = "AAA-Rated Steak cool down: " + PitUtils.currentSteakCooldownInTicks + "ticks";
+            auraCD = "Aura Of Protection cool down: " + PitUtils.currentAuraCooldownInTicks + "ticks";
         }
-        if (PitUtils.toggledMyst) {
-            String killsPerMystic =
-                    "Kills/Mystic: " + ((PitUtils.mysticDrops == 0) ? PitUtils.mysticDrops
-                            : new DecimalFormat("#.##")
-                    .format(PitUtils.killCount / (PitUtils.mysticDrops * 1.0d)));
-            String kills = "Kills: " + (int)PitUtils.killCount;
-            String mystics = "Mystic Drops: " + (int)PitUtils.mysticDrops;
-            String lastMystic = "Kills since last Mystic Drop: " + (int)PitUtils.sinceLastMysticDrop;
-            String eggCD, steakCD, auraCD;
-            if (PitUtils.displayCooldownInTicks) {
-                eggCD = "First-Aid Egg cool down: " + PitUtils.currentEggCooldownInTicks + " ticks";
-                steakCD = "AAA-Rated Steak cool down: " + PitUtils.currentSteakCooldownInTicks + "ticks";
-                auraCD = "Aura Of Protection cool down: " + PitUtils.currentAuraCooldownInTicks + "ticks";
-            }
-            else {
-                eggCD = "First-Aid Egg cool down: " + PitUtils.currentEggCooldownInTicks + " seconds";
-                steakCD = "AAA-Rated Steak cool down: " + PitUtils.currentSteakCooldownInTicks + "seconds";
-                auraCD = "Aura Of Protection Cool down: " + PitUtils.currentAuraCooldownInTicks + "seconds";
-            }
+        else {
+            eggCD = "First-Aid Egg cool down: " + PitUtils.currentEggCooldownInTicks / 20 + " seconds";
+            steakCD = "AAA-Rated Steak cool down: " + PitUtils.currentSteakCooldownInTicks / 20 + "seconds";
+            auraCD = "Aura Of Protection Cool down: " + PitUtils.currentAuraCooldownInTicks / 20+ "seconds";
+        }
 
-            String longest = auraCD;
-            //auraCD is the longest string, because you are not getting a 20 digit number of kills
-            if (PitUtils.align.equals("right")) {
+        PitUtils.saveLogInfo("\n\n" + eggCD + "\n" + auraCD + "\n" + steakCD + "\n\n");
+
+        String longest = auraCD;
+        //auraCD is the longest string, because you are not getting a 20 digit number of kills
+
+        if (PitUtils.align.equals("right")) {
+            if (PitUtils.toggledMyst) {
                 renderer.drawString(mystics, PitUtils.guiLocation[0] +
                                 renderer.getStringWidth(longest) -
                                 renderer.getStringWidth(mystics),
@@ -231,6 +236,8 @@ public class EventHandler {
                                 renderer.getStringWidth(longest) -
                                 renderer.getStringWidth(lastMystic),
                         PitUtils.guiLocation[1] + renderer.FONT_HEIGHT * 3, PitUtils.color, true);
+            }
+            if (PitUtils.toggledCooldown) {
 
                 renderer.drawString(steakCD, PitUtils.guiLocation[0] +
                                 renderer.getStringWidth(longest) -
@@ -244,26 +251,31 @@ public class EventHandler {
                                 renderer.getStringWidth(longest) -
                                 renderer.getStringWidth(auraCD),
                         PitUtils.guiLocation[1] + renderer.FONT_HEIGHT * 7, PitUtils.color, true);
-
             }
-            else {
+
+        }
+        else {
+            if (PitUtils.toggledMyst) {
                 renderer.drawString(mystics, PitUtils.guiLocation[0],
-                            PitUtils.guiLocation[1], PitUtils.color, true);
+                        PitUtils.guiLocation[1], PitUtils.color, true);
                 renderer.drawString(kills, PitUtils.guiLocation[0],
-                            PitUtils.guiLocation[1] + renderer.FONT_HEIGHT, PitUtils.color, true);
+                        PitUtils.guiLocation[1] + renderer.FONT_HEIGHT, PitUtils.color, true);
                 renderer.drawString(killsPerMystic, PitUtils.guiLocation[0],
-                            PitUtils.guiLocation[1] + renderer.FONT_HEIGHT * 2, PitUtils.color, true);
+                        PitUtils.guiLocation[1] + renderer.FONT_HEIGHT * 2, PitUtils.color, true);
                 renderer.drawString(lastMystic, PitUtils.guiLocation[0],
-                            PitUtils.guiLocation[1] + renderer.FONT_HEIGHT * 3, PitUtils.color, true);
+                        PitUtils.guiLocation[1] + renderer.FONT_HEIGHT * 3, PitUtils.color, true);
+            }
+            if (PitUtils.toggledCooldown) {
 
                 renderer.drawString(steakCD, PitUtils.guiLocation[0],
                         PitUtils.guiLocation[1] + renderer.FONT_HEIGHT * 5, PitUtils.color, true);
                 renderer.drawString(eggCD, PitUtils.guiLocation[0],
-                            PitUtils.guiLocation[1] + renderer.FONT_HEIGHT * 6, PitUtils.color, true);
+                        PitUtils.guiLocation[1] + renderer.FONT_HEIGHT * 6, PitUtils.color, true);
                 renderer.drawString(auraCD, PitUtils.guiLocation[0],
-                            PitUtils.guiLocation[1] + renderer.FONT_HEIGHT * 7, PitUtils.color, true);
-                 }
+                        PitUtils.guiLocation[1] + renderer.FONT_HEIGHT * 7, PitUtils.color, true);
+            }
         }
+
     }
 
 }
