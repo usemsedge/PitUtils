@@ -2,17 +2,13 @@ package io.github.usemsedge;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import net.minecraft.client.Minecraft;
@@ -22,13 +18,13 @@ import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import scala.tools.nsc.doc.model.ModelFactory;
 
 @Mod(modid = PitUtils.MODID, version = PitUtils.VERSION)
 public class PitUtils {
@@ -37,26 +33,13 @@ public class PitUtils {
     private static final String PIT_UTILS_PATH = "PitUtils.dat";
     static boolean loggedIn = false;
     static boolean usingLabyMod = false;
-    static boolean toggledMyst = true;
-    static boolean toggledCooldown = true;
-    static int color = 0x55FFFF;
-    static String align = "left";
-    static float killCount = 0;
-    static float mysticDrops = 0;
-    static float sinceLastMysticDrop = 0;
     static boolean isInPit = false;
-    static int[] guiLocation = new int[]{2, 2};
-    static int steakCooldownInTicks = 200;
-    static int auraCooldownInTicks = 300;
-    static int eggCooldownInTicks = 200;
-    static int currentSteakCooldownInTicks = 0;
-    static int currentAuraCooldownInTicks = 0;
-    static int currentEggCooldownInTicks = 0;
-    static boolean displayCooldownInTicks = false;
+
+    static ArrayList permList = new ArrayList();
+
     private static ScheduledExecutorService autoSaveExecutor;
 
     static String LOG_PATH = "PitUtils.log";
-
 
     static void saveLogInfo(String log) {
         new Thread(() -> {
@@ -80,21 +63,30 @@ public class PitUtils {
             autoSaveExecutor = Executors.newSingleThreadScheduledExecutor();
             autoSaveExecutor.scheduleAtFixedRate(() -> {
                 if (loggedIn && isInPit) {
-                    saveInfo(killCount, mysticDrops, sinceLastMysticDrop, steakCooldownInTicks,
-                            auraCooldownInTicks);
+                    saveInfo();
                 }
             }, 0, delay, TimeUnit.SECONDS);
         }
     }
 
-    static void saveInfo(float kills, float drops, float last, int steak, int aura) {
+    static void saveInfo() {
         new Thread(() -> {
-            File mystic_file = new File(PIT_UTILS_PATH);
+            File util_file = new File(PIT_UTILS_PATH);
+            String permListString = "";
+            for (int i = 0; i < permList.size(); i++) {
+                permListString = permListString + permList.get(i) + ",";
+            }
+
             try {
-                FileWriter fw = new FileWriter(mystic_file, false);
-                fw.write((int)kills + "," + (int)drops + "," + (int)last + "," + guiLocation[0]
-                        + "," + guiLocation[1] + "," + Integer.toHexString(color) + "," + align
-                        + "," + steak + "," + aura);
+                FileWriter fw = new FileWriter(util_file, false);
+                fw.write(permListString + "\n" +
+                        MysticDropCounter.toggled + "," + MysticDropCounter.killCount + "," + MysticDropCounter.mysticDrops + "," + MysticDropCounter.sinceLastMysticDrop
+                                + "," + MysticDropCounter.guiLocation[0] + "," + MysticDropCounter.guiLocation[1] + "," + MysticDropCounter.align + "," + MysticDropCounter.color + "\n" +
+
+                         Cooldown.toggled + "," + Cooldown.guiLocation[0] + "," + Cooldown.guiLocation[1] + "," + Cooldown.align + "," + Cooldown.color + "\n" +
+
+                         AutoL.toggled + "," + AutoL.onBan + "," + AutoL.onPermList + "," + AutoL.onBountyClaimed
+                         );
                 fw.close();
             }
             catch (IOException e) {
@@ -124,6 +116,13 @@ public class PitUtils {
             }
         }
         return true;
+    }
+
+    static boolean isBool(String s) {
+        if (s.equalsIgnoreCase("true") || s.equalsIgnoreCase("false")) {
+            return true;
+        }
+        return false;
     }
 
     static List<String> getSidebarLines() {
@@ -159,36 +158,27 @@ public class PitUtils {
         return lines;
     }
 
-    static void chat(EntityPlayer player, String message) {
+    static void messagePlayer(EntityPlayer player, String message) {
         player.addChatMessage(new ChatComponentText(message));
     }
+
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
 
         ClientCommandHandler.instance.registerCommand(new PitUtilsCommand());
-        MinecraftForge.EVENT_BUS.register(new io.github.usemsedge.EventHandler());
+        MinecraftForge.EVENT_BUS.register(new PitUtilsEventHandler());
         if (new File(PIT_UTILS_PATH).isFile()) {
             try {
-                String[] input = new BufferedReader(new FileReader(PIT_UTILS_PATH)).readLine().split(",");
-                if (input.length == 9 && isInteger(input[0]) && isInteger(input[1]) && isInteger(input[2])
-                        && isInteger(input[3]) && isInteger(input[4]) && isInteger(input[5], 16)
-                        && isInteger(input[7]) && isInteger(input[8])) {
-                    killCount = Integer.parseInt(input[0]);
-                    mysticDrops = Integer.parseInt(input[1]);
-                    sinceLastMysticDrop = Integer.parseInt(input[2]);
-                    guiLocation = new int[]{Integer.parseInt(input[3]), Integer.parseInt(input[4])};
-                    color = Integer.parseInt(input[5], 16);
-                    align = input[6];
-                    auraCooldownInTicks = Integer.parseInt(input[8]);
-                    steakCooldownInTicks = Integer.parseInt(input[7]);
+                String[] content = new BufferedReader(new FileReader(PIT_UTILS_PATH)).readLine().split("\n");
 
-                    saveLogInfo("data file loading actually works\n");
-                }
-                else {
-                    saveInfo(0, 0, 0, 10, 15);
-                    saveLogInfo("input data file is wrong\n");
-                }
+
+                MysticDropCounter.setVars(content[1]);
+                Cooldown.setVars(content[2]);
+                AutoL.setVars(content[3]);
+
+                saveInfo();
+
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -197,7 +187,7 @@ public class PitUtils {
         }
         else {
             saveLogInfo("no data file exists\n");
-            saveInfo(0, 0, 0, 10, 15);
+            saveInfo();
         }
         scheduleFileSave(true, 120);
     }
