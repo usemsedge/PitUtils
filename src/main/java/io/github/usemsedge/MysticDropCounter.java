@@ -93,15 +93,23 @@ public class MysticDropCounter {
     }
 
     static boolean setVars(String line) {
+        PitUtils.saveLogInfo("mysticdropcounter started to save info \n");
         try {
             if (isValid(line)) {
                 String[] row = line.split(",");
+                PitUtils.saveLogInfo("line has been split \n");
                 toggled = (row[0].equalsIgnoreCase("true")) ? true : false;
+                PitUtils.saveLogInfo("toggled has been set");
                 killCount = Integer.parseInt(row[1]);
+                PitUtils.saveLogInfo("killcount set");
                 mysticDrops = Integer.parseInt(row[2]);
+                PitUtils.saveLogInfo("mysticdrops set");
                 sinceLastMysticDrop = Integer.parseInt(row[3]);
+                PitUtils.saveLogInfo("sincelast set");
                 guiLocation = new int[]{Integer.parseInt(row[4]), Integer.parseInt(row[5])};
+                PitUtils.saveLogInfo("guilocation set");
                 align = row[6];
+                PitUtils.saveLogInfo("align set");
                 color = Integer.parseInt(row[7], 16);
                 PitUtils.saveLogInfo("mystic drop save info works");
                 return true;
