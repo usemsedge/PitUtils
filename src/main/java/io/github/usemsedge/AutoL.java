@@ -61,14 +61,22 @@ public class AutoL {
     }
 
     static boolean setVars(String line) {
-        if (isValid(line)) {
-            String[] row = line.split(",");
-            toggled = (row[0].equalsIgnoreCase("true")) ? true: false;
-            onBan = (row[1].equalsIgnoreCase("true")) ? true: false;
-            onPermList = (row[2].equalsIgnoreCase("true")) ? true: false;
-            onBountyClaimed = (row[3].equalsIgnoreCase("true")) ? true: false;
-            return true;
+        try {
+            if (isValid(line)) {
+                String[] row = line.split(",");
+                toggled = (row[0].equalsIgnoreCase("true")) ? true : false;
+                onBan = (row[1].equalsIgnoreCase("true")) ? true : false;
+                onPermList = (row[2].equalsIgnoreCase("true")) ? true : false;
+                onBountyClaimed = (row[3].equalsIgnoreCase("true")) ? true : false;
+                PitUtils.saveLogInfo("autol save info  workas");
+                return true;
+            }
+            PitUtils.saveLogInfo("autol save info invalud" + line);
+            return false;
         }
-        return false;
+        catch (Exception e) {
+            PitUtils.saveLogInfo("autol save info does not work" + line);
+            return false;
+        }
     }
 }

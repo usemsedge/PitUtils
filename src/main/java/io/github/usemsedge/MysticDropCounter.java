@@ -93,19 +93,25 @@ public class MysticDropCounter {
     }
 
     static boolean setVars(String line) {
-        if (isValid(line)) {
-            String[] row = line.split(",");
-            toggled = (row[0].equalsIgnoreCase("true")) ? true: false;
-            killCount = Integer.parseInt(row[1]);
-            mysticDrops = Integer.parseInt(row[2]);
-            sinceLastMysticDrop = Integer.parseInt(row[3]);
-            guiLocation = new int[]{Integer.parseInt(row[4]), Integer.parseInt(row[5])};
-            align = row[6];
-            color = Integer.parseInt(row[7], 16);
-            PitUtils.saveLogInfo("mystic drop save info works");
-            return true;
+        try {
+            if (isValid(line)) {
+                String[] row = line.split(",");
+                toggled = (row[0].equalsIgnoreCase("true")) ? true : false;
+                killCount = Integer.parseInt(row[1]);
+                mysticDrops = Integer.parseInt(row[2]);
+                sinceLastMysticDrop = Integer.parseInt(row[3]);
+                guiLocation = new int[]{Integer.parseInt(row[4]), Integer.parseInt(row[5])};
+                align = row[6];
+                color = Integer.parseInt(row[7], 16);
+                PitUtils.saveLogInfo("mystic drop save info works");
+                return true;
+            }
+            PitUtils.saveLogInfo("mystic drop save info invalud" + line);
+            return false;
         }
-        PitUtils.saveLogInfo("mystic drop save info doesnt work");
-        return false;
+        catch (Exception e) {
+            PitUtils.saveLogInfo("mystic drop save info does not work" + line);
+            return false;
+        }
     }
 }

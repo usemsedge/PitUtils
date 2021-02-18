@@ -155,16 +155,23 @@ public class Cooldown {
     }
 
     static boolean setVars(String line) {
-        if (isValid(line)) {
-            String[] row = line.split(",");
-            toggled = (row[0].equalsIgnoreCase("true")) ? true: false;
-            guiLocation = new int[] {Integer.parseInt(row[1]), Integer.parseInt(row[2])};
-            align = row[3];
-            color = Integer.parseInt(row[4], 16);
-            PitUtils.saveLogInfo("cooldown save info works");
-            return true;
+        try {
+            if (isValid(line)) {
+                String[] row = line.split(",");
+                toggled = (row[0].equalsIgnoreCase("true")) ? true : false;
+                guiLocation = new int[]{Integer.parseInt(row[1]), Integer.parseInt(row[2])};
+                align = row[3];
+                color = Integer.parseInt(row[4], 16);
+                PitUtils.saveLogInfo("cooldown save info works");
+                return true;
+            }
+            PitUtils.saveLogInfo("cooldown save info is not valid" + line);
+            return false;
         }
-        PitUtils.saveLogInfo("cooldown save info does not work");
-        return false;
+        catch (Exception e) {
+            PitUtils.saveLogInfo("cooldown save info does not work" + line);
+
+            return false;
+        }
     }
 }
