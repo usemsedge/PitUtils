@@ -179,7 +179,7 @@ public class PitUtils {
                 String[] content = new BufferedReader(new FileReader(PIT_UTILS_PATH)).readLine().split("\n");
 
                 if (content.length == 3) {
-                    saveLogInfo("CONTENT LENGTH IS 3" + content);
+                    saveLogInfo("CONTENT LENGTH IS 3" + content.toString());
                     //perm list is empty
 
                     MysticDropCounter.setVars(content[0]);
@@ -187,11 +187,12 @@ public class PitUtils {
                     AutoL.setVars(content[2]);
                 }
                 else {
-                    saveLogInfo("content length is 4" + content);
+                    saveLogInfo("content length is 4" + content.toString());
                     String[] c = content[0].split(",");
                     for (int i = 0; i < c.length; i++) {
                         PitUtils.permList.add(c[i]);
                     }
+                    saveLogInfo("perm list set");
                     MysticDropCounter.setVars(content[1]);
                     Cooldown.setVars(content[2]);
                     AutoL.setVars(content[3]);
