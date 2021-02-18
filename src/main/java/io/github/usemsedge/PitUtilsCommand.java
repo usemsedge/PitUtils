@@ -52,6 +52,37 @@ public class PitUtilsCommand extends CommandBase {
                 else if (args.length == 3 && args[1].equalsIgnoreCase("align")) {
                     MysticDropCounter.align = (args[2].equalsIgnoreCase("right")) ? "right": "left";
                 }
+                else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
+                    char[] c = args[3].toCharArray();
+
+                    //last six chars of the input string
+                    // #ffffff will give "ffffff", so will 0xffffff
+                    char[] x = Arrays.copyOfRange(c, c.length - 6, c.length);
+                    String number = String.copyValueOf(x);
+
+                    if (!PitUtils.isInteger(number, 16)) {
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Changes the color of the display");
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit myst color (color)");
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "(color) should be substituted for a 6-character hex value like 00ffff");
+                        return;
+                    }
+                    MysticDropCounter.color = Integer.decode("0x" + number);
+                }
+
+                else if (args.length == 4 && args[1].equalsIgnoreCase("pos")) {
+
+                    if (PitUtils.isInteger(args[2]) &&
+                            PitUtils.isInteger(args[3])) {
+
+                        MysticDropCounter.guiLocation[0] = Integer.parseInt(args[2]);
+                        MysticDropCounter.guiLocation[1] = Integer.parseInt(args[3]);
+                    }
+                    else {
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Changes the location of the display");
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit myst pos (x) (y)");
+                    }
+                }
+
                 else {
                     PitUtils.messagePlayer(player, EnumChatFormatting.BLACK + "________________________");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Tracks amounts of kills per mystic drop");
@@ -59,6 +90,8 @@ public class PitUtilsCommand extends CommandBase {
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit myst toggle  (turns the display on or off)");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit myst align (right|left) (aligns the display right or left");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit myst count  (prints the numbers to the chat)");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit myst color (color) (changes the mystic drop display to the color)");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit myst pos (x) (x) (changes the location of the mystic drop display");
                 }
 
             }
@@ -87,6 +120,34 @@ public class PitUtilsCommand extends CommandBase {
                 else if (args.length == 3 && args[1].equalsIgnoreCase("align")) {
                     Cooldown.align = (args[2].equalsIgnoreCase("right")) ? "right": "left";
                 }
+                else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
+                    char[] c = args[3].toCharArray();
+
+                    char[] x = Arrays.copyOfRange(c, c.length - 6, c.length);
+                    String number = String.copyValueOf(x);
+
+                    if (!PitUtils.isInteger(number, 16)) {
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Changes the color of the display");
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit cd color (color)");
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "(color) should be substituted for a 6-character hex value like 00ffff");
+                        return;
+                    }
+                    Cooldown.color = Integer.decode("0x" + number);
+                }
+
+                else if (args.length == 4 && args[1].equalsIgnoreCase("pos")) {
+
+                    if (PitUtils.isInteger(args[2]) &&
+                            PitUtils.isInteger(args[3])) {
+
+                        Cooldown.guiLocation[0] = Integer.parseInt(args[2]);
+                        Cooldown.guiLocation[1] = Integer.parseInt(args[3]);
+                    }
+                    else {
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Changes the location of the display");
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit cd pos (x) (y)");
+                    }
+                }
                 else {
                     PitUtils.messagePlayer(player, EnumChatFormatting.BLACK + "________________________");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Tracks cooldowns of First-Aid Egg, AAA-Rated Steak, and Aura of Protection");
@@ -94,7 +155,8 @@ public class PitUtilsCommand extends CommandBase {
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit cd toggle  (turns the display on or off");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit cd align (right|left) (aligns the display right or left");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit cd display (ticks|t|seconds|s)  (displays the cooldown times in ticks or seconds");
-
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit cd color (color) (changes the cooldown display to the color)");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit cd pos (x) (x) (changes the location of the cooldown display");
                 }
             }
 
@@ -109,12 +171,15 @@ public class PitUtilsCommand extends CommandBase {
                 else if (args.length == 3 && args[1].equalsIgnoreCase("add")) {
                     if (args[2].equalsIgnoreCase("bounty")) {
                         AutoL.onBountyClaimed = true;
+                        PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "Will now say L when you claim a bounty");
                     }
                     else if (args[2].equalsIgnoreCase("perm")) {
                         AutoL.onPermList = true;
+                        PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "Will now say L when you kill someone on your perm list");
                     }
                     else if (args[2].equalsIgnoreCase("ban")) {
                         AutoL.onBan = true;
+                        PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "Will now say L when someone gets banned");
                     }
                     else {
                         PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Last argument must be (ban|bounty|perm)");
@@ -126,12 +191,15 @@ public class PitUtilsCommand extends CommandBase {
                 else if (args.length == 3 && args[1].equalsIgnoreCase("remove")) {
                     if (args[2].equalsIgnoreCase("bounty")) {
                         AutoL.onBountyClaimed = false;
+                        PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "Will now not say L when you claim a bounty");
                     }
                     else if (args[2].equalsIgnoreCase("perm")) {
                         AutoL.onPermList = false;
+                        PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "Will now not say L when you kill someone on your perm list");
                     }
                     else if (args[2].equalsIgnoreCase("ban")) {
                         AutoL.onBan = false;
+                        PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "Will now not say L when someone gets banned");
                     }
                     else {
                         PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Last argument must be (ban|bounty|perm)");
