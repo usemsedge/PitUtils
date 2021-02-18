@@ -12,7 +12,7 @@ public class MysticDropCounter {
 
     static int[] guiLocation = new int[]{2, 2};
     static boolean toggled = true;
-    static int color = 0x000000;
+    static int color = 0x00ffff;
     static String align = "left";
 
     static void onChatMessageReceived(String msg) {
@@ -86,6 +86,8 @@ public class MysticDropCounter {
             PitUtils.isBool(things[0]) &&  //toggled
             things[6].equalsIgnoreCase("left") || things[6].equalsIgnoreCase("right") ) {
             return true;
+            //MysticDropCounter.toggled + "," + MysticDropCounter.killCount + "," + MysticDropCounter.mysticDrops + "," + MysticDropCounter.sinceLastMysticDrop
+            //                                + "," + MysticDropCounter.guiLocation[0] + "," + MysticDropCounter.guiLocation[1] + "," + MysticDropCounter.align + "," + MysticDropCounter.color + "\n" +
         }
         return false;
     }
@@ -100,8 +102,10 @@ public class MysticDropCounter {
             guiLocation = new int[]{Integer.parseInt(row[4]), Integer.parseInt(row[5])};
             align = row[6];
             color = Integer.parseInt(row[7], 16);
+            PitUtils.saveLogInfo("mystic drop save info works");
             return true;
         }
+        PitUtils.saveLogInfo("mystic drop save info doesnt work");
         return false;
     }
 }

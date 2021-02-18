@@ -19,7 +19,7 @@ public class Cooldown {
 
     static int[] guiLocation = new int[]{2, 2};
     static boolean toggled = true;
-    static int color = 0x000000;
+    static int color = 0x00ffff;
     static String align = "left";
 
     static void onPlayerClick() {
@@ -159,9 +159,12 @@ public class Cooldown {
             String[] row = line.split(",");
             toggled = (row[0].equalsIgnoreCase("true")) ? true: false;
             guiLocation = new int[] {Integer.parseInt(row[1]), Integer.parseInt(row[2])};
+            align = row[3];
             color = Integer.parseInt(row[4], 16);
+            PitUtils.saveLogInfo("cooldown save info works");
             return true;
         }
+        PitUtils.saveLogInfo("cooldown save info does not work");
         return false;
     }
 }

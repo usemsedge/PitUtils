@@ -217,6 +217,56 @@ public class PitUtilsCommand extends CommandBase {
                 }
             }
 
+            else if (args[0].equalsIgnoreCase("perm")) {
+                if (args.length == 3 && args[1].equalsIgnoreCase("add")) {
+                    if (PitUtils.checkUsername(args[2])) {
+                        if (PitUtils.permList.contains(args[2])) {
+                            PitUtils.messagePlayer(player, EnumChatFormatting.RED + args[2] + " is already permed.");
+                        } else {
+                            PitUtils.permList.add(args[2]);
+                            PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + args[2] + " is now permed.");
+                        }
+                    }
+                    else {
+                        PitUtils.messagePlayer(player, EnumChatFormatting.RED + args[2] + " is not a valid username.");
+                    }
+
+                }
+                else if (args.length == 3 && args[1].equalsIgnoreCase("remove")) {
+                    if (PitUtils.checkUsername(args[2])) {
+                        if (PitUtils.permList.contains(args[2])) {
+                            PitUtils.permList.remove(args[2]);
+                            PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + args[2] + " is no longer permed.");
+                        } else {
+                            PitUtils.messagePlayer(player, EnumChatFormatting.RED + args[2] + " is not permed.");
+                        }
+                    }
+                    else {
+                        PitUtils.messagePlayer(player, EnumChatFormatting.RED + args[2] + " is not a valid username.");
+                    }
+                }
+                else if (args.length == 2 && args[1].equalsIgnoreCase("clear")) {
+                    PitUtils.permList.clear();
+                    PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "Your perm list is now empty.");
+                }
+                else if (args.length == 2 && args[1].equalsIgnoreCase("view")) {
+                    for (int i = 0; i < PitUtils.permList.size(); i++) {
+                        PitUtils.messagePlayer(player, EnumChatFormatting.RED + PitUtils.permList.get(i).toString());
+                    }
+                }
+                else {
+                    PitUtils.messagePlayer(player, EnumChatFormatting.BLACK + "__________________________");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Manages your list of \"permed\" (permenantly hunted) players, or players you want to hunt and kill");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm [command] [argument]");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm add (player) (adds this player to your perm list");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm remove (player) (removes this player from your perm list");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm clear (deletes everyone from your perm list)");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm view (views your perm list)");
+                }
+
+
+            }
+
             else if (args[0].equalsIgnoreCase("tips")) {
                 PitUtils.messagePlayer(player, EnumChatFormatting.DARK_GREEN + "PIT TIPS FOR NONS (not unranked players, think skyblock terminology)");
                 PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "To get an axe: You must be Prestige 2 and buy the Barbarian renown upgrade, then buy it in the perk shop");
@@ -236,6 +286,7 @@ public class PitUtilsCommand extends CommandBase {
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit myst  (Mystic Counter)");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit cd  (Item Cooldowns)");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit l (Auto-L");
+                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm (your perm list)");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit tips");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit help");
 

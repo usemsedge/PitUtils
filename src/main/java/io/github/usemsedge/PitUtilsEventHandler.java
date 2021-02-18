@@ -54,6 +54,9 @@ public class PitUtilsEventHandler {
         if (MysticDropCounter.toggled) {
             MysticDropCounter.onChatMessageReceived(msg);
         }
+        if (AutoL.toggled) {
+            AutoL.checkIfSayL(msg);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)

@@ -77,6 +77,7 @@ public class PitUtils {
                 permListString = permListString + permList.get(i) + ",";
             }
 
+
             try {
                 FileWriter fw = new FileWriter(util_file, false);
                 fw.write(permListString + "\n" +
@@ -128,6 +129,7 @@ public class PitUtils {
     static List<String> getSidebarLines() {
         List<String> lines = new ArrayList<>();
         Scoreboard sb = Minecraft.getMinecraft().theWorld.getScoreboard();
+
         if (sb == null) {
             return lines;
         }
@@ -162,6 +164,10 @@ public class PitUtils {
         player.addChatMessage(new ChatComponentText(message));
     }
 
+    static boolean checkUsername(String name) {
+        return name.matches("^[A-Za-z0-9_]*$");
+    }
+
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
@@ -172,10 +178,24 @@ public class PitUtils {
             try {
                 String[] content = new BufferedReader(new FileReader(PIT_UTILS_PATH)).readLine().split("\n");
 
+                if (content.length == 3) {
+                    //perm list is empty
 
-                MysticDropCounter.setVars(content[1]);
-                Cooldown.setVars(content[2]);
-                AutoL.setVars(content[3]);
+                    MysticDropCounter.setVars(content[0]);
+                    Cooldown.setVars(content[1]);
+                    AutoL.setVars(content[2]);
+                }
+                else {
+                    String[] c = content[0].split(",");
+                    for (int i = 0; i < c.length; i++) {
+                        PitUtils.permList.add(c[i]);
+                    }
+                    MysticDropCounter.setVars(content[1]);
+                    Cooldown.setVars(content[2]);
+                    AutoL.setVars(content[3]);
+                }
+
+
 
                 saveInfo();
 
