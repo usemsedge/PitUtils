@@ -182,6 +182,9 @@ public class PitUtils {
         if (new File(PIT_UTILS_PATH).isFile()) {
             try {
                 String[] content = new BufferedReader(new FileReader(PIT_UTILS_PATH)).readLine().split("|");
+                for (int j = 0; j < content.length; j++) {
+                    saveLogInfo(content[j] + "\n");
+                }
 
 
                 saveLogInfo("content length is something" + content.toString() + "       " + content.length + "\n");
