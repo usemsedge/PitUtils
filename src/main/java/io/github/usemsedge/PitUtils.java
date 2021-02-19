@@ -70,7 +70,7 @@ public class PitUtils {
     }
 
     static List getPlayers() {
-        List x = null;
+        List<String> x = new ArrayList<>();
         for (EntityPlayer player : Minecraft.getMinecraft().theWorld.playerEntities) {
             x.add(player.getName());
         }
