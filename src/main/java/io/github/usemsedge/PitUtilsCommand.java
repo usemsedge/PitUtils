@@ -121,10 +121,14 @@ public class PitUtilsCommand extends CommandBase {
                     Cooldown.align = (args[2].equalsIgnoreCase("right")) ? "right": "left";
                 }
                 else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
+                    PitUtils.saveLogInfo("color command with right number of args");
                     char[] c = args[3].toCharArray();
+                    PitUtils.saveLogInfo("toCharArray works");
 
                     char[] x = Arrays.copyOfRange(c, c.length - 6, c.length);
+                    PitUtils.saveLogInfo("last 6 chars of the range works");
                     String number = String.copyValueOf(x);
+                    PitUtils.saveLogInfo("copied value of char[] to string");
 
                     if (!PitUtils.isInteger(number, 16)) {
                         PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Changes the color of the display");
@@ -132,7 +136,9 @@ public class PitUtilsCommand extends CommandBase {
                         PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "(color) should be substituted for a 6-character hex value like 00ffff");
                         return;
                     }
+                    PitUtils.saveLogInfo("the thing is an integer in base 16");
                     Cooldown.color = Integer.decode("0x" + number);
+                    PitUtils.saveLogInfo("color changes");
                 }
 
                 else if (args.length == 4 && args[1].equalsIgnoreCase("pos")) {
