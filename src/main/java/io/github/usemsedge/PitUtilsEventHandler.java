@@ -74,9 +74,8 @@ public class PitUtilsEventHandler {
                                     .getDisplayName())).contains("THE HYPIXEL PIT") && Minecraft.getMinecraft()
                             .getCurrentServerData().serverIP.toLowerCase().contains("hypixel.net"));
                 }
+                PermTracker.permedPlayersInServer = PermTracker.findPermedPlayersInServer();
 
-                List players = PitUtils.getPlayers();
-                PitUtils.saveLogInfo(players.toString());
                 tick = 0;
             }
 
@@ -90,7 +89,7 @@ public class PitUtilsEventHandler {
         new ScheduledThreadPoolExecutor(1).schedule(() -> {
             Minecraft.getMinecraft().thePlayer
                     .addChatMessage(new ChatComponentText(EnumChatFormatting.RED +
-                    "Downloads not from github.com/usemsedge/mystic-counter are RATs.\n" + EnumChatFormatting.GREEN + "Type /pit to get a list of commands."));
+                    "Downloads not from github.com/usemsedge/mystic-counter are RATs.\n" + EnumChatFormatting.GREEN + "Type /pit help to get a list of commands."));
         }, 3, TimeUnit.SECONDS);
     }
 
@@ -132,8 +131,6 @@ public class PitUtilsEventHandler {
 
     private void renderStats() {
         ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
-        int width = res.getScaledWidth();
-        int height = res.getScaledHeight();
 
         if (MysticDropCounter.toggled) {
             MysticDropCounter.renderStats(renderer);
@@ -141,6 +138,10 @@ public class PitUtilsEventHandler {
         if (Cooldown.toggled) {
             Cooldown.renderStats(renderer);
         }
+        if (PermTracker.toggled) {
+            PermTracker.renderStats(renderer);
+        }
+
     }
 
 }

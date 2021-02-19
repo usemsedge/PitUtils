@@ -94,53 +94,50 @@ public class Cooldown {
 
     static void renderStats(FontRenderer renderer) {
         String eggCD, steakCD, auraCD;
-        if (Cooldown.displayCooldownInTicks) {
-            eggCD = "First-Aid Egg cool down: " + Cooldown.currentEggCooldownInTicks + " ticks";
-            steakCD = "AAA-Rated Steak cool down: " + Cooldown.currentSteakCooldownInTicks + " ticks";
-            auraCD = "Aura Of Protection cool down: " + Cooldown.currentAuraCooldownInTicks + " ticks";
+        if (displayCooldownInTicks) {
+            eggCD = "First-Aid Egg cool down: " + currentEggCooldownInTicks + " ticks";
+            steakCD = "AAA-Rated Steak cool down: " + currentSteakCooldownInTicks + " ticks";
+            auraCD = "Aura Of Protection cool down: " + currentAuraCooldownInTicks + " ticks";
         }
         else {
-            eggCD = "First-Aid Egg cool down: " + Cooldown.currentEggCooldownInTicks / 20 + " seconds";
-            steakCD = "AAA-Rated Steak cool down: " + Cooldown.currentSteakCooldownInTicks / 20 + " seconds";
-            auraCD = "Aura Of Protection Cool down: " + Cooldown.currentAuraCooldownInTicks / 20+ " seconds";
+            eggCD = "First-Aid Egg cool down: " + currentEggCooldownInTicks / 20 + " seconds";
+            steakCD = "AAA-Rated Steak cool down: " + currentSteakCooldownInTicks / 20 + " seconds";
+            auraCD = "Aura Of Protection Cool down: " + currentAuraCooldownInTicks / 20+ " seconds";
         }
         String longestCd = auraCD;
 
-        if (Cooldown.align == "right") {
-            renderer.drawString(steakCD, Cooldown.guiLocation[0] +
+        if (align.equals("right")) {
+            renderer.drawString(steakCD, guiLocation[0] +
                             renderer.getStringWidth(longestCd) -
                             renderer.getStringWidth(steakCD),
-                    Cooldown.guiLocation[1] + renderer.FONT_HEIGHT * 5, Cooldown.color, true);
-            renderer.drawString(eggCD, Cooldown.guiLocation[0] +
+                    guiLocation[1] + renderer.FONT_HEIGHT, color, true);
+            renderer.drawString(eggCD, guiLocation[0] +
                             renderer.getStringWidth(longestCd) -
                             renderer.getStringWidth(eggCD),
-                    Cooldown.guiLocation[1] + renderer.FONT_HEIGHT * 6, Cooldown.color, true);
-            renderer.drawString(auraCD, Cooldown.guiLocation[0] +
+                    guiLocation[1] + renderer.FONT_HEIGHT * 2, color, true);
+            renderer.drawString(auraCD, guiLocation[0] +
                             renderer.getStringWidth(longestCd) -
                             renderer.getStringWidth(auraCD),
-                    Cooldown.guiLocation[1] + renderer.FONT_HEIGHT * 7, Cooldown.color, true);
+                    guiLocation[1] + renderer.FONT_HEIGHT * 3, color, true);
         }
         else {
-            renderer.drawString(steakCD, Cooldown.guiLocation[0],
-                    Cooldown.guiLocation[1] + renderer.FONT_HEIGHT * 5, Cooldown.color, true);
-            renderer.drawString(eggCD, Cooldown.guiLocation[0],
-                    Cooldown.guiLocation[1] + renderer.FONT_HEIGHT * 6, Cooldown.color, true);
-            renderer.drawString(auraCD, Cooldown.guiLocation[0],
-                    Cooldown.guiLocation[1] + renderer.FONT_HEIGHT * 7, Cooldown.color, true);
+            renderer.drawString(steakCD, guiLocation[0],
+                    guiLocation[1] + renderer.FONT_HEIGHT, color, true);
+            renderer.drawString(eggCD, guiLocation[0],
+                    guiLocation[1] + renderer.FONT_HEIGHT * 2, color, true);
+            renderer.drawString(auraCD, guiLocation[0],
+                    guiLocation[1] + renderer.FONT_HEIGHT * 3, color, true);
         }
     }
 
     static boolean isValid(String row) {
         String[] things = row.split(",");
 
-        if (PitUtils.isInteger(things[1]) &&
-            PitUtils.isInteger(things[2]) &&
-            PitUtils.isInteger(things[4], 16) &&
-            PitUtils.isBool(things[0]) &&
-            things[3].equalsIgnoreCase("left") || things[3].equalsIgnoreCase("right")) {
-            return true;
-        }
-        return false;
+        return PitUtils.isInteger(things[1]) &&
+                PitUtils.isInteger(things[2]) &&
+                PitUtils.isInteger(things[4], 16) &&
+                PitUtils.isBool(things[0]) &&
+                things[3].equalsIgnoreCase("left") || things[3].equalsIgnoreCase("right");
 
 
                 /*
@@ -148,7 +145,7 @@ public class Cooldown {
                 MysticDropCounter.toggled + "," + MysticDropCounter.killCount + "," + MysticDropCounter.mysticDrops + "," + MysticDropCounter.sinceLastMysticDrop
                 + "," + MysticDropCounter.guiLocation[0] + "," + MysticDropCounter.guiLocation[1] + "," + MysticDropCounter.align + "," + MysticDropCounter.color + "\n" +
 
-                Cooldown.toggled + "," + Cooldown.guiLocation[0] + "," + Cooldown.guiLocation[1] + "," + Cooldown.align + "," + Cooldown.color + "\n" +
+                toggled + "," + Cooldown.guiLocation[0] + "," + Cooldown.guiLocation[1] + "," + Cooldown.align + "," + Cooldown.color + "\n" +
 
                 AutoL.toggled + "," + AutoL.onBan + "," + AutoL.onPermList + "," + AutoL.onBountyClaimed
         );*/
@@ -158,7 +155,7 @@ public class Cooldown {
         try {
             if (isValid(line)) {
                 String[] row = line.split(",");
-                toggled = (row[0].equalsIgnoreCase("true")) ? true : false;
+                toggled = row[0].equalsIgnoreCase("true");
                 guiLocation = new int[]{Integer.parseInt(row[1]), Integer.parseInt(row[2])};
                 align = row[3];
                 color = Integer.parseInt(row[4], 16);

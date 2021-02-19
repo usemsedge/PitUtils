@@ -53,7 +53,7 @@ public class PitUtilsCommand extends CommandBase {
                     MysticDropCounter.align = (args[2].equalsIgnoreCase("right")) ? "right": "left";
                 }
                 else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
-                    char[] c = args[3].toCharArray();
+                    char[] c = args[2].toCharArray();
 
                     //last six chars of the input string
                     // #ffffff will give "ffffff", so will 0xffffff
@@ -113,7 +113,7 @@ public class PitUtilsCommand extends CommandBase {
                         Cooldown.displayCooldownInTicks = false;
                     }
                     else {
-                        PitUtils.messagePlayer(player, EnumChatFormatting.RED + "Last argument must be (seconds|s|ticks|t), not " + args[3]);
+                        PitUtils.messagePlayer(player, EnumChatFormatting.RED + "Last argument must be (seconds|s|ticks|t), not " + args[2]);
                     }
 
                 }
@@ -122,7 +122,7 @@ public class PitUtilsCommand extends CommandBase {
                 }
                 else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
                     PitUtils.saveLogInfo("color command with right number of args");
-                    char[] c = args[3].toCharArray();
+                    char[] c = args[2].toCharArray();
                     PitUtils.saveLogInfo("toCharArray works");
 
                     char[] x = Arrays.copyOfRange(c, c.length - 6, c.length);
@@ -260,14 +260,64 @@ public class PitUtilsCommand extends CommandBase {
                         PitUtils.messagePlayer(player, EnumChatFormatting.RED + PitUtils.permList.get(i).toString());
                     }
                 }
+                else if (args.length == 2 && args[1].equalsIgnoreCase("toggle")) {
+                    PermTracker.toggled ^= true;
+                    PitUtils.messagePlayer(player, EnumChatFormatting.GREEN +
+                            "Perm List Display has been toggled " +
+                            EnumChatFormatting.DARK_GREEN +
+                            (PermTracker.toggled ? "on" : "off"));
+                }
+                else if (args.length == 3 && args[1].equalsIgnoreCase("align")) {
+                    Cooldown.align = (args[2].equalsIgnoreCase("right")) ? "right": "left";
+                }
+                else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
+                    PitUtils.saveLogInfo("color command with right number of args");
+                    char[] c = args[2].toCharArray();
+                    PitUtils.saveLogInfo("toCharArray works");
+
+                    char[] x = Arrays.copyOfRange(c, c.length - 6, c.length);
+                    PitUtils.saveLogInfo("last 6 chars of the range works");
+                    String number = String.copyValueOf(x);
+                    PitUtils.saveLogInfo("copied value of char[] to string");
+
+                    if (!PitUtils.isInteger(number, 16)) {
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Changes the color of the display");
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit perm color (color)");
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "(color) should be substituted for a 6-character hex value like 00ffff");
+                        return;
+                    }
+                    PitUtils.saveLogInfo("the thing is an integer in base 16");
+                    PermTracker.color = Integer.decode("0x" + number);
+                    PitUtils.saveLogInfo("color changes");
+                }
+
+                else if (args.length == 4 && args[1].equalsIgnoreCase("pos")) {
+
+                    if (PitUtils.isInteger(args[2]) &&
+                            PitUtils.isInteger(args[3])) {
+
+                        PermTracker.guiLocation[0] = Integer.parseInt(args[2]);
+                        PermTracker.guiLocation[1] = Integer.parseInt(args[3]);
+                    }
+                    else {
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Changes the location of the display");
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit perm pos (x) (y)");
+                    }
+                }
                 else {
                     PitUtils.messagePlayer(player, EnumChatFormatting.BLACK + "__________________________");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Manages your list of \"permed\" (permenantly hunted) players, or players you want to hunt and kill");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "If toggled on, people in your lobby and the perm list will show up");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm [command] [argument]");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm add (player) (adds this player to your perm list");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm remove (player) (removes this player from your perm list");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm clear (deletes everyone from your perm list)");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm view (views your perm list)");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm toggle (turns on or off the display");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm color (color) (changes the color of the display)");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm align (right|left) (aligns the text right or left");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm pos (x) (y) (sets the locatino of the display)");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm chat (turns on or off saying the permed people in chat constantly)");
                 }
 
 

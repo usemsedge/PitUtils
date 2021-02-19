@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -35,7 +36,7 @@ public class PitUtils {
     static boolean usingLabyMod = false;
     static boolean isInPit = false;
 
-    static ArrayList permList = new ArrayList();
+    static ArrayList<String> permList = new ArrayList<>();
 
     private static ScheduledExecutorService autoSaveExecutor;
 
@@ -69,7 +70,7 @@ public class PitUtils {
         }
     }
 
-    static List getPlayers() {
+    static List<String> getPlayers() {
         List<String> x = new ArrayList<>();
         for (EntityPlayer player : Minecraft.getMinecraft().theWorld.playerEntities) {
             x.add(player.getName());
@@ -80,9 +81,9 @@ public class PitUtils {
     static void saveInfo() {
         new Thread(() -> {
             File util_file = new File(PIT_UTILS_PATH);
-            String permListString = "";
+            StringBuilder permListString = new StringBuilder();
             for (int i = 0; i < permList.size(); i++) {
-                permListString = permListString + permList.get(i).toString() + ",";
+                permListString.append(permList.get(i)).append(",");
             }
 
 
@@ -94,7 +95,9 @@ public class PitUtils {
 
                          Cooldown.toggled + "," + Cooldown.guiLocation[0] + "," + Cooldown.guiLocation[1] + "," + Cooldown.align + "," + Cooldown.color + ";" +
 
-                         AutoL.toggled + "," + AutoL.onBan + "," + AutoL.onPermList + "," + AutoL.onBountyClaimed
+                         AutoL.toggled + "," + AutoL.onBan + "," + AutoL.onPermList + "," + AutoL.onBountyClaimed + ";" +
+
+                         PermTracker.toggled + "," + PermTracker.sayInChat + "," + PermTracker.guiLocation[0] + "," + PermTracker.guiLocation[1] + PermTracker.align + "," + PermTracker.color
                          );
                 fw.close();
             }
@@ -128,10 +131,7 @@ public class PitUtils {
     }
 
     static boolean isBool(String s) {
-        if (s.equalsIgnoreCase("true") || s.equalsIgnoreCase("false")) {
-            return true;
-        }
-        return false;
+        return s.equalsIgnoreCase("true") || s.equalsIgnoreCase("false");
     }
 
     static List<String> getSidebarLines() {
@@ -185,16 +185,15 @@ public class PitUtils {
         if (new File(PIT_UTILS_PATH).isFile()) {
             try {
                 String[] content = new BufferedReader(new FileReader(PIT_UTILS_PATH)).readLine().split(";");
-                for (int j = 0; j < content.length; j++) {
-                    saveLogInfo(content[j] + "\n");
+                for (String s : content) {
+                    saveLogInfo(s + "\n");
                 }
 
 
                 saveLogInfo("content length is something" + content.toString() + "       " + content.length + "\n");
                 String[] c = content[0].split(",");
-                for (int i = 0; i < c.length; i++) {
-                    PitUtils.permList.add(c[i]);
-                }
+                PitUtils.permList.addAll(Arrays.asList(c));
+
                 saveLogInfo("perm list set \n");
                 MysticDropCounter.setVars(content[1]);
                 saveLogInfo("mystic drop set \n");

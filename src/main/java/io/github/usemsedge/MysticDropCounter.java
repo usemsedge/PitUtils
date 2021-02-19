@@ -19,25 +19,25 @@ public class MysticDropCounter {
         long d = System.currentTimeMillis();
 
         if (msg.contains("MYSTIC ITEM!") && !msg.contains(":") && msg.contains("dropped")) {
-            MysticDropCounter.mysticDrops++;
-            MysticDropCounter.sinceLastMysticDrop = 0;
+            mysticDrops++;
+            sinceLastMysticDrop = 0;
         }
 
         else if (msg.contains("KILL!") && !msg.contains(":") && msg.contains("[") && msg.contains("]")) {
-            MysticDropCounter.killCount += 1;
-            MysticDropCounter.sinceLastMysticDrop += 1;
+            killCount += 1;
+            sinceLastMysticDrop += 1;
 
         }
     }
 
     static void renderStats(FontRenderer renderer) {
         String killsPerMystic =
-                "Kills/Mystic: " + ((MysticDropCounter.mysticDrops == 0) ? MysticDropCounter.mysticDrops
+                "Kills/Mystic: " + ((mysticDrops == 0) ? mysticDrops
                         : new DecimalFormat("#.##")
-                        .format(MysticDropCounter.killCount / (MysticDropCounter.mysticDrops * 1.0d)));
-        String kills = "Kills: " + MysticDropCounter.killCount;
-        String mystics = "Mystic Drops: " + MysticDropCounter.mysticDrops;
-        String lastMystic = "Kills since last Mystic Drop: " + MysticDropCounter.sinceLastMysticDrop;
+                        .format(killCount / (mysticDrops * 1.0d)));
+        String kills = "Kills: " + killCount;
+        String mystics = "Mystic Drops: " + mysticDrops;
+        String lastMystic = "Kills since last Mystic Drop: " + sinceLastMysticDrop;
 
 
         //PitUtils.saveLogInfo("\n\n" + eggCD + "\n" + auraCD + "\n" + steakCD + "\n\n");
@@ -45,33 +45,33 @@ public class MysticDropCounter {
         String longestMyst = lastMystic;
         //lastMystic is the longest string, because you are not getting a 20 digit number of kills
 
-        if (MysticDropCounter.align == "right") {
-            renderer.drawString(mystics, MysticDropCounter.guiLocation[0] +
+        if (align == "right") {
+            renderer.drawString(mystics, guiLocation[0] +
                             renderer.getStringWidth(longestMyst) -
                             renderer.getStringWidth(mystics),
-                    MysticDropCounter.guiLocation[1], MysticDropCounter.color, true);
-            renderer.drawString(kills, MysticDropCounter.guiLocation[0] +
+                    guiLocation[1], color, true);
+            renderer.drawString(kills, guiLocation[0] +
                             renderer.getStringWidth(longestMyst) -
                             renderer.getStringWidth(kills),
-                    MysticDropCounter.guiLocation[1] + renderer.FONT_HEIGHT, MysticDropCounter.color, true);
-            renderer.drawString(killsPerMystic, MysticDropCounter.guiLocation[0] +
+                    guiLocation[1] + renderer.FONT_HEIGHT, color, true);
+            renderer.drawString(killsPerMystic, guiLocation[0] +
                             renderer.getStringWidth(longestMyst) -
                             renderer.getStringWidth(killsPerMystic),
-                    MysticDropCounter.guiLocation[1] + renderer.FONT_HEIGHT * 2, MysticDropCounter.color, true);
-            renderer.drawString(lastMystic, MysticDropCounter.guiLocation[0] +
+                    guiLocation[1] + renderer.FONT_HEIGHT * 2, color, true);
+            renderer.drawString(lastMystic, guiLocation[0] +
                             renderer.getStringWidth(longestMyst) -
                             renderer.getStringWidth(lastMystic),
-                    MysticDropCounter.guiLocation[1] + renderer.FONT_HEIGHT * 3, MysticDropCounter.color, true);
+                    guiLocation[1] + renderer.FONT_HEIGHT * 3, color, true);
         }
         else {
-            renderer.drawString(mystics, MysticDropCounter.guiLocation[0],
-                    MysticDropCounter.guiLocation[1], MysticDropCounter.color, true);
-            renderer.drawString(kills, MysticDropCounter.guiLocation[0],
-                    MysticDropCounter.guiLocation[1] + renderer.FONT_HEIGHT, MysticDropCounter.color, true);
-            renderer.drawString(killsPerMystic, MysticDropCounter.guiLocation[0],
-                    MysticDropCounter.guiLocation[1] + renderer.FONT_HEIGHT * 2, MysticDropCounter.color, true);
-            renderer.drawString(lastMystic, MysticDropCounter.guiLocation[0],
-                    MysticDropCounter.guiLocation[1] + renderer.FONT_HEIGHT * 3, MysticDropCounter.color, true);
+            renderer.drawString(mystics, guiLocation[0],
+                    guiLocation[1], color, true);
+            renderer.drawString(kills, guiLocation[0],
+                    guiLocation[1] + renderer.FONT_HEIGHT, color, true);
+            renderer.drawString(killsPerMystic, guiLocation[0],
+                    guiLocation[1] + renderer.FONT_HEIGHT * 2, color, true);
+            renderer.drawString(lastMystic, guiLocation[0],
+                    guiLocation[1] + renderer.FONT_HEIGHT * 3, color, true);
         }
     }
 
@@ -98,7 +98,7 @@ public class MysticDropCounter {
             if (isValid(line)) {
                 String[] row = line.split(",");
                 PitUtils.saveLogInfo("line has been split \n");
-                toggled = (row[0].equalsIgnoreCase("true")) ? true : false;
+                toggled = row[0].equalsIgnoreCase("true");
                 PitUtils.saveLogInfo("toggled has been set");
                 killCount = Integer.parseInt(row[1]);
                 PitUtils.saveLogInfo("killcount set");
@@ -110,7 +110,7 @@ public class MysticDropCounter {
                 PitUtils.saveLogInfo("guilocation set");
                 align = row[6];
                 PitUtils.saveLogInfo("align set");
-                color = Integer.parseInt(row[7], 16);
+                color = Integer.parseInt(row[7]);
                 PitUtils.saveLogInfo("mystic drop save info works");
                 return true;
             }

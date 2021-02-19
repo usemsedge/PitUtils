@@ -64,10 +64,10 @@ public class AutoL {
         try {
             if (isValid(line)) {
                 String[] row = line.split(",");
-                toggled = (row[0].equalsIgnoreCase("true")) ? true : false;
-                onBan = (row[1].equalsIgnoreCase("true")) ? true : false;
-                onPermList = (row[2].equalsIgnoreCase("true")) ? true : false;
-                onBountyClaimed = (row[3].equalsIgnoreCase("true")) ? true : false;
+                toggled = row[0].equalsIgnoreCase("true");
+                onBan = row[1].equalsIgnoreCase("true");
+                onPermList = row[2].equalsIgnoreCase("true");
+                onBountyClaimed = row[3].equalsIgnoreCase("true");
                 PitUtils.saveLogInfo("autol save info  workas");
                 return true;
             }
