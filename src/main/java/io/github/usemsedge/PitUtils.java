@@ -79,7 +79,7 @@ public class PitUtils {
             File util_file = new File(PIT_UTILS_PATH);
             String permListString = "";
             for (int i = 0; i < permList.size(); i++) {
-                permListString = permListString + permList.get(i) + ",";
+                permListString = permListString + permList.get(i).toString() + ",";
             }
 
 
@@ -183,28 +183,20 @@ public class PitUtils {
             try {
                 String[] content = new BufferedReader(new FileReader(PIT_UTILS_PATH)).readLine().split("|");
 
-                if (content.length == 3) {
-                    saveLogInfo("CONTENT LENGTH IS 3" + content.toString() + "\n");
-                    //perm list is empty
 
-                    MysticDropCounter.setVars(content[0]);
-                    Cooldown.setVars(content[1]);
-                    AutoL.setVars(content[2]);
+                saveLogInfo("content length is something" + content.toString() + "       " + content.length + "\n");
+                String[] c = content[0].split(",");
+                for (int i = 0; i < c.length; i++) {
+                    PitUtils.permList.add(c[i]);
                 }
-                else {
-                    saveLogInfo("content length is something" + content.toString() + "       " + content.length + "\n");
-                    String[] c = content[0].split(",");
-                    for (int i = 0; i < c.length; i++) {
-                        PitUtils.permList.add(c[i]);
-                    }
-                    saveLogInfo("perm list set \n");
-                    MysticDropCounter.setVars(content[1]);
-                    saveLogInfo("mystic drop set \n");
-                    Cooldown.setVars(content[2]);
-                    saveLogInfo("cooldown set \n");
-                    AutoL.setVars(content[3]);
-                    saveLogInfo("modules set");
-                }
+                saveLogInfo("perm list set \n");
+                MysticDropCounter.setVars(content[1]);
+                saveLogInfo("mystic drop set \n");
+                Cooldown.setVars(content[2]);
+                saveLogInfo("cooldown set \n");
+                AutoL.setVars(content[3]);
+                saveLogInfo("modules set \n");
+
             }
             catch (Exception e) {
                 e.printStackTrace();

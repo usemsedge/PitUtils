@@ -75,7 +75,8 @@ public class PitUtilsEventHandler {
                             .getCurrentServerData().serverIP.toLowerCase().contains("hypixel.net"));
                 }
 
-                PitUtils.saveLogInfo(PitUtils.getPlayers().toString());
+                List players = PitUtils.getPlayers();
+                PitUtils.saveLogInfo(players.toString());
                 tick = 0;
             }
 
