@@ -69,6 +69,11 @@ public class PitUtils {
         }
     }
 
+    static List getPlayers() {
+        List l = Minecraft.getMinecraft().theWorld.playerEntities;
+        return l;
+    }
+
     static void saveInfo() {
         new Thread(() -> {
             File util_file = new File(PIT_UTILS_PATH);
@@ -80,11 +85,11 @@ public class PitUtils {
 
             try {
                 FileWriter fw = new FileWriter(util_file, false);
-                fw.write(permListString + "\n" +
+                fw.write(permListString + "|" +
                         MysticDropCounter.toggled + "," + MysticDropCounter.killCount + "," + MysticDropCounter.mysticDrops + "," + MysticDropCounter.sinceLastMysticDrop
-                                + "," + MysticDropCounter.guiLocation[0] + "," + MysticDropCounter.guiLocation[1] + "," + MysticDropCounter.align + "," + MysticDropCounter.color + "\n" +
+                                + "," + MysticDropCounter.guiLocation[0] + "," + MysticDropCounter.guiLocation[1] + "," + MysticDropCounter.align + "," + MysticDropCounter.color + "|" +
 
-                         Cooldown.toggled + "," + Cooldown.guiLocation[0] + "," + Cooldown.guiLocation[1] + "," + Cooldown.align + "," + Cooldown.color + "\n" +
+                         Cooldown.toggled + "," + Cooldown.guiLocation[0] + "," + Cooldown.guiLocation[1] + "," + Cooldown.align + "," + Cooldown.color + "|" +
 
                          AutoL.toggled + "," + AutoL.onBan + "," + AutoL.onPermList + "," + AutoL.onBountyClaimed
                          );
@@ -176,7 +181,7 @@ public class PitUtils {
         MinecraftForge.EVENT_BUS.register(new PitUtilsEventHandler());
         if (new File(PIT_UTILS_PATH).isFile()) {
             try {
-                String[] content = new BufferedReader(new FileReader(PIT_UTILS_PATH)).readLine().split("\n");
+                String[] content = new BufferedReader(new FileReader(PIT_UTILS_PATH)).readLine().split("|");
 
                 if (content.length == 3) {
                     saveLogInfo("CONTENT LENGTH IS 3" + content.toString() + "\n");
@@ -187,7 +192,7 @@ public class PitUtils {
                     AutoL.setVars(content[2]);
                 }
                 else {
-                    saveLogInfo("content length is 4" + content.toString() + "\n");
+                    saveLogInfo("content length is something" + content.toString() + "       " + content.length + "\n");
                     String[] c = content[0].split(",");
                     for (int i = 0; i < c.length; i++) {
                         PitUtils.permList.add(c[i]);
@@ -201,9 +206,10 @@ public class PitUtils {
                     saveLogInfo("modules set");
                 }
             }
-            catch (IOException e) {
+            catch (Exception e) {
                 e.printStackTrace();
                 saveLogInfo("opening data file failed\n");
+                saveInfo();
             }
         }
         else {

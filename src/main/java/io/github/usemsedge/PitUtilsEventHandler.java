@@ -74,6 +74,8 @@ public class PitUtilsEventHandler {
                                     .getDisplayName())).contains("THE HYPIXEL PIT") && Minecraft.getMinecraft()
                             .getCurrentServerData().serverIP.toLowerCase().contains("hypixel.net"));
                 }
+
+                PitUtils.saveLogInfo(PitUtils.getPlayers().toString());
                 tick = 0;
             }
 
