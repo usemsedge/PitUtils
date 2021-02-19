@@ -85,11 +85,11 @@ public class PitUtils {
 
             try {
                 FileWriter fw = new FileWriter(util_file, false);
-                fw.write(permListString + "|" +
+                fw.write(permListString + ";" +
                         MysticDropCounter.toggled + "," + MysticDropCounter.killCount + "," + MysticDropCounter.mysticDrops + "," + MysticDropCounter.sinceLastMysticDrop
-                                + "," + MysticDropCounter.guiLocation[0] + "," + MysticDropCounter.guiLocation[1] + "," + MysticDropCounter.align + "," + MysticDropCounter.color + "|" +
+                                + "," + MysticDropCounter.guiLocation[0] + "," + MysticDropCounter.guiLocation[1] + "," + MysticDropCounter.align + "," + MysticDropCounter.color + ";" +
 
-                         Cooldown.toggled + "," + Cooldown.guiLocation[0] + "," + Cooldown.guiLocation[1] + "," + Cooldown.align + "," + Cooldown.color + "|" +
+                         Cooldown.toggled + "," + Cooldown.guiLocation[0] + "," + Cooldown.guiLocation[1] + "," + Cooldown.align + "," + Cooldown.color + ";" +
 
                          AutoL.toggled + "," + AutoL.onBan + "," + AutoL.onPermList + "," + AutoL.onBountyClaimed
                          );
@@ -181,7 +181,7 @@ public class PitUtils {
         MinecraftForge.EVENT_BUS.register(new PitUtilsEventHandler());
         if (new File(PIT_UTILS_PATH).isFile()) {
             try {
-                String[] content = new BufferedReader(new FileReader(PIT_UTILS_PATH)).readLine().split("|");
+                String[] content = new BufferedReader(new FileReader(PIT_UTILS_PATH)).readLine().split(";");
                 for (int j = 0; j < content.length; j++) {
                     saveLogInfo(content[j] + "\n");
                 }
