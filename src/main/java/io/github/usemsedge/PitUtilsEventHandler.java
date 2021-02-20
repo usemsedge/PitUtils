@@ -75,6 +75,7 @@ public class PitUtilsEventHandler {
                             .getCurrentServerData().serverIP.toLowerCase().contains("hypixel.net"));
                 }
                 PermTracker.permedPlayersInServer = PermTracker.findPermedPlayersInServer();
+                DarkChecker.playersUsingDarksInServer = DarkChecker.checkForDarks();
 
                 tick = 0;
             }
@@ -140,6 +141,9 @@ public class PitUtilsEventHandler {
         }
         if (PermTracker.toggled) {
             PermTracker.renderStats(renderer);
+        }
+        if (DarkChecker.toggled) {
+            DarkChecker.renderStats(renderer);
         }
 
     }
