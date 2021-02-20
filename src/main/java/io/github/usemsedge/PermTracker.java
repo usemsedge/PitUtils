@@ -9,7 +9,7 @@ import java.util.List;
 public class PermTracker {
     static boolean toggled = true;
     static boolean sayInChat = false;
-    static int[] guiLocation = new int[]{2, 200};
+    static int[] guiLocation = new int[]{2, 100};
     static int color = 0x00ffff;
     static String align = "left";
 

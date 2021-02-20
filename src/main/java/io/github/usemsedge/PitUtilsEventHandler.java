@@ -42,7 +42,7 @@ public class PitUtilsEventHandler {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void onPlayerClick(PlayerInteractEvent e) throws IOException {
         if (Cooldown.toggled) {
-            Cooldown.onPlayerClick();
+            Cooldown.onPlayerClick(e);
         }
 
     }

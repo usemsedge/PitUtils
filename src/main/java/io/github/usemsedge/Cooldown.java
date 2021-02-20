@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -17,12 +18,12 @@ public class Cooldown {
     static int currentEggCooldownInTicks = 0;
     static boolean displayCooldownInTicks = false;
 
-    static int[] guiLocation = new int[]{2, 2};
+    static int[] guiLocation = new int[]{2, 50};
     static boolean toggled = true;
     static int color = 0x00ffff;
     static String align = "left";
 
-    static void onPlayerClick() {
+    static void onPlayerClick(PlayerInteractEvent e) {
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
         //if (player.getHeldItem().toString())
         //PitUtils.saveLogInfo(player.getHeldItem().toString() + "\n");
@@ -31,8 +32,8 @@ public class Cooldown {
         try {
             name = player.getHeldItem().getDisplayName();
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        catch (Exception ex) {
+            ex.printStackTrace();
             return;
         }
 
@@ -43,6 +44,7 @@ public class Cooldown {
             if (currentSteakCooldownInTicks > 0) {
                 PitUtils.messagePlayer(player, EnumChatFormatting.RED + "Steak on cooldown!");
                 //steaks on cooldown
+                e.setCanceled(true);
             }
             else {
                 currentSteakCooldownInTicks = steakCooldownInTicks;
@@ -54,6 +56,7 @@ public class Cooldown {
             if (currentAuraCooldownInTicks > 0) {
                 //Aura cooldown
                 PitUtils.messagePlayer(player, EnumChatFormatting.RED + "Aura on cooldown!");
+                e.setCanceled(true);
             }
             else {
                 currentAuraCooldownInTicks = auraCooldownInTicks;
