@@ -110,23 +110,23 @@ public class Cooldown {
             renderer.drawString(steakCD, guiLocation[0] +
                             renderer.getStringWidth(longestCd) -
                             renderer.getStringWidth(steakCD),
-                    guiLocation[1] + renderer.FONT_HEIGHT, color, true);
+                    guiLocation[1], color, true);
             renderer.drawString(eggCD, guiLocation[0] +
                             renderer.getStringWidth(longestCd) -
                             renderer.getStringWidth(eggCD),
-                    guiLocation[1] + renderer.FONT_HEIGHT * 2, color, true);
+                    guiLocation[1] + renderer.FONT_HEIGHT, color, true);
             renderer.drawString(auraCD, guiLocation[0] +
                             renderer.getStringWidth(longestCd) -
                             renderer.getStringWidth(auraCD),
-                    guiLocation[1] + renderer.FONT_HEIGHT * 3, color, true);
+                    guiLocation[1] + renderer.FONT_HEIGHT * 2, color, true);
         }
         else {
             renderer.drawString(steakCD, guiLocation[0],
-                    guiLocation[1] + renderer.FONT_HEIGHT, color, true);
+                    guiLocation[1], color, true);
             renderer.drawString(eggCD, guiLocation[0],
-                    guiLocation[1] + renderer.FONT_HEIGHT * 2, color, true);
+                    guiLocation[1] + renderer.FONT_HEIGHT, color, true);
             renderer.drawString(auraCD, guiLocation[0],
-                    guiLocation[1] + renderer.FONT_HEIGHT * 3, color, true);
+                    guiLocation[1] + renderer.FONT_HEIGHT * 2, color, true);
         }
     }
 

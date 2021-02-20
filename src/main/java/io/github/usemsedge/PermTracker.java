@@ -21,9 +21,11 @@ public class PermTracker {
         StringBuilder s = new StringBuilder();
 
         for (String player : players) {
-            if (PitUtils.permList.contains(player)) {
-                foundPlayers.add(player);
-                s.append(" " + player);
+            for (String permedPlayer : PitUtils.permList) {
+                if (player.equalsIgnoreCase(permedPlayer)) {
+                    foundPlayers.add(player);
+                    s.append(" " + player);
+                }
             }
         }
         PitUtils.saveLogInfo(s.toString() + "\n");
