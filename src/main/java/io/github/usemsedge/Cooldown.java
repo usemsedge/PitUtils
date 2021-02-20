@@ -158,7 +158,7 @@ public class Cooldown {
                 toggled = row[0].equalsIgnoreCase("true");
                 guiLocation = new int[]{Integer.parseInt(row[1]), Integer.parseInt(row[2])};
                 align = row[3];
-                color = Integer.parseInt(row[4], 16);
+                color = Integer.parseInt(row[4]);
                 PitUtils.saveLogInfo("cooldown save info works");
                 return true;
             }

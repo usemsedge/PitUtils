@@ -40,6 +40,11 @@ public class PermTracker {
             }
         }
 
+        List<String> e = permedPlayersInServer;
+        if (e.isEmpty()) {
+            e.add("No permed players");
+        }
+
         if (align == "right") {
             for (int i = 0; i < permedPlayersInServer.size(); i++) {
                 renderer.drawString(permedPlayersInServer.get(i), guiLocation[0] +
