@@ -70,12 +70,15 @@ public class PitUtils {
         }
     }
 
-    static List<String> getPlayers() {
+    static List<String> getPlayerNames() {
         List<String> x = new ArrayList<>();
         for (EntityPlayer player : Minecraft.getMinecraft().theWorld.playerEntities) {
             x.add(player.getName());
         }
         return x;
+    }
+    static List<EntityPlayer> getPlayers() {
+        return Minecraft.getMinecraft().theWorld.playerEntities;
     }
 
     static void saveInfo() {
@@ -97,8 +100,10 @@ public class PitUtils {
 
                          AutoL.toggled + "," + AutoL.onBan + "," + AutoL.onPermList + "," + AutoL.onBountyClaimed + ";" +
 
-                         PermTracker.toggled + "," + PermTracker.sayInChat + "," + PermTracker.guiLocation[0] + "," + PermTracker.guiLocation[1] + PermTracker.align + "," + PermTracker.color
-                         );
+                         PermTracker.toggled + "," + PermTracker.sayInChat + "," + PermTracker.guiLocation[0] + "," + PermTracker.guiLocation[1] + PermTracker.align + "," + PermTracker.color + ";" +
+
+                         DarkChecker.toggled + "," + DarkChecker.sayInChat + "," + DarkChecker.guiLocation[0] + "," + DarkChecker.guiLocation[1] + DarkChecker.align + "," + DarkChecker.color
+                );
                 fw.close();
             }
             catch (IOException e) {
@@ -200,7 +205,11 @@ public class PitUtils {
                 Cooldown.setVars(content[2]);
                 saveLogInfo("cooldown set \n");
                 AutoL.setVars(content[3]);
-                saveLogInfo("modules set \n");
+                saveLogInfo("autol set \n");
+                PermTracker.setVars(content[4]);
+                saveLogInfo("perm tracker set");
+                DarkChecker.setVars(content[5]);
+                saveLogInfo("darkchecker set");
 
             }
             catch (Exception e) {

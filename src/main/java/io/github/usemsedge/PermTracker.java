@@ -16,7 +16,7 @@ public class PermTracker {
     static List<String> permedPlayersInServer = new ArrayList<>();
 
     static List<String> findPermedPlayersInServer () {
-        List<String> players = PitUtils.getPlayers();
+        List<String> players = PitUtils.getPlayerNames();
         List<String> foundPlayers = new ArrayList<>();
         StringBuilder s = new StringBuilder();
 
