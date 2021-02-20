@@ -18,11 +18,17 @@ public class PermTracker {
     static List<String> findPermedPlayersInServer () {
         List<String> players = PitUtils.getPlayers();
         List<String> foundPlayers = new ArrayList<>();
+        StringBuilder s = new StringBuilder();
+
         for (String player : players) {
             if (PitUtils.permList.contains(player)) {
                 foundPlayers.add(player);
+                s.append(" " + player);
             }
         }
+        PitUtils.saveLogInfo(s.toString() + "\n");
+        PitUtils.saveLogInfo(PitUtils.permList.toString() + "\n");
+        PitUtils.saveLogInfo(players.toString());
         return foundPlayers;
     }
 
