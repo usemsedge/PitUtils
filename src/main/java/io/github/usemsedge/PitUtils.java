@@ -77,9 +77,6 @@ public class PitUtils {
         }
         return x;
     }
-    static List<EntityPlayer> getPlayers() {
-        return Minecraft.getMinecraft().theWorld.playerEntities;
-    }
 
     static void saveInfo() {
         new Thread(() -> {

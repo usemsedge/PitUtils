@@ -1,5 +1,6 @@
 package io.github.usemsedge;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -19,7 +20,9 @@ public class DarkChecker {
     static List<String> checkForDarks() {
         ItemStack item;
         List<String> playersUsingDarks = new ArrayList<>();
-        for (EntityPlayer player : PitUtils.getPlayers()) {
+        PitUtils.saveLogInfo(("start checking for darks"));
+        for (EntityPlayer player : Minecraft.getMinecraft().theWorld.playerEntities) {
+            PitUtils.saveLogInfo("a player" + player.getName());
             item = player.getCurrentArmor(3); //pants
             if (item.getDisplayName().contains("Dark") || item.getDisplayName().contains("Evil")) {
                 playersUsingDarks.add(player.getName());
