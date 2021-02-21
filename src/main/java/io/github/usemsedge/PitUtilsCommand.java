@@ -268,7 +268,7 @@ public class PitUtilsCommand extends CommandBase {
                             (PermTracker.toggled ? "on" : "off"));
                 }
                 else if (args.length == 3 && args[1].equalsIgnoreCase("align")) {
-                    Cooldown.align = (args[2].equalsIgnoreCase("right")) ? "right": "left";
+                    PermTracker.align = (args[2].equalsIgnoreCase("right")) ? "right": "left";
                 }
                 else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
                     PitUtils.saveLogInfo("color command with right number of args");
@@ -304,6 +304,13 @@ public class PitUtilsCommand extends CommandBase {
                         PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit perm pos (x) (y)");
                     }
                 }
+                else if (args.length == 2 && args[1].equalsIgnoreCase("chat")) {
+                    PermTracker.sayInChat ^= true;
+                    PitUtils.messagePlayer(player, EnumChatFormatting.GREEN +
+                            "Perm List Say In Chat " +
+                            EnumChatFormatting.DARK_GREEN +
+                            (PermTracker.toggled ? "on" : "off"));
+                }
                 else {
                     PitUtils.messagePlayer(player, EnumChatFormatting.BLACK + "__________________________");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Manages your list of \"permed\" (permenantly hunted) players, or players you want to hunt and kill");
@@ -318,6 +325,76 @@ public class PitUtilsCommand extends CommandBase {
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm align (right|left) (aligns the text right or left");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm pos (x) (y) (sets the locatino of the display)");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm chat (turns on or off saying the permed people in chat constantly)");
+                }
+
+
+            }
+
+            else if (args[0].equalsIgnoreCase("dark")) {
+
+                if (args.length == 2 && args[1].equalsIgnoreCase("toggle")) {
+                    DarkChecker.toggled ^= true;
+
+                    PitUtils.messagePlayer(player, EnumChatFormatting.GREEN +
+                            "Dark Pants Display has been toggled " +
+                            EnumChatFormatting.DARK_GREEN +
+                            (DarkChecker.toggled ? "on" : "off"));
+                }
+                else if (args.length == 3 && args[1].equalsIgnoreCase("align")) {
+                    DarkChecker.align = (args[2].equalsIgnoreCase("right")) ? "right": "left";
+                }
+                else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
+                    PitUtils.saveLogInfo("color command with right number of args");
+                    char[] c = args[2].toCharArray();
+                    PitUtils.saveLogInfo("toCharArray works");
+
+                    char[] x = Arrays.copyOfRange(c, c.length - 6, c.length);
+                    PitUtils.saveLogInfo("last 6 chars of the range works");
+                    String number = String.copyValueOf(x);
+                    PitUtils.saveLogInfo("copied value of char[] to string");
+
+                    if (!PitUtils.isInteger(number, 16)) {
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Changes the color of the display");
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit dark color (color)");
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "(color) should be substituted for a 6-character hex value like 00ffff");
+                        return;
+                    }
+                    PitUtils.saveLogInfo("the thing is an integer in base 16");
+                    DarkChecker.color = Integer.decode("0x" + number);
+                    PitUtils.saveLogInfo("color changes");
+                }
+
+                else if (args.length == 4 && args[1].equalsIgnoreCase("pos")) {
+
+                    if (PitUtils.isInteger(args[2]) &&
+                            PitUtils.isInteger(args[3])) {
+
+                        DarkChecker.guiLocation[0] = Integer.parseInt(args[2]);
+                        DarkChecker.guiLocation[1] = Integer.parseInt(args[3]);
+                    }
+                    else {
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Changes the location of the display");
+                        PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit dark pos (x) (y)");
+                    }
+                }
+                else if (args.length == 2 && args[1].equalsIgnoreCase("chat")) {
+
+                    DarkChecker.sayInChat ^= true;
+                    PitUtils.messagePlayer(player, EnumChatFormatting.GREEN +
+                            "Dark List Say In Chat " +
+                            EnumChatFormatting.DARK_GREEN +
+                            (DarkChecker.toggled ? "on" : "off"));
+
+                }
+                else {
+                    PitUtils.messagePlayer(player, EnumChatFormatting.BLACK + "__________________________");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "If toggled on, people in your lobby wearing dark pants will show up");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit dark [command] [argument]");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit dark toggle (turns on or off the display");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit dark color (color) (changes the color of the display)");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit dark align (right|left) (aligns the text right or left");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit dark pos (x) (y) (sets the locatino of the display)");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit dark chat (turns on or off saying the dark people in chat constantly)");
                 }
 
 

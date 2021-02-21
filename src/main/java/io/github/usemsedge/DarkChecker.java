@@ -20,11 +20,12 @@ public class DarkChecker {
     static List<String> checkForDarks() {
         ItemStack item;
         List<String> playersUsingDarks = new ArrayList<>();
-        PitUtils.saveLogInfo(("start checking for darks"));
+        PitUtils.saveLogInfo(("start checking for darks + \n"));
         List<EntityPlayer> players = new ArrayList<>();
         for (int i = 0; i < players.size(); i++) {
-            PitUtils.saveLogInfo("a player" + players.get(i).getName());
+            PitUtils.saveLogInfo("a player" + players.get(i).getName() + "\n");
             item = players.get(i).getCurrentArmor(3); //pants
+            PitUtils.saveLogInfo(item.getDisplayName() + "\n");
             if (item.getDisplayName().contains("Dark") || item.getDisplayName().contains("Evil")) {
                 playersUsingDarks.add(players.get(i).getName());
             }
