@@ -27,7 +27,7 @@ public class DarkChecker {
         for (EntityPlayer player : players) {
             PitUtils.saveLogInfo("a player" + player.getName() + "\n");
             try {
-                item = player.inventory.armorInventory[2]; //pants?? third slot in r
+                item = player.inventory.armorInventory[3]; //pants?? third slot in r
                 PitUtils.saveLogInfo(item.getDisplayName() + "\n");
                 if (item.getDisplayName().contains("Dark") || item.getDisplayName().contains("Evil")) {
                     playersUsingDarks.add(player.getName());
