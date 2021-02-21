@@ -2,6 +2,7 @@ package io.github.usemsedge;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -25,10 +26,16 @@ public class DarkChecker {
         PitUtils.saveLogInfo("length of players is " + players.size());
         for (EntityPlayer player : players) {
             PitUtils.saveLogInfo("a player" + player.getName() + "\n");
-            item = player.getCurrentArmor(3); //pants
-            PitUtils.saveLogInfo(item.getDisplayName() + "\n");
-            if (item.getDisplayName().contains("Dark") || item.getDisplayName().contains("Evil")) {
-                playersUsingDarks.add(player.getName());
+            try {
+                item = player.inventory.armorInventory[2]; //pants?? third slot in r
+                PitUtils.saveLogInfo(item.getDisplayName() + "\n");
+                if (item.getDisplayName().contains("Dark") || item.getDisplayName().contains("Evil")) {
+                    playersUsingDarks.add(player.getName());
+                }
+                PitUtils.saveLogInfo("their armor had stuff in it " + player.inventory.armorInventory.toString() + "             " + item.getDisplayName() + "\n");
+            }
+            catch (Exception e) {
+                PitUtils.saveLogInfo("they armor slots made an exception" + player.inventory.armorInventory.toString() + "\n");
             }
         }
         return playersUsingDarks;
