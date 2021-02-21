@@ -28,9 +28,6 @@ public class PermTracker {
                 }
             }
         }
-        PitUtils.saveLogInfo(s.toString() + "\n");
-        PitUtils.saveLogInfo(PitUtils.permList.toString() + "\n");
-        PitUtils.saveLogInfo(players.toString());
         return foundPlayers;
     }
 
