@@ -21,13 +21,13 @@ public class DarkChecker {
         ItemStack item;
         List<String> playersUsingDarks = new ArrayList<>();
         PitUtils.saveLogInfo(("start checking for darks + \n"));
-        List<EntityPlayer> players = new ArrayList<>();
-        for (int i = 0; i < players.size(); i++) {
-            PitUtils.saveLogInfo("a player" + players.get(i).getName() + "\n");
-            item = players.get(i).getCurrentArmor(3); //pants
+        List<EntityPlayer> players = Minecraft.getMinecraft().theWorld.playerEntities;
+        for (EntityPlayer player : players) {
+            PitUtils.saveLogInfo("a player" + player.getName() + "\n");
+            item = player.getCurrentArmor(3); //pants
             PitUtils.saveLogInfo(item.getDisplayName() + "\n");
             if (item.getDisplayName().contains("Dark") || item.getDisplayName().contains("Evil")) {
-                playersUsingDarks.add(players.get(i).getName());
+                playersUsingDarks.add(player.getName());
             }
         }
         return playersUsingDarks;
