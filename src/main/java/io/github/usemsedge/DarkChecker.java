@@ -29,7 +29,7 @@ public class DarkChecker {
             try {
                 item = player.inventory.armorInventory[1]; //pants?? third slot in r
                 PitUtils.saveLogInfo(item.getDisplayName() + "\n");
-                if (item.getDisplayName().contains("Dark") || item.getDisplayName().contains("Evil")) {
+                if (item.getDisplayName().contains("Dark") || item.getDisplayName().contains("Evil") && !item.getDisplayName().contains("Fresh")) {
                     playersUsingDarks.add(player.getName());
                 }
                 PitUtils.saveLogInfo("their armor had stuff in it " + player.inventory.armorInventory.toString() + "             " + item.getDisplayName() + "\n");
