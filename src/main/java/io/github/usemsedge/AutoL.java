@@ -13,10 +13,12 @@ public class AutoL {
 
     static void checkIfSayL(String msg) {
         if (onBountyClaimed) {
-            /*
-            if (msg.contains("BOUNTY CLAIMED!") && msg.contains(Minecraft.getMinecraft().thePlayer.getName()) {
 
-            }*/
+            if (msg.contains("BOUNTY CLAIMED!") && msg.contains(Minecraft.getMinecraft().thePlayer.getName()) &&
+                    msg.contains("killed") && msg.indexOf(Minecraft.getMinecraft().thePlayer.getName()) < msg.indexOf("killed")) {
+                    //You claimed a bounty, not the other way around
+                sayL();
+            }
         }
 
         if (onBan) {
@@ -41,23 +43,10 @@ public class AutoL {
     static boolean isValid(String row) {
         String[] things = row.split(",");
 
-        if (PitUtils.isBool(things[0]) &&
-            PitUtils.isBool(things[1]) &&
-            PitUtils.isBool(things[2]) &&
-            PitUtils.isBool(things[3])) {
-            return true;
-        }
-        return false;
-
-                /*
-        fw.write(permList.toString() + "\n" +
-                MysticDropCounter.toggled + "," + MysticDropCounter.killCount + "," + MysticDropCounter.mysticDrops + "," + MysticDropCounter.sinceLastMysticDrop
-                + "," + MysticDropCounter.guiLocation[0] + "," + MysticDropCounter.guiLocation[1] + "," + MysticDropCounter.align + "," + MysticDropCounter.color + "\n" +
-
-                Cooldown.toggled + "," + Cooldown.guiLocation[0] + "," + Cooldown.guiLocation[1] + "," + Cooldown.align + "," + Cooldown.color + "\n" +
-
-                AutoL.toggled + "," + AutoL.onBan + "," + AutoL.onPermList + "," + AutoL.onBountyClaimed
-        );*/
+        return PitUtils.isBool(things[0]) &&
+                PitUtils.isBool(things[1]) &&
+                PitUtils.isBool(things[2]) &&
+                PitUtils.isBool(things[3]);
     }
 
     static boolean setVars(String line) {
@@ -68,14 +57,14 @@ public class AutoL {
                 onBan = row[1].equalsIgnoreCase("true");
                 onPermList = row[2].equalsIgnoreCase("true");
                 onBountyClaimed = row[3].equalsIgnoreCase("true");
-                PitUtils.saveLogInfo("autol save info  workas");
+                PitUtils.saveLogInfo("Auto-L save info successfully loaded\n");
                 return true;
             }
-            PitUtils.saveLogInfo("autol save info invalud" + line);
+            PitUtils.saveLogInfo("Auto-L save info failed: here was the faulty data " + line + "\n");
             return false;
         }
         catch (Exception e) {
-            PitUtils.saveLogInfo("autol save info does not work" + line);
+            PitUtils.saveLogInfo("Auto-L save info had some kind of error\n");
             return false;
         }
     }

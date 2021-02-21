@@ -3,12 +3,8 @@ package io.github.usemsedge;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-
-import java.io.FileWriter;
-import java.io.PrintWriter;
 
 public class Cooldown {
     static int steakCooldownInTicks = 200;
@@ -26,8 +22,6 @@ public class Cooldown {
 
     static void onPlayerClick(PlayerInteractEvent e) {
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-        //if (player.getHeldItem().toString())
-        //PitUtils.saveLogInfo(player.getHeldItem().toString() + "\n");
 
         String name;
         try {
@@ -38,10 +32,7 @@ public class Cooldown {
             return;
         }
 
-
-        PitUtils.saveLogInfo(name + "\n");
         if (name.contains("AAA-Rated Steak")) {
-            PitUtils.saveLogInfo("Steak Used\n");
             if (currentSteakCooldownInTicks > 0) {
                 PitUtils.messagePlayer(player, EnumChatFormatting.RED + "Steak on cooldown!");
                 //steaks on cooldown
@@ -52,8 +43,7 @@ public class Cooldown {
             }
 
         }
-                else if (name.contains("Aura of Protection")) {
-            PitUtils.saveLogInfo("Aura Used");
+        else if (name.contains("Aura of Protection")) {
             if (currentAuraCooldownInTicks > 0) {
                 //Aura cooldown
                 PitUtils.messagePlayer(player, EnumChatFormatting.RED + "Aura on cooldown!");
@@ -64,8 +54,7 @@ public class Cooldown {
             }
 
         }
-                else if (name.contains("First-Aid Egg")) {  //"First-Aid Egg")) {
-            PitUtils.saveLogInfo("Egg Used");
+        else if (name.contains("First-Aid Egg")) {  //"First-Aid Egg")) {
             if (currentEggCooldownInTicks > 0) {
                 //First aid egg
                 PitUtils.messagePlayer(player, EnumChatFormatting.RED + "Egg on cooldown!");
@@ -75,13 +64,6 @@ public class Cooldown {
             }
         }
 
-                else {
-            PitUtils.saveLogInfo(name + " used\n");
-        }
-
-        PitUtils.saveLogInfo("\n" + currentAuraCooldownInTicks + " aura\n" +
-                            currentEggCooldownInTicks + " egg\n" +
-                            currentSteakCooldownInTicks + "Steak\n\n");
     }
 
     static void adjustCooldowns() {
@@ -143,16 +125,6 @@ public class Cooldown {
                 PitUtils.isBool(things[0]) &&
                 things[3].equalsIgnoreCase("left") || things[3].equalsIgnoreCase("right");
 
-
-                /*
-        fw.write(permList.toString() + "\n" +
-                MysticDropCounter.toggled + "," + MysticDropCounter.killCount + "," + MysticDropCounter.mysticDrops + "," + MysticDropCounter.sinceLastMysticDrop
-                + "," + MysticDropCounter.guiLocation[0] + "," + MysticDropCounter.guiLocation[1] + "," + MysticDropCounter.align + "," + MysticDropCounter.color + "\n" +
-
-                toggled + "," + Cooldown.guiLocation[0] + "," + Cooldown.guiLocation[1] + "," + Cooldown.align + "," + Cooldown.color + "\n" +
-
-                AutoL.toggled + "," + AutoL.onBan + "," + AutoL.onPermList + "," + AutoL.onBountyClaimed
-        );*/
     }
 
     static boolean setVars(String line) {
@@ -163,14 +135,15 @@ public class Cooldown {
                 guiLocation = new int[]{Integer.parseInt(row[1]), Integer.parseInt(row[2])};
                 align = row[3];
                 color = Integer.parseInt(row[4]);
-                PitUtils.saveLogInfo("cooldown save info works");
+                PitUtils.saveLogInfo("Cooldown save info successfully loaded\n");
+
                 return true;
             }
-            PitUtils.saveLogInfo("cooldown save info is not valid" + line);
+            PitUtils.saveLogInfo("Cooldown save info failed: here was the faulty data " + line + "\n");
             return false;
         }
         catch (Exception e) {
-            PitUtils.saveLogInfo("cooldown save info does not work" + line);
+            PitUtils.saveLogInfo("Cooldown save info had some kind of error\n");
 
             return false;
         }

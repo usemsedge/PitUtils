@@ -2,7 +2,6 @@ package io.github.usemsedge;
 
 import net.minecraft.client.gui.FontRenderer;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +17,11 @@ public class PermTracker {
     static List<String> findPermedPlayersInServer () {
         List<String> players = PitUtils.getPlayerNames();
         List<String> foundPlayers = new ArrayList<>();
-        StringBuilder s = new StringBuilder();
 
         for (String player : players) {
             for (String permedPlayer : PitUtils.permList) {
                 if (player.equalsIgnoreCase(permedPlayer)) {
                     foundPlayers.add(player);
-                    s.append(" " + player);
                 }
             }
         }
@@ -39,12 +36,12 @@ public class PermTracker {
             }
         }
 
-        List<String> e = permedPlayersInServer;
+        List<String> e = new ArrayList<>(permedPlayersInServer);
         if (e.isEmpty()) {
             e.add("No permed players");
         }
 
-        if (align == "right") {
+        if (align.equalsIgnoreCase("right")) {
             for (int i = 0; i < permedPlayersInServer.size(); i++) {
                 renderer.drawString(permedPlayersInServer.get(i), guiLocation[0] +
                                 renderer.getStringWidth(longest) -
@@ -62,42 +59,32 @@ public class PermTracker {
 
     static boolean isValid(String row) {
         String[] things = row.split(",");
-        if (
-                PitUtils.isInteger(things[2]) &&
+        //PermTracker.toggled + "," + PermTracker.guiLocation[0] + "," + PermTracker.guiLocation[1] + PermTracker.align + "," + PermTracker.color
+        return PitUtils.isInteger(things[2]) &&
                 PitUtils.isInteger(things[3]) &&
                 PitUtils.isInteger(things[5]) &&
                 PitUtils.isBool(things[0]) &&  //toggled
                 PitUtils.isBool(things[1]) && //display in chat
-                things[4].equalsIgnoreCase("left") || things[4].equalsIgnoreCase("right") ) {
-            return true;
-            //PermTracker.toggled + "," + PermTracker.guiLocation[0] + "," + PermTracker.guiLocation[1] + PermTracker.align + "," + PermTracker.color
-        }
-        return false;
+                things[4].equalsIgnoreCase("left") || things[4].equalsIgnoreCase("right");
     }
 
     static boolean setVars(String line) {
-        PitUtils.saveLogInfo("permtracker started to save info \n");
         try {
             if (isValid(line)) {
                 String[] row = line.split(",");
-                PitUtils.saveLogInfo("line has been split \n");
                 toggled = row[0].equalsIgnoreCase("true");
                 sayInChat = row[1].equalsIgnoreCase("true");
-                PitUtils.saveLogInfo("toggled has been set");
-
                 guiLocation = new int[]{Integer.parseInt(row[2]), Integer.parseInt(row[3])};
-                PitUtils.saveLogInfo("guilocation set");
                 align = row[4];
-                PitUtils.saveLogInfo("align set");
                 color = Integer.parseInt(row[5]);
-                PitUtils.saveLogInfo("perm tracker save info works");
+                PitUtils.saveLogInfo("Perm Tracker save info successfully loaded\n");
                 return true;
             }
-            PitUtils.saveLogInfo("perm tracker save info invalud" + line);
+            PitUtils.saveLogInfo("Perm Tracker save info failed: here was the faulty data " + line + "\n");
             return false;
         }
         catch (Exception e) {
-            PitUtils.saveLogInfo("perm tracker save info does not work" + line);
+            PitUtils.saveLogInfo("Perm Tracker save info had some kind of error\n");
             return false;
         }
     }

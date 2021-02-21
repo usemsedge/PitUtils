@@ -1,29 +1,18 @@
 package io.github.usemsedge;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.text.DecimalFormat;
-import java.util.Date;
-import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-
-
-import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -32,15 +21,10 @@ import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 public class PitUtilsEventHandler {
     private boolean firstJoin = true;
     private FontRenderer renderer = Minecraft.getMinecraft().fontRendererObj;
-    private boolean tempSuspend = false;
     private int tick = 0;
 
-    private int timeOfLastEggAlert = 0;
-    private int timeOfLastSteakAlert = 0;
-    private int timeOfLastAuraAlert = 0;
-
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public void onPlayerClick(PlayerInteractEvent e) throws IOException {
+    public void onPlayerClick(PlayerInteractEvent e) {
         if (Cooldown.toggled) {
             Cooldown.onPlayerClick(e);
         }
@@ -87,11 +71,9 @@ public class PitUtilsEventHandler {
     @SubscribeEvent
     public void onPlayerJoinevent(FMLNetworkEvent.ClientConnectedToServerEvent event) {
         PitUtils.loggedIn = true;
-        new ScheduledThreadPoolExecutor(1).schedule(() -> {
-            Minecraft.getMinecraft().thePlayer
-                    .addChatMessage(new ChatComponentText(EnumChatFormatting.RED +
-                    "Downloads not from github.com/usemsedge/mystic-counter are RATs.\n" + EnumChatFormatting.GREEN + "Type /pit help to get a list of commands."));
-        }, 3, TimeUnit.SECONDS);
+        new ScheduledThreadPoolExecutor(1).schedule(() -> Minecraft.getMinecraft().thePlayer
+                .addChatMessage(new ChatComponentText(EnumChatFormatting.RED +
+                "Downloads not from github.com/usemsedge/mystic-counter are RATs.\n" + EnumChatFormatting.GREEN + "Type /pit help to get a list of commands.")), 3, TimeUnit.SECONDS);
     }
 
     @SubscribeEvent
@@ -131,8 +113,6 @@ public class PitUtilsEventHandler {
     }
 
     private void renderStats() {
-        ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
-
         if (MysticDropCounter.toggled) {
             MysticDropCounter.renderStats(renderer);
         }
@@ -145,7 +125,5 @@ public class PitUtilsEventHandler {
         if (DarkChecker.toggled) {
             DarkChecker.renderStats(renderer);
         }
-
     }
-
 }

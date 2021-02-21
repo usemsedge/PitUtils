@@ -2,7 +2,6 @@ package io.github.usemsedge;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -21,22 +20,15 @@ public class DarkChecker {
     static List<String> checkForDarks() {
         ItemStack item;
         List<String> playersUsingDarks = new ArrayList<>();
-        PitUtils.saveLogInfo(("start checking for darks + \n"));
         List<EntityPlayer> players = Minecraft.getMinecraft().theWorld.playerEntities;
-        PitUtils.saveLogInfo("length of players is " + players.size());
         for (EntityPlayer player : players) {
-            PitUtils.saveLogInfo("a player" + player.getName() + "\n");
             try {
                 item = player.inventory.armorInventory[1]; //pants?? third slot in r
-                PitUtils.saveLogInfo(item.getDisplayName() + "\n");
-                if (item.getDisplayName().contains("Dark") || item.getDisplayName().contains("Evil") && !item.getDisplayName().contains("Fresh")) {
+                if ((item.getDisplayName().contains("Dark") || item.getDisplayName().contains("Evil")) && item.getDisplayName().contains("Tier")) {
                     playersUsingDarks.add(player.getName());
                 }
-                PitUtils.saveLogInfo("their armor had stuff in it " + player.inventory.armorInventory.toString() + "             " + item.getDisplayName() + "\n");
             }
-            catch (Exception e) {
-                PitUtils.saveLogInfo("they armor slots made an exception" + player.inventory.armorInventory.toString() + "\n");
-            }
+            catch (Exception e) {} //no pants
         }
         return playersUsingDarks;
     }
@@ -49,22 +41,22 @@ public class DarkChecker {
             }
         }
 
-        List<String> e = playersUsingDarksInServer;
+        List<String> e = new ArrayList<>(playersUsingDarksInServer);
         if (e.isEmpty()) {
             e.add("No darks");
         }
 
-        if (align == "right") {
-            for (int i = 0; i < playersUsingDarksInServer.size(); i++) {
-                renderer.drawString(playersUsingDarksInServer.get(i), guiLocation[0] +
+        if (align.equalsIgnoreCase("right")) {
+            for (int i = 0; i < e.size(); i++) {
+                renderer.drawString(e.get(i), guiLocation[0] +
                                 renderer.getStringWidth(longest) -
-                                renderer.getStringWidth(playersUsingDarksInServer.get(i)),
+                                renderer.getStringWidth(e.get(i)),
                         guiLocation[1] + renderer.FONT_HEIGHT * i, color, true);
             }
         }
         else {
-            for (int i = 0; i < playersUsingDarksInServer.size(); i++) {
-                renderer.drawString(playersUsingDarksInServer.get(i), guiLocation[0],
+            for (int i = 0; i < e.size(); i++) {
+                renderer.drawString(e.get(i), guiLocation[0],
                         guiLocation[1] + renderer.FONT_HEIGHT * i, color, true);
             }
         }
@@ -72,42 +64,32 @@ public class DarkChecker {
 
     static boolean isValid(String row) {
         String[] things = row.split(",");
-        if (
-                PitUtils.isInteger(things[2]) &&
-                        PitUtils.isInteger(things[3]) &&
-                        PitUtils.isInteger(things[5]) &&
-                        PitUtils.isBool(things[0]) &&  //toggled
-                        PitUtils.isBool(things[1]) && //display in chat
-                        things[4].equalsIgnoreCase("left") || things[4].equalsIgnoreCase("right") ) {
-            return true;
-            //PermTracker.toggled + ","say in chat + PermTracker.guiLocation[0] + "," + PermTracker.guiLocation[1] + PermTracker.align + "," + PermTracker.color
-        }
-        return false;
+        //PermTracker.toggled + ","say in chat + PermTracker.guiLocation[0] + "," + PermTracker.guiLocation[1] + PermTracker.align + "," + PermTracker.color
+        return PitUtils.isInteger(things[2]) &&
+                PitUtils.isInteger(things[3]) &&
+                PitUtils.isInteger(things[5]) &&
+                PitUtils.isBool(things[0]) &&  //toggled
+                PitUtils.isBool(things[1]) && //display in chat
+                things[4].equalsIgnoreCase("left") || things[4].equalsIgnoreCase("right");
     }
 
     static boolean setVars(String line) {
-        PitUtils.saveLogInfo("dark tracker started to save info \n");
         try {
             if (isValid(line)) {
                 String[] row = line.split(",");
-                PitUtils.saveLogInfo("line has been split \n");
                 toggled = row[0].equalsIgnoreCase("true");
                 sayInChat = row[1].equalsIgnoreCase("true");
-                PitUtils.saveLogInfo("toggled has been set");
-
                 guiLocation = new int[]{Integer.parseInt(row[2]), Integer.parseInt(row[3])};
-                PitUtils.saveLogInfo("guilocation set");
                 align = row[4];
-                PitUtils.saveLogInfo("align set");
                 color = Integer.parseInt(row[5]);
-                PitUtils.saveLogInfo("dark tracker save info works");
+                PitUtils.saveLogInfo("Dark Tracker save info successfully loaded\n");
                 return true;
             }
-            PitUtils.saveLogInfo("dark tracker save info invalud" + line);
+            PitUtils.saveLogInfo("Dark Tracker save info failed: here was the faulty data " + line + "\n");
             return false;
         }
         catch (Exception e) {
-            PitUtils.saveLogInfo("dark tracker save info does not work" + line);
+            PitUtils.saveLogInfo("Dark Tracker save info had some kind of error\n");
             return false;
         }
     }

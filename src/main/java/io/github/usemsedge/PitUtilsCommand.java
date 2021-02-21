@@ -11,7 +11,7 @@ import net.minecraft.util.EnumChatFormatting;
 
 public class PitUtilsCommand extends CommandBase {
     @Override
-    public List getCommandAliases() {
+    public List<String> getCommandAliases() {
         return new ArrayList<String>() {
             {
                 add("pit");
@@ -121,14 +121,10 @@ public class PitUtilsCommand extends CommandBase {
                     Cooldown.align = (args[2].equalsIgnoreCase("right")) ? "right": "left";
                 }
                 else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
-                    PitUtils.saveLogInfo("color command with right number of args");
                     char[] c = args[2].toCharArray();
-                    PitUtils.saveLogInfo("toCharArray works");
 
                     char[] x = Arrays.copyOfRange(c, c.length - 6, c.length);
-                    PitUtils.saveLogInfo("last 6 chars of the range works");
                     String number = String.copyValueOf(x);
-                    PitUtils.saveLogInfo("copied value of char[] to string");
 
                     if (!PitUtils.isInteger(number, 16)) {
                         PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Changes the color of the display");
@@ -136,9 +132,7 @@ public class PitUtilsCommand extends CommandBase {
                         PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "(color) should be substituted for a 6-character hex value like 00ffff");
                         return;
                     }
-                    PitUtils.saveLogInfo("the thing is an integer in base 16");
                     Cooldown.color = Integer.decode("0x" + number);
-                    PitUtils.saveLogInfo("color changes");
                 }
 
                 else if (args.length == 4 && args[1].equalsIgnoreCase("pos")) {
@@ -257,7 +251,7 @@ public class PitUtilsCommand extends CommandBase {
                 }
                 else if (args.length == 2 && args[1].equalsIgnoreCase("view")) {
                     for (int i = 0; i < PitUtils.permList.size(); i++) {
-                        PitUtils.messagePlayer(player, EnumChatFormatting.RED + PitUtils.permList.get(i).toString());
+                        PitUtils.messagePlayer(player, EnumChatFormatting.RED + PitUtils.permList.get(i));
                     }
                 }
                 else if (args.length == 2 && args[1].equalsIgnoreCase("toggle")) {
@@ -271,14 +265,10 @@ public class PitUtilsCommand extends CommandBase {
                     PermTracker.align = (args[2].equalsIgnoreCase("right")) ? "right": "left";
                 }
                 else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
-                    PitUtils.saveLogInfo("color command with right number of args");
                     char[] c = args[2].toCharArray();
-                    PitUtils.saveLogInfo("toCharArray works");
 
                     char[] x = Arrays.copyOfRange(c, c.length - 6, c.length);
-                    PitUtils.saveLogInfo("last 6 chars of the range works");
                     String number = String.copyValueOf(x);
-                    PitUtils.saveLogInfo("copied value of char[] to string");
 
                     if (!PitUtils.isInteger(number, 16)) {
                         PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Changes the color of the display");
@@ -286,9 +276,7 @@ public class PitUtilsCommand extends CommandBase {
                         PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "(color) should be substituted for a 6-character hex value like 00ffff");
                         return;
                     }
-                    PitUtils.saveLogInfo("the thing is an integer in base 16");
                     PermTracker.color = Integer.decode("0x" + number);
-                    PitUtils.saveLogInfo("color changes");
                 }
 
                 else if (args.length == 4 && args[1].equalsIgnoreCase("pos")) {
@@ -344,14 +332,10 @@ public class PitUtilsCommand extends CommandBase {
                     DarkChecker.align = (args[2].equalsIgnoreCase("right")) ? "right": "left";
                 }
                 else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
-                    PitUtils.saveLogInfo("color command with right number of args");
                     char[] c = args[2].toCharArray();
-                    PitUtils.saveLogInfo("toCharArray works");
 
                     char[] x = Arrays.copyOfRange(c, c.length - 6, c.length);
-                    PitUtils.saveLogInfo("last 6 chars of the range works");
                     String number = String.copyValueOf(x);
-                    PitUtils.saveLogInfo("copied value of char[] to string");
 
                     if (!PitUtils.isInteger(number, 16)) {
                         PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Changes the color of the display");
@@ -359,9 +343,7 @@ public class PitUtilsCommand extends CommandBase {
                         PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "(color) should be substituted for a 6-character hex value like 00ffff");
                         return;
                     }
-                    PitUtils.saveLogInfo("the thing is an integer in base 16");
                     DarkChecker.color = Integer.decode("0x" + number);
-                    PitUtils.saveLogInfo("color changes");
                 }
 
                 else if (args.length == 4 && args[1].equalsIgnoreCase("pos")) {
@@ -401,25 +383,26 @@ public class PitUtilsCommand extends CommandBase {
             }
 
             else if (args[0].equalsIgnoreCase("tips")) {
-                PitUtils.messagePlayer(player, EnumChatFormatting.DARK_GREEN + "PIT TIPS FOR NONS (not unranked players, think skyblock terminology)");
-                PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "To get an axe: You must be Prestige 2 and buy the Barbarian renown upgrade, then buy it in the perk shop");
-                PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "Perks you should unlock in order: G-Head, Strength Chain, Vampire (replace G-Head), Gladiator OR Streaker");
-                PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "Fresh: red, green, yellow, blue, orange fresh pants, worth about 15k");
-                PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "Golden (enchanted) swords: mystic swords, can be enchanted to T1 and T2 when you have the Level 1 Mysticism upgrade, and can be T3 when you have the Level 9 Mysticism Upgrade ");
-                PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "The Pit is a PVP game and expect to be killed.");
-                PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "The Pit has a rabbit infestation that you can't do anything about.");
-                PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "If you think diamond armor is unfair, buy diamond armor yourself.");
-                PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "Permanent diamond armor is either an Archangel Chestplate or someone unlocking Autobuy.");
-                PitUtils.messagePlayer(player, EnumChatFormatting.GREEN + "Before downloading a Pit Mod, be sure to make sure it does not contain any RATs");
+                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Features:");
+                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "All features are toggleable and customizable.");
+                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Mystic Counter: Tracks your mystic drops compared to your kills.");
+                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Cooldown: Tracks cooldowns and prevents you from using too many items.");
+                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Auto L: Automatically says L whenever someone gets banned or you kill someone.");
+                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Perm List: Add people to a list and you can see if they are in your server.");
+                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Dark Checker: See if there are players in darks in your server.");
+                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Contact me at cityblock#7498 or on the github/forge if you find bugs or need help.");
+                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "https://github.com/usemsedge/PitUtils");
             }
 
             else {
                 PitUtils.messagePlayer(player, EnumChatFormatting.BLACK + "___________________________");
+                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Pit Utils is a QOL mod for The Hypixel Pit.");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pitutils (/pit) [subsection] for more information");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit myst  (Mystic Counter)");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit cd  (Item Cooldowns)");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit l (Auto-L");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm (your perm list)");
+                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit dark (dark pant users)");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit tips");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit help");
 

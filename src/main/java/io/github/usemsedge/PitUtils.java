@@ -56,18 +56,18 @@ public class PitUtils {
             }}).start();
     }
 
-    static void scheduleFileSave(boolean toggle, int delay) {
+    static void scheduleFileSave(int delay) {
         if (autoSaveExecutor != null && !autoSaveExecutor.isShutdown()) {
             autoSaveExecutor.shutdownNow();
         }
-        if (toggle) {
-            autoSaveExecutor = Executors.newSingleThreadScheduledExecutor();
-            autoSaveExecutor.scheduleAtFixedRate(() -> {
-                if (loggedIn && isInPit) {
-                    saveInfo();
-                }
-            }, 0, delay, TimeUnit.SECONDS);
-        }
+
+        autoSaveExecutor = Executors.newSingleThreadScheduledExecutor();
+        autoSaveExecutor.scheduleAtFixedRate(() -> {
+            if (loggedIn && isInPit) {
+                saveInfo();
+            }
+        }, 0, delay, TimeUnit.SECONDS);
+
     }
 
     static List<String> getPlayerNames() {
@@ -82,8 +82,8 @@ public class PitUtils {
         new Thread(() -> {
             File util_file = new File(PIT_UTILS_PATH);
             StringBuilder permListString = new StringBuilder();
-            for (int i = 0; i < permList.size(); i++) {
-                permListString.append(permList.get(i)).append(",");
+            for (String s : permList) {
+                permListString.append(s).append(",");
             }
 
 
@@ -187,12 +187,11 @@ public class PitUtils {
         if (new File(PIT_UTILS_PATH).isFile()) {
             try {
                 String[] content = new BufferedReader(new FileReader(PIT_UTILS_PATH)).readLine().split(";");
+                saveLogInfo("Opened file, her was the content of the file");
                 for (String s : content) {
                     saveLogInfo(s + "\n");
                 }
 
-
-                saveLogInfo("content length is something" + content.toString() + "       " + content.length + "\n");
                 String[] c = content[0].split(",");
                 PitUtils.permList.addAll(Arrays.asList(c));
 
@@ -219,7 +218,7 @@ public class PitUtils {
             saveLogInfo("no data file exists\n");
             saveInfo();
         }
-        scheduleFileSave(true, 120);
+        scheduleFileSave(120);
     }
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {usingLabyMod = Loader.isModLoaded("labymod");}

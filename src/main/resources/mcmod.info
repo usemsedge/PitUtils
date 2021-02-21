@@ -1,7 +1,7 @@
 [
 {
   "modid": "PitUtils",
-  "name": "Pit Utilities",
+  "name": "Pit Utils",
   "description": "QOL mod for The Hypixel Pit",
   "version": "${version}",
   "mcversion": "${mcversion}",
