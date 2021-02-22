@@ -42,9 +42,7 @@ public class DarkChecker {
         }
 
         List<String> e = new ArrayList<>(playersUsingDarksInServer);
-        if (e.isEmpty()) {
-            e.add("No darks");
-        }
+        e.add(0, "List of dark users");
 
         if (align.equalsIgnoreCase("right")) {
             for (int i = 0; i < e.size(); i++) {

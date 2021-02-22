@@ -414,6 +414,7 @@ public class PitUtilsCommand extends CommandBase {
                     new ChatComponentText(
                             EnumChatFormatting.RED + "Please join The Hypixel Pit to use this command."));
         }
+        PitUtils.saveInfo();
     }
 
     public boolean canCommandSenderUseCommand(ICommandSender sender) {

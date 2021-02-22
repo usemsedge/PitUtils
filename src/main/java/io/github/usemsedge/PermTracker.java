@@ -37,21 +37,19 @@ public class PermTracker {
         }
 
         List<String> e = new ArrayList<>(permedPlayersInServer);
-        if (e.isEmpty()) {
-            e.add("No permed players");
-        }
+        e.add(0, "List of permed players");
 
         if (align.equalsIgnoreCase("right")) {
-            for (int i = 0; i < permedPlayersInServer.size(); i++) {
-                renderer.drawString(permedPlayersInServer.get(i), guiLocation[0] +
+            for (int i = 0; i < e.size(); i++) {
+                renderer.drawString(e.get(i), guiLocation[0] +
                                 renderer.getStringWidth(longest) -
-                                renderer.getStringWidth(permedPlayersInServer.get(i)),
+                                renderer.getStringWidth(e.get(i)),
                         guiLocation[1] + renderer.FONT_HEIGHT * i, color, true);
             }
         }
         else {
-            for (int i = 0; i < permedPlayersInServer.size(); i++) {
-                renderer.drawString(permedPlayersInServer.get(i), guiLocation[0],
+            for (int i = 0; i < e.size(); i++) {
+                renderer.drawString(e.get(i), guiLocation[0],
                         guiLocation[1] + renderer.FONT_HEIGHT * i, color, true);
             }
         }
