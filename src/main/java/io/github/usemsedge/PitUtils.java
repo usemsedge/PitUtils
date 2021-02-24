@@ -73,7 +73,7 @@ public class PitUtils {
     }
 
     static String getNBT(ItemStack item) {
-        return item.getTagCompound().getTagList("lore", 8).get(1).toString();
+        return item.getTagCompound().getTagList("lore", 8).getStringTagAt(1);
     }
 
     static List<String> getPlayerNames() {
