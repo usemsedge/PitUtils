@@ -11,6 +11,7 @@ public class AutoL {
 
     static String L = "L";
     //test
+    //gytrfdsauighfsdiu
 
     static void checkIfSayL(String msg) {
         if (onBountyClaimed) {
