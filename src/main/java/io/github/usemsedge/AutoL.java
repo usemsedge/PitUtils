@@ -10,6 +10,7 @@ public class AutoL {
     static boolean onPermList = true;
 
     static String L = "L";
+    //test
 
     static void checkIfSayL(String msg) {
         if (onBountyClaimed) {
