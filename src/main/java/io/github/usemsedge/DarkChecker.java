@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DarkChecker {
-    static final List<String> DARK_ENCHANTS = Arrays.asList("Venom", "Misery", "Spite", "Needless Suffering", "Grim Reaper", "Nostalgia", "Hedge Fund", "Heartripper", "Sanguisuge", "Lycanthropy", "Mind Assault");
+    static final List<String> DARK_ENCHANTS = Arrays.asList("Venom", "Misery", "Spite", "Needless Suffering", "Grim Reaper", "Nostalgia", "Hedge Fund", "Heartripper", "Sanguisuge", "Lycanthropy", "Mind Assault", "Golden Handcuffs");
 
     static boolean toggled = true;
     static int[] guiLocation = new int[]{100, 2};
@@ -36,13 +36,16 @@ public class DarkChecker {
                         p.add("Plain Somber");
                     }
                     else {
-                        /*
+
                         for (String enchant : DARK_ENCHANTS) {
                             if (PitUtils.getNBT(item).contains(enchant)) {
                                 p.add(enchant);
                                 break;
                             }
-                        }*/
+                        }
+                        if (p.size() == 1) {
+                            p.add("Other");
+                        }
                         p.add(PitUtils.getNBT(item));
                     }
                     playersUsingDarks.add(p);
