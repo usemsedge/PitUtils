@@ -1,5 +1,6 @@
 package io.github.usemsedge;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
@@ -68,6 +70,10 @@ public class PitUtils {
             }
         }, 0, delay, TimeUnit.SECONDS);
 
+    }
+
+    static String getNBT(ItemStack item) {
+        return item.getTagCompound().getTagList("lore", 8).get(1).toString();
     }
 
     static List<String> getPlayerNames() {
