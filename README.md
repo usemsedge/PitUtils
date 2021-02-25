@@ -13,6 +13,8 @@ Item Cooldowns  (Tracks item cooldowns and prevents you from using too many.)
 Things to do later:  
 Hopper Checker (Scans lobby for nons with high killstreaks.)  
 Low-Life Mystic Checker (Tells you if any mystics are low lives.)  
-Player Count Checker (Shows how much enchants like shark, notglad, and soli proc.)
+Player Count Checker (Shows how much enchants like shark, notglad, and soli proc.)  
+
+Type /pit for the list of commands
 
 Contact me on discord at cityblock#7498 for bugs or help.
