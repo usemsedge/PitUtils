@@ -21,6 +21,7 @@ public class DarkChecker {
     static List<List<String>> playersUsingDarksInServer = new ArrayList<>();
 
     static List<List<String>> checkForDarks() {
+        //edit
         ItemStack item;
         List<List<String>> playersUsingDarks = new ArrayList<>();
         List<EntityPlayer> players = Minecraft.getMinecraft().theWorld.playerEntities;

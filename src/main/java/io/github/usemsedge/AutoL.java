@@ -13,7 +13,6 @@ public class AutoL {
 
     static void checkIfSayL(String msg) {
         if (onBountyClaimed) {
-
             if (msg.contains("BOUNTY CLAIMED!") && msg.contains(Minecraft.getMinecraft().thePlayer.getName()) &&
                     msg.contains("killed") && msg.indexOf(Minecraft.getMinecraft().thePlayer.getName()) < msg.indexOf("killed")) {
                     //You claimed a bounty, not the other way around

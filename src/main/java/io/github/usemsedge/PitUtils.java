@@ -106,7 +106,9 @@ public class PitUtils {
 
                          PermTracker.toggled + "," + PermTracker.sayInChat + "," + PermTracker.guiLocation[0] + "," + PermTracker.guiLocation[1] + "," + PermTracker.align + "," + PermTracker.color + ";" +
 
-                         DarkChecker.toggled + "," + DarkChecker.sayInChat + "," + DarkChecker.guiLocation[0] + "," + DarkChecker.guiLocation[1] + "," + DarkChecker.align + "," + DarkChecker.color + ";"
+                         DarkChecker.toggled + "," + DarkChecker.sayInChat + "," + DarkChecker.guiLocation[0] + "," + DarkChecker.guiLocation[1] + "," + DarkChecker.align + "," + DarkChecker.color + ";" +
+
+                         CountingPlayers.toggled + "," + CountingPlayers.guiLocation[0] + "," + CountingPlayers.guiLocation[1] + "," + CountingPlayers.align + "," + CountingPlayers.color
                 );
                 fw.close();
             }
@@ -213,6 +215,8 @@ public class PitUtils {
                 saveLogInfo("perm tracker set");
                 DarkChecker.setVars(content[5]);
                 saveLogInfo("darkchecker set");
+                CountingPlayers.setVars(content[6]);
+                saveLogInfo("counting players set");
 
             }
             catch (Exception e) {
