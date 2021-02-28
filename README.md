@@ -14,6 +14,7 @@ Player Count Checker (Shows how much enchants like shark, notglad, and soli proc
 Things to do later:  
 Hopper Checker (Scans lobby for nons with high killstreaks.)  
 Low-Life Mystic Checker (Tells you if any mystics are low lives.)  
+Telebow Cooldown  (and other mystics)  
 
 Type /pit for the list of commands
 
