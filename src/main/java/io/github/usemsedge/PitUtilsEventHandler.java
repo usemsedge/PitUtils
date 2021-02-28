@@ -35,9 +35,8 @@ public class PitUtilsEventHandler {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void onChatMessageRecieved(ClientChatReceivedEvent e) {
         String msg = e.message.getUnformattedText();
-        if (MysticDropCounter.toggled) {
-            MysticDropCounter.onChatMessageReceived(msg);
-        }
+        MysticDropCounter.onChatMessageReceived(msg);
+
         if (AutoL.toggled) {
             AutoL.checkIfSayL(msg);
         }
@@ -60,6 +59,8 @@ public class PitUtilsEventHandler {
                 }
                 PermTracker.permedPlayersInServer = PermTracker.findPermedPlayersInServer();
                 DarkChecker.playersUsingDarksInServer = DarkChecker.checkForDarks();
+                CountingPlayers.checkGear();
+                CountingPlayers.updateCount();
 
                 tick = 0;
             }
@@ -124,6 +125,9 @@ public class PitUtilsEventHandler {
         }
         if (DarkChecker.toggled) {
             DarkChecker.renderStats(renderer);
+        }
+        if (CountingPlayers.toggled) {
+            CountingPlayers.renderStats(renderer);
         }
     }
 }

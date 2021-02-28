@@ -1,5 +1,6 @@
 package io.github.usemsedge;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 
 import java.text.DecimalFormat;
@@ -19,11 +20,13 @@ public class MysticDropCounter {
         if (msg.contains("MYSTIC ITEM!") && !msg.contains(":") && msg.contains("dropped")) {
             mysticDrops++;
             sinceLastMysticDrop = 0;
+            PitUtils.messagePlayer(Minecraft.getMinecraft().thePlayer, msg);
         }
 
         else if (msg.contains("KILL!") && !msg.contains(":") && msg.contains("[") && msg.contains("]")) {
             killCount += 1;
             sinceLastMysticDrop += 1;
+            PitUtils.messagePlayer(Minecraft.getMinecraft().thePlayer, msg);
 
         }
     }

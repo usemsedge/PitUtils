@@ -326,7 +326,52 @@ public class PitUtilsCommand extends CommandBase {
                     }
 
 
-                } else if (args[0].equalsIgnoreCase("tips")) {
+                }
+                else if (args[0].equalsIgnoreCase("count")) {
+                        if (args.length == 2 && args[1].equalsIgnoreCase("toggle")) {
+                            CountingPlayers.toggled ^= true;
+
+                            PitUtils.messagePlayer(player, EnumChatFormatting.GREEN +
+                                    "Counting Players Display has been toggled " +
+                                    EnumChatFormatting.DARK_GREEN +
+                                    (CountingPlayers.toggled ? "on" : "off"));
+                        } else if (args.length == 3 && args[1].equalsIgnoreCase("align")) {
+                            CountingPlayers.align = (args[2].equalsIgnoreCase("right")) ? "right" : "left";
+                        } else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
+                            char[] c = args[2].toCharArray();
+
+                            char[] x = Arrays.copyOfRange(c, c.length - 6, c.length);
+                            String number = String.copyValueOf(x);
+
+                            if (!PitUtils.isInteger(number, 16)) {
+                                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Changes the color of the display");
+                                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit count color (color)");
+                                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "(color) should be substituted for a 6-character hex value like 00ffff");
+                                return;
+                            }
+                            CountingPlayers.color = Integer.decode("0x" + number);
+                        } else if (args.length == 4 && args[1].equalsIgnoreCase("pos")) {
+
+                            if (PitUtils.isInteger(args[2]) &&
+                                    PitUtils.isInteger(args[3])) {
+
+                                CountingPlayers.guiLocation[0] = Integer.parseInt(args[2]);
+                                CountingPlayers.guiLocation[1] = Integer.parseInt(args[3]);
+                            } else {
+                                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Changes the location of the display");
+                                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit count pos (x) (y)");
+                            }
+                        } else {
+                            PitUtils.messagePlayer(player, EnumChatFormatting.BLACK + "__________________________");
+                            PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "If toggled on, shows shark, notglad, solitude");
+                            PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit count [command] [argument]");
+                            PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit count toggle (turns on or off the display");
+                            PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit count color (color) (changes the color of the display)");
+                            PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit count align (right|left) (aligns the text right or left");
+                            PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit count pos (x) (y) (sets the locatino of the display)");
+                        }
+                }
+                    else if (args[0].equalsIgnoreCase("tips")) {
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Features:");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "All features are toggleable and customizable.");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "Mystic Counter: Tracks your mystic drops compared to your kills.");
@@ -345,6 +390,7 @@ public class PitUtilsCommand extends CommandBase {
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit l (Auto-L");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm (your perm list)");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit dark (dark pant users)");
+                    PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit count (# of players near you)");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit tips");
                     PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit help");
                 }
@@ -358,6 +404,7 @@ public class PitUtilsCommand extends CommandBase {
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit l (Auto-L");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit perm (your perm list)");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit dark (dark pant users)");
+                PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit count (# of players near you)");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit tips");
                 PitUtils.messagePlayer(player, EnumChatFormatting.LIGHT_PURPLE + "/pit help");
             }
