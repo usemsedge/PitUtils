@@ -95,7 +95,6 @@ public class CountingPlayers {
             x.add(player.posZ);
             positions.add(x);
         }
-        PitUtils.saveLogInfo(positions.toString() + "\n\n\n");
         return positions;
     }
 
