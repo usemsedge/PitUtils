@@ -34,7 +34,7 @@ public class Cooldown {
 
         if (name.contains("AAA-Rated Steak")) {
             if (currentSteakCooldownInTicks > 0) {
-                PitUtils.messagePlayer(player, EnumChatFormatting.RED + "Steak on cooldown!");
+                PitUtils.messagePlayer(EnumChatFormatting.RED + "Steak on cooldown!");
                 //steaks on cooldown
                 e.setCanceled(true);
             }
@@ -46,7 +46,7 @@ public class Cooldown {
         else if (name.contains("Aura of Protection")) {
             if (currentAuraCooldownInTicks > 0) {
                 //Aura cooldown
-                PitUtils.messagePlayer(player, EnumChatFormatting.RED + "Aura on cooldown!");
+                PitUtils.messagePlayer(EnumChatFormatting.RED + "Aura on cooldown!");
                 e.setCanceled(true);
             }
             else {
@@ -57,7 +57,7 @@ public class Cooldown {
         else if (name.contains("First-Aid Egg")) {  //"First-Aid Egg")) {
             if (currentEggCooldownInTicks > 0) {
                 //First aid egg
-                PitUtils.messagePlayer(player, EnumChatFormatting.RED + "Egg on cooldown!");
+                PitUtils.messagePlayer(EnumChatFormatting.RED + "Egg on cooldown!");
             }
             else {
                 currentEggCooldownInTicks = eggCooldownInTicks;

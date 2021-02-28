@@ -25,15 +25,15 @@ public class DarkChecker {
         ItemStack item;
         List<List<String>> playersUsingDarks = new ArrayList<>();
         List<EntityPlayer> players = Minecraft.getMinecraft().theWorld.playerEntities;
-        List<String> p = new ArrayList<>();
+        List<String> p;
         for (EntityPlayer player : players) {
             try {
                 item = player.inventory.armorInventory[1]; //pants?? third slot in r
                 if ((item.getDisplayName().contains("Dark") || item.getDisplayName().contains("Evil")) && item.getDisplayName().contains("Tier")) {
-                    //enchanted dark pants, must have tier in it
+                    //enchanted dark pants, must have tier I in it
                     p = new ArrayList<>();
                     p.add(player.getName());
-                    if (PitUtils.getNBT(item).contains("Tier 1")) {
+                    if (PitUtils.getNBT(item).contains("Tier I ")) {
                         p.add("Plain Somber");
                     }
                     else {
@@ -54,14 +54,6 @@ public class DarkChecker {
                 }
             }
             catch (Exception e) {} //no pants
-        }
-        for (List<String> playersUsingDark : playersUsingDarks) {
-            try {
-                PitUtils.saveLogInfo(playersUsingDark.get(0) + " " + playersUsingDark.get(1) + "\n");
-            }
-            catch(Exception e) {
-                PitUtils.saveLogInfo(playersUsingDark.get(0) + "\n");
-            }
         }
         return playersUsingDarks;
     }

@@ -179,8 +179,8 @@ public class PitUtils {
         return lines;
     }
 
-    static void messagePlayer(EntityPlayer player, String message) {
-        player.addChatMessage(new ChatComponentText(message));
+    static void messagePlayer(String message) {
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
     }
 
     static boolean checkUsername(String name) {
