@@ -26,7 +26,7 @@ public class CountingPlayers {
     static boolean isWearingSybil = false;
     static int sybilLevel = 0;
 
-    static int[] guiLocation = new int[]{2, 100};
+    static int[] guiLocation = new int[]{300, 2};
     static boolean toggled = true;
     static int color = 0x00ffff;
     static String align = "left";
@@ -63,7 +63,22 @@ public class CountingPlayers {
                 notGladLevel = 0;
             }
 
-            //if (pants.contains("Sybil I")) will get different levels of sybill one day
+            if (pants.contains("Sybil III")) {
+                isWearingSybil = true;
+                sybilLevel = 3;
+            }
+            if (pants.contains("Sybil II")) {
+                isWearingSybil = true;
+                sybilLevel = 2;
+            }
+            if (pants.contains("Sybil I")) {
+                isWearingSybil = true;
+                sybilLevel = 1;
+            }
+            else {
+                isWearingSybil = false;
+                sybilLevel = -1;
+            }
 
 
             String sword = PitUtils.getNBT(Minecraft.getMinecraft().thePlayer.getHeldItem());
@@ -132,10 +147,10 @@ public class CountingPlayers {
                 bPlayersWithin12Under6 += 1;
             }
         }
-        playersWithin7 = bPlayersWithin7;
-        playersWithin12 = bPlayersWithin12;
+        playersWithin7 = bPlayersWithin7 + 1 + sybilLevel;
+        playersWithin12 = bPlayersWithin12 + 1 + sybilLevel;
         if (playersWithin12 > 10) {playersWithin12 = 10;}
-        playersWithin12Under6 = bPlayersWithin12Under6;
+        playersWithin12Under6 = bPlayersWithin12Under6 + 1 + sybilLevel;
     }
 
 
