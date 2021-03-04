@@ -14,6 +14,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiIngame;
+import net.minecraft.client.gui.GuiPlayerTabOverlay;
+import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.Score;
@@ -83,6 +87,11 @@ public class PitUtils {
             x.add(player.getName());
         }
         return x;
+
+/*
+        NetHandlerPlayClient nhpc = Minecraft.getMinecraft().thePlayer.sendQueue;
+        List<NetworkPlayerInfo> list =
+                new GuiPlayerTabOverlay(Minecraft.getMinecraft(), Minecraft.getMinecraft().ingameGUI)*/
     }
 
     static void saveInfo() {
@@ -108,7 +117,9 @@ public class PitUtils {
 
                          DarkChecker.toggled + "," + DarkChecker.sayInChat + "," + DarkChecker.guiLocation[0] + "," + DarkChecker.guiLocation[1] + "," + DarkChecker.align + "," + DarkChecker.color + ";" +
 
-                         CountingPlayers.toggled + "," + CountingPlayers.guiLocation[0] + "," + CountingPlayers.guiLocation[1] + "," + CountingPlayers.align + "," + CountingPlayers.color
+                         CountingPlayers.toggled + "," + CountingPlayers.guiLocation[0] + "," + CountingPlayers.guiLocation[1] + "," + CountingPlayers.align + "," + CountingPlayers.color + ";" +
+
+                         LowLifeMystics.toggled + "," + LowLifeMystics.livesToAlert + "," + LowLifeMystics.guiLocation[0] + "," + LowLifeMystics.guiLocation[1] + "," + LowLifeMystics.align + "," + LowLifeMystics.color
                 );
                 fw.close();
             }
@@ -217,6 +228,7 @@ public class PitUtils {
                 saveLogInfo("darkchecker set");
                 CountingPlayers.setVars(content[6]);
                 saveLogInfo("counting players set");
+                LowLifeMystics.setVars(content[7]);
 
             }
             catch (Exception e) {

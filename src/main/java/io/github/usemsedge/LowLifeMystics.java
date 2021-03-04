@@ -41,29 +41,31 @@ public class LowLifeMystics {
         String itemNBT, itemName;
         int lives, swords = 0, pants = 0, bows = 0, armor = 0, items = 0;
         for (int i = 0; i < 36; i++) {
-            item = inv.getStackInSlot(i);
-            itemNBT = PitUtils.getNBT(item);
-            itemName = item.getDisplayName();
-            lives = getLives(itemNBT);
-            if (lives < livesToAlert) {
-                if (itemName.contains("Pants")) {
-                    pants += 1;
+            try {
+                item = inv.getStackInSlot(i);
+                itemNBT = PitUtils.getNBT(item);
+                itemName = item.getDisplayName();
+                lives = getLives(itemNBT);
+                PitUtils.saveLogInfo(lives + " " + itemName + "\n");
+                if (lives < livesToAlert) {
+                    if (itemName.contains("Pants")) {
+                        pants += 1;
+                    } else if (itemName.contains("Sword")) {
+                        swords += 1;
+                    } else if (itemName.contains("Bow")) {
+                        bows += 1;
+                    } else if (itemName.contains("Golden Helmet") ||
+                            itemName.contains("Archangel") ||
+                            itemName.contains("Armageddon")) {
+                        armor += 1;
+                    } else {
+                        items += 1;
+                    }
+                    PitUtils.saveLogInfo(itemName + " " + lives + " has low lives\n");
                 }
-                else if (itemName.contains("Sword")) {
-                    swords += 1;
-                }
-                else if (itemName.contains("Bow")) {
-                    bows += 1;
-                }
-                else if (itemName.contains("Golden Helmet") ||
-                         itemName.contains("Archangel") ||
-                         itemName.contains("Armageddon")) {
-                    armor += 1;
-                }
-                else {
-                    items += 1;
-                }
-                PitUtils.saveLogInfo(itemName + " " + lives + " has low lives\n");
+            }
+            catch (Exception e) {
+                //no item int hat slot
             }
 
         }

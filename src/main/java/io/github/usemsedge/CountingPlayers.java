@@ -41,7 +41,7 @@ public class CountingPlayers {
             } else if (pants.contains("Solitude II")) {
                 isWearingSoli = true;
                 soliLevel = 2;
-            } else if (pants.contains("Solitude I")) {
+            } else if (pants.contains("Solitude")) {
                 isWearingSoli = true;
                 soliLevel = 1;
             } else {
@@ -55,7 +55,7 @@ public class CountingPlayers {
             } else if (pants.contains("Gladiator II")) {
                 isWearingNotGlad = true;
                 notGladLevel = 2;
-            } else if (pants.contains("Gladiator I")) {
+            } else if (pants.contains("Gladiator")) {
                 isWearingNotGlad = true;
                 notGladLevel = 1;
             } else {
@@ -71,7 +71,7 @@ public class CountingPlayers {
                 isWearingSybil = true;
                 sybilLevel = 2;
             }
-            if (pants.contains("Sybil I")) {
+            if (pants.contains("Sybil")) {
                 isWearingSybil = true;
                 sybilLevel = 1;
             }
@@ -89,7 +89,7 @@ public class CountingPlayers {
             } else if (sword.contains("Shark II")) {
                 isHoldingShark = true;
                 sharkLevel = 2;
-            } else if (sword.contains("Shark I")) {
+            } else if (sword.contains("Shark")) {
                 isHoldingShark = true;
                 sharkLevel = 1;
             } else {

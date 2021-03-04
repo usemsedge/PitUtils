@@ -61,6 +61,7 @@ public class PitUtilsEventHandler {
                 DarkChecker.playersUsingDarksInServer = DarkChecker.checkForDarks();
                 CountingPlayers.checkGear();
                 CountingPlayers.updateCount();
+                LowLifeMystics.checkAllLives();
 
                 tick = 0;
             }
@@ -130,7 +131,7 @@ public class PitUtilsEventHandler {
             CountingPlayers.renderStats(renderer);
         }
         if (LowLifeMystics.toggled) {
-            CountingPlayers.renderStats(renderer);
+            LowLifeMystics.renderStats(renderer);
         }
     }
 }
