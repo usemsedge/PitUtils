@@ -129,5 +129,8 @@ public class PitUtilsEventHandler {
         if (CountingPlayers.toggled) {
             CountingPlayers.renderStats(renderer);
         }
+        if (LowLifeMystics.toggled) {
+            CountingPlayers.renderStats(renderer);
+        }
     }
 }

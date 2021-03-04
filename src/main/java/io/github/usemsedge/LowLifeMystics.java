@@ -29,7 +29,7 @@ public class LowLifeMystics {
             return Integer.parseInt(lives);
         }
         else {
-            return Integer.MAX_VALUE;
+            return Integer.MAX_VALUE; //it's fresh
         }
 
     }
@@ -63,6 +63,7 @@ public class LowLifeMystics {
                 else {
                     items += 1;
                 }
+                PitUtils.saveLogInfo(itemName + " " + lives + " has low lives\n");
             }
 
         }
