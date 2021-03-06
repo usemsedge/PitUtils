@@ -25,7 +25,7 @@ public class LowLifeMystics {
             itemNBT.contains("Armageddon")) {
             int slash = itemNBT.indexOf("/");
             int colon = itemNBT.indexOf(":");
-            String lives = itemNBT.substring(colon + 2, slash); //lives look like      Lives: 12/46
+            String lives = itemNBT.substring(colon + 3, slash - 2); //lives look like      Lives: §c12§8/46 (§8 is a color code)
             return Integer.parseInt(lives);
         }
         else {
@@ -69,6 +69,8 @@ public class LowLifeMystics {
             }
 
         }
+        PitUtils.saveLogInfo(inv.mainInventory.toString() + "|||||||" + inv.mainInventory.length);
+        PitUtils.saveLogInfo("\n");
         lowLifeArmor = armor;
         lowLifeItems = items;
         lowLifeSwords = swords;
