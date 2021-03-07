@@ -63,16 +63,7 @@ public class PitUtilsEventHandler {
                 CountingPlayers.checkGear();
                 CountingPlayers.updateCount();
                 LowLifeMystics.checkAllLives();
-
-                for (int i = 0; i < Minecraft.getMinecraft().thePlayer.inventory.mainInventory.length; i++) {
-                    try {
-                        PitUtils.saveLogInfo(Minecraft.getMinecraft().thePlayer.inventory.mainInventory[i].getDisplayName() + "||" + i + "\n");
-                    }
-                    catch (Exception ex) {
-                        PitUtils.saveLogInfo("error|" + ex.toString() + "|" + i + "\n");
-                    }
-                }
-                PitUtils.saveLogInfo("end of inventory\n\n");
+                
 
                 tick = 0;
             }

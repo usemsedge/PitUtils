@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class LowLifeMystics {
@@ -41,12 +42,14 @@ public class LowLifeMystics {
         ItemStack item;
         String itemNBT, itemName;
         int lives, swords = 0, pants = 0, bows = 0, armor = 0, items = 0;
-        for (int i = 0; i < 36; i++) {
+        for (int i = 0; i < inv.length; i++) {
             try {
                 item = inv[i];
-                itemNBT = PitUtils.getNBT(item);
                 itemName = item.getDisplayName();
+                PitUtils.saveLogInfo(new Date().getTime() + "|" + itemName + "|" + i + "|\n");
+                itemNBT = PitUtils.getNBT(item);
                 lives = getLives(itemNBT);
+                
                 if (lives < livesToAlert) {
                     if (itemName.contains("Pants")) {
                         pants += 1;
@@ -65,6 +68,7 @@ public class LowLifeMystics {
             }
             catch (Exception e) {
                 //no item int hat slot
+                PitUtils.saveLogInfo(new Date().getTime() + "|" + e.toString() + "|" + i + "\n");
             }
 
         }
