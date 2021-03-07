@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
@@ -62,6 +63,16 @@ public class PitUtilsEventHandler {
                 CountingPlayers.checkGear();
                 CountingPlayers.updateCount();
                 LowLifeMystics.checkAllLives();
+
+                for (int i = 0; i < Minecraft.getMinecraft().thePlayer.inventory.mainInventory.length; i++) {
+                    try {
+                        PitUtils.saveLogInfo(Minecraft.getMinecraft().thePlayer.inventory.mainInventory[i].getDisplayName() + "||" + i + "\n");
+                    }
+                    catch (Exception ex) {
+                        PitUtils.saveLogInfo("error|" + ex.toString() + "|" + i + "\n");
+                    }
+                }
+                PitUtils.saveLogInfo("end of inventory\n\n");
 
                 tick = 0;
             }

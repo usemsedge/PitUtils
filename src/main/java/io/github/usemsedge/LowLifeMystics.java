@@ -6,6 +6,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LowLifeMystics {
@@ -35,18 +36,17 @@ public class LowLifeMystics {
     }
 
     static void checkAllLives() {
-        InventoryPlayer inv = Minecraft.getMinecraft().thePlayer.inventory;
-
+        ItemStack[] inv = Minecraft.getMinecraft().thePlayer.inventory.mainInventory;
+        
         ItemStack item;
         String itemNBT, itemName;
         int lives, swords = 0, pants = 0, bows = 0, armor = 0, items = 0;
         for (int i = 0; i < 36; i++) {
             try {
-                item = inv.getStackInSlot(i);
+                item = inv[i];
                 itemNBT = PitUtils.getNBT(item);
                 itemName = item.getDisplayName();
                 lives = getLives(itemNBT);
-                PitUtils.saveLogInfo(lives + " " + itemName + "\n");
                 if (lives < livesToAlert) {
                     if (itemName.contains("Pants")) {
                         pants += 1;
@@ -61,7 +61,6 @@ public class LowLifeMystics {
                     } else {
                         items += 1;
                     }
-                    PitUtils.saveLogInfo(itemName + " " + lives + " has low lives\n");
                 }
             }
             catch (Exception e) {
@@ -69,8 +68,6 @@ public class LowLifeMystics {
             }
 
         }
-        PitUtils.saveLogInfo(inv.mainInventory.toString() + "|||||||" + inv.mainInventory.length);
-        PitUtils.saveLogInfo("\n");
         lowLifeArmor = armor;
         lowLifeItems = items;
         lowLifeSwords = swords;
