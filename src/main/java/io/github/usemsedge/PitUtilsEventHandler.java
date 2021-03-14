@@ -63,7 +63,6 @@ public class PitUtilsEventHandler {
                 CountingPlayers.checkGear();
                 CountingPlayers.updateCount();
                 LowLifeMystics.checkAllLives();
-                
 
                 tick = 0;
             }

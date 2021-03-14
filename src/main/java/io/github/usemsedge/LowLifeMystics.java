@@ -48,8 +48,10 @@ public class LowLifeMystics {
                 itemName = item.getDisplayName();
                 PitUtils.saveLogInfo(new Date().getTime() + "|" + itemName + "|" + i + "|\n");
                 itemNBT = PitUtils.getNBT(item);
+                PitUtils.saveLogInfo(itemNBT + "|" + i + "\n");
+
                 lives = getLives(itemNBT);
-                
+                                                                  
                 if (lives < livesToAlert) {
                     if (itemName.contains("Pants")) {
                         pants += 1;
@@ -70,6 +72,7 @@ public class LowLifeMystics {
                 //no item int hat slot
                 PitUtils.saveLogInfo(new Date().getTime() + "|" + e.toString() + "|" + i + "\n");
             }
+            PitUtils.saveLogInfo("\n");
 
         }
         lowLifeArmor = armor;

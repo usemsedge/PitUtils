@@ -20,6 +20,8 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
@@ -78,7 +80,25 @@ public class PitUtils {
     }
 
     static String getNBT(ItemStack item) {
-       return item.getTagCompound().toString();
+        try {
+            StringBuilder loreBuilder = new StringBuilder();
+            NBTTagList loreNBT = item.getTagCompound().getCompoundTag("display").getTagList("lore", 8);
+            PitUtils.saveLogInfo("\n\nstarted saving nbt data for " + item.getDisplayName());
+
+            for (int i = 0; i < loreNBT.tagCount(); i++) {
+                PitUtils.saveLogInfo(i + " " + loreNBT.getStringTagAt(i));
+                loreBuilder.append(loreNBT.getStringTagAt(i));
+            }
+            PitUtils.saveLogInfo("saved nbt data for " + item.getDisplayName() + "\n");
+
+            return loreBuilder.toString();
+        }
+        catch (Exception e) {
+            PitUtils.saveLogInfo(item.getDisplayName() + "|error: " + e.toString());
+            return "";
+        }
+
+        //return item.getTagCompound().toString();
         //return item.getTagCompound().getTagList("lore", 8).getStringTagAt(1);
     }
 
