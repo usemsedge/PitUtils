@@ -412,6 +412,7 @@ public class PitUtilsCommand extends CommandBase {
 
                         if (PitUtils.isInteger(args[2])) {
                             LowLifeMystics.livesToAlert = Integer.parseInt(args[2]);
+                            PitUtils.messagePlayer("Lives to alert changed to " + LowLifeMystics.livesToAlert);
                         }
                         else {
                             PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "Changes the lives to alert at");

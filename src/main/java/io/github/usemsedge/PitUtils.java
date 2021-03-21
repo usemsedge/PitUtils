@@ -92,11 +92,18 @@ public class PitUtils {
 
     static String getEnchants(ItemStack item) {
         /*
+
         ArrayList<String> enchants = new ArrayList<>();
         NBTTagList list = item.getEnchantmentTagList();
         for (int i = 0; i < list.tagCount(); i++) {
             enchants.add(list.getStringTagAt())
         }*/
+
+        NBTTagList list = item.getTagCompound().getCompoundTag("ExtraAttributes").getTagList("CustomEnchants", 8);
+
+        for (int i = 0; i < list.tagCount(); i++) {
+            PitUtils.saveLogInfo(list.get(i).toString());
+        }
         return "";
     }
 

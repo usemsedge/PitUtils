@@ -27,7 +27,8 @@ public class LowLifeMystics {
             itemNBT.contains("Armageddon")) {
             int slash = itemNBT.indexOf("/");
             int colon = itemNBT.indexOf(":");
-            String lives = itemNBT.substring(colon + 3, slash - 2); //lives look like      Lives: §c12§8/46 (§8 is a color code)
+            String lives = itemNBT.substring(colon + 4, slash - 2); //lives look like      Lives: §c12§8/46 (§8 is a color code)
+            PitUtils.saveLogInfo(lives + "\n");
             return Integer.parseInt(lives);
         }
         else {
