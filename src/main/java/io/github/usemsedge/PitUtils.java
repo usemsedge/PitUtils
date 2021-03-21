@@ -20,6 +20,7 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.scoreboard.Score;
@@ -79,27 +80,24 @@ public class PitUtils {
 
     }
 
-    static String getNBT(ItemStack item) {
-        try {
-            StringBuilder loreBuilder = new StringBuilder();
-            NBTTagList loreNBT = item.getTagCompound().getCompoundTag("display").getTagList("lore", 8);
-            PitUtils.saveLogInfo("\n\nstarted saving nbt data for " + item.getDisplayName());
-
-            for (int i = 0; i < loreNBT.tagCount(); i++) {
-                PitUtils.saveLogInfo(i + " " + loreNBT.getStringTagAt(i));
-                loreBuilder.append(loreNBT.getStringTagAt(i));
-            }
-            PitUtils.saveLogInfo("saved nbt data for " + item.getDisplayName() + "\n");
-
-            return loreBuilder.toString();
+    static String getLore(ItemStack item) {
+        StringBuilder loreBuilder = new StringBuilder();
+        NBTTagList list = item.getTagCompound().getCompoundTag("display").getTagList("Lore", 8);
+        for (int i = 0; i < list.tagCount(); i++) {
+            loreBuilder.append(" " + list.getStringTagAt(i));
         }
-        catch (Exception e) {
-            PitUtils.saveLogInfo(item.getDisplayName() + "|error: " + e.toString());
-            return "";
-        }
+        PitUtils.saveLogInfo(item.getDisplayName() + " | " + loreBuilder + "\n");
+        return loreBuilder.toString();
+    }
 
-        //return item.getTagCompound().toString();
-        //return item.getTagCompound().getTagList("lore", 8).getStringTagAt(1);
+    static String getEnchants(ItemStack item) {
+        /*
+        ArrayList<String> enchants = new ArrayList<>();
+        NBTTagList list = item.getEnchantmentTagList();
+        for (int i = 0; i < list.tagCount(); i++) {
+            enchants.add(list.getStringTagAt())
+        }*/
+        return "";
     }
 
     static List<String> getPlayerNames() {

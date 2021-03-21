@@ -40,17 +40,14 @@ public class LowLifeMystics {
         ItemStack[] inv = Minecraft.getMinecraft().thePlayer.inventory.mainInventory;
         
         ItemStack item;
-        String itemNBT, itemName;
+        String itemLore, itemName;
         int lives, swords = 0, pants = 0, bows = 0, armor = 0, items = 0;
         for (int i = 0; i < inv.length; i++) {
             try {
                 item = inv[i];
                 itemName = item.getDisplayName();
-                PitUtils.saveLogInfo(new Date().getTime() + "|" + itemName + "|" + i + "|\n");
-                itemNBT = PitUtils.getNBT(item);
-                PitUtils.saveLogInfo(itemNBT + "|" + i + "\n");
-
-                lives = getLives(itemNBT);
+                itemLore = PitUtils.getLore(item);
+                lives = getLives(itemLore);
                                                                   
                 if (lives < livesToAlert) {
                     if (itemName.contains("Pants")) {

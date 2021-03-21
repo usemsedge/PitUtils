@@ -33,7 +33,7 @@ public class CountingPlayers {
 
     static void checkGear() {
         try {
-            String pants = PitUtils.getNBT(Minecraft.getMinecraft().thePlayer.inventory.armorInventory[1]);
+            String pants = PitUtils.getLore(Minecraft.getMinecraft().thePlayer.inventory.armorInventory[1]);
 
             if (pants.contains("Solitude III")) {
                 isWearingSoli = true;
@@ -81,7 +81,7 @@ public class CountingPlayers {
             }
 
 
-            String sword = PitUtils.getNBT(Minecraft.getMinecraft().thePlayer.getHeldItem());
+            String sword = PitUtils.getLore(Minecraft.getMinecraft().thePlayer.getHeldItem());
 
             if (sword.contains("Shark III")) {
                 isHoldingShark = true;

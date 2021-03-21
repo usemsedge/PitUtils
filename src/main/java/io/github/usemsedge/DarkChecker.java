@@ -33,13 +33,13 @@ public class DarkChecker {
                     //enchanted dark pants, must have tier I in it
                     p = new ArrayList<>();
                     p.add(player.getName());
-                    if (PitUtils.getNBT(item).contains("Tier I ")) {
+                    if (item.getDisplayName().contains("Tier I ")) {
                         p.add("Plain Somber");
                     }
                     else {
 
                         for (String enchant : DARK_ENCHANTS) {
-                            if (PitUtils.getNBT(item).contains(enchant)) {
+                            if (PitUtils.getEnchants(item).contains(enchant)) {
                                 p.add(enchant);
                                 break;
                             }
@@ -47,7 +47,6 @@ public class DarkChecker {
                         if (p.size() == 1) {
                             p.add("Other");
                         }
-                        p.add(PitUtils.getNBT(item));
                     }
                     playersUsingDarks.add(p);
 
