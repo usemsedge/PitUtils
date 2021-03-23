@@ -1,0 +1,34 @@
+plain_melee_damage:Sharp
+melee_damage_vs_bounties:Bounty Reaper
+melee_damage_vs_diamond:Diamond Stomp
+melee_damage_vs_bows:Beat the Spammers
+melee_damage_vs_low_hp:Punisher
+melee_damage_vs_high_hp:King Buster
+melee_damage_when_low:Pain Focus
+melee_damage_when_absorption:Gold and Boosted
+melee_damage_when_on_grass:Cricket
+melee_damage_when_close_low_players:Shark
+melee_damage_vs_leather:Fancy Raider
+increased_blocking:Bruiser
+melee_crit_midair:Berserker
+etspeed_on_kill:Speedy Kill
+resistance_on_kill:Counter-Janitor
+melee_heal_on_kill:Guts
+melee_combo_damage:Combo: Damage
+melee_combo_heal:Combo: Heal
+melee_combo_speed:Combo: Swift
+melee_weakness:Crush
+melee_heal_on_hit:Lifesteal
+melee_knockback:Knockback
+blocking_cancels_projectiles:Bullet Time
+melee_avenge:Revengeance
+melee_strike_after_block:Duelist
+melee_bleed:Hemorrhage
+melee_lightning:Combo: Perun's Wrath
+melee_execute:Executioner
+melee_speed_on_hit:Speedy Hit
+melee_launch:The Punch
+melee_gamble:Gamble
+melee_stun:Combo: Stun
+melee_literally_p2w:Billionaire
+melee_healer:Healer

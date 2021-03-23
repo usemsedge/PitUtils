@@ -5,10 +5,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class LowLifeMystics {
     static int[] guiLocation = new int[]{300, 50};
@@ -20,37 +17,43 @@ public class LowLifeMystics {
     static int lowLifePants = 0, lowLifeSwords = 0, lowLifeBows = 0, lowLifeArmor = 0, lowLifeItems = 0;
 
 
-    static int getLives(String itemNBT) {
-        if (itemNBT.contains("Tier") ||
-            itemNBT.contains("Golden Helmet") ||
-            itemNBT.contains("Archangel") ||
-            itemNBT.contains("Armageddon")) {
+    static int getLives(ItemStack item) {
+        String itemNBT = PitUtils.getLore(item);
+        String itemName = item.getDisplayName();
+        if (itemName.contains("Tier") ||
+            itemName.contains("Golden Helmet") ||
+            itemName.contains("Archangel") ||
+            itemName.contains("Armageddon")) {
             int slash = itemNBT.indexOf("/");
             int colon = itemNBT.indexOf(":");
             String lives = itemNBT.substring(colon + 4, slash - 2); //lives look like      Lives: §c12§8/46 (§8 is a color code)
-            PitUtils.saveLogInfo(lives + "\n");
+            PitUtils.saveLogInfo("Lives on item: |||" + lives + "|||.\\n");
             return Integer.parseInt(lives);
         }
         else {
+            PitUtils.saveLogInfo("fresh item\n");
             return Integer.MAX_VALUE; //it's fresh
         }
 
     }
 
     static void checkAllLives() {
-        ItemStack[] inv = Minecraft.getMinecraft().thePlayer.inventory.mainInventory;
+        ArrayList<ItemStack> inv = new ArrayList<>();
+        ItemStack[] invItems = Minecraft.getMinecraft().thePlayer.inventory.mainInventory.clone();
+        Collections.addAll(inv, invItems);
+        ItemStack[] armorItems = Minecraft.getMinecraft().thePlayer.inventory.armorInventory.clone();
+        Collections.addAll(inv, armorItems);
         
         ItemStack item;
-        String itemLore, itemName;
+        String itemName;
         int lives, swords = 0, pants = 0, bows = 0, armor = 0, items = 0;
-        for (int i = 0; i < inv.length; i++) {
+        for (int i = 0; i < inv.size(); i++) {
             try {
-                item = inv[i];
+                item = inv.get(i);
                 itemName = item.getDisplayName();
-                itemLore = PitUtils.getLore(item);
-                lives = getLives(itemLore);
+                lives = getLives(item);
                                                                   
-                if (lives < livesToAlert) {
+                if (lives <= livesToAlert) {
                     if (itemName.contains("Pants")) {
                         pants += 1;
                     } else if (itemName.contains("Sword")) {

@@ -5,10 +5,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -45,6 +42,9 @@ public class PitUtils {
     static boolean loggedIn = false;
     static boolean usingLabyMod = false;
     static boolean isInPit = false;
+
+    //static Dictionary<String, String> enchants = new Hashtable<String, String>();
+    //pretty things can come later
 
     static ArrayList<String> permList = new ArrayList<>();
 
@@ -90,21 +90,28 @@ public class PitUtils {
         return loreBuilder.toString();
     }
 
-    static String getEnchants(ItemStack item) {
-        /*
+    static ArrayList<String> getEnchants(ItemStack item) {
 
         ArrayList<String> enchants = new ArrayList<>();
-        NBTTagList list = item.getEnchantmentTagList();
+
+        NBTTagList list = item.getTagCompound().getCompoundTag("ExtraAttributes").getTagList("CustomEnchants", 10);
         for (int i = 0; i < list.tagCount(); i++) {
-            enchants.add(list.getStringTagAt())
-        }*/
+            enchants.add(list.getStringTagAt(i));
+        }
+        PitUtils.saveLogInfo(item.getDisplayName() + " has this string for ehcnats " + enchants.toString() + " and has this for its enchanttaglist " + list.toString() + "\n");
 
-        NBTTagList list = item.getTagCompound().getCompoundTag("ExtraAttributes").getTagList("CustomEnchants", 8);
+        /*
+        NBTTagCompound list = item.getTagCompound().getCompoundTag("ExtraAttributes");
 
+        PitUtils.saveLogInfo(item.getDisplayName() + " and has this string: " + list.toString() + "\n");*/
+
+
+
+        /*
         for (int i = 0; i < list.tagCount(); i++) {
             PitUtils.saveLogInfo(list.get(i).toString());
-        }
-        return "";
+        }*/
+        return enchants;
     }
 
     static List<String> getPlayerNames() {
