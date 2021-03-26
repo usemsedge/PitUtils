@@ -36,12 +36,17 @@ import scala.tools.nsc.doc.model.ModelFactory;
 
 @Mod(modid = PitUtils.MODID, version = PitUtils.VERSION)
 public class PitUtils {
+    private HashMap<String,String> enchants = new HashMap<>();
+    private HashMap<String,String> enchants_short = new HashMap<>();
     static final String MODID = "PitUtils";
     static final String VERSION = "1.0";
     private static final String PIT_UTILS_PATH = "PitUtils.dat";
     static boolean loggedIn = false;
     static boolean usingLabyMod = false;
     static boolean isInPit = false;
+
+    static boolean useShortEnchants = false;
+    static boolean enchantsLoaded = false;
 
     //static Dictionary<String, String> enchants = new Hashtable<String, String>();
     //pretty things can come later
@@ -96,21 +101,10 @@ public class PitUtils {
 
         NBTTagList list = item.getTagCompound().getCompoundTag("ExtraAttributes").getTagList("CustomEnchants", 10);
         for (int i = 0; i < list.tagCount(); i++) {
-            enchants.add(list.getStringTagAt(i));
+            enchants.add(list.getCompoundTagAt(i).getString("Key"));
         }
         PitUtils.saveLogInfo(item.getDisplayName() + " has this string for ehcnats " + enchants.toString() + " and has this for its enchanttaglist " + list.toString() + "\n");
 
-        /*
-        NBTTagCompound list = item.getTagCompound().getCompoundTag("ExtraAttributes");
-
-        PitUtils.saveLogInfo(item.getDisplayName() + " and has this string: " + list.toString() + "\n");*/
-
-
-
-        /*
-        for (int i = 0; i < list.tagCount(); i++) {
-            PitUtils.saveLogInfo(list.get(i).toString());
-        }*/
         return enchants;
     }
 
@@ -235,8 +229,27 @@ public class PitUtils {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
 
+
         ClientCommandHandler.instance.registerCommand(new PitUtilsCommand());
         MinecraftForge.EVENT_BUS.register(new PitUtilsEventHandler());
+
+        try {
+            BufferedReader enchants_reader = new BufferedReader(new FileReader(new File("enchants/enchants_mystics.txt")));
+            BufferedReader enchants_short_reader = new BufferedReader(new FileReader(new File("enchants/enchants_mystics_short.txt")));
+            String ench, ench_short;
+            while ((ench = enchants_reader.readLine()) != null && (ench_short = enchants_short_reader.readLine()) != null) {
+                enchants.put(ench.substring(0, ench.indexOf(":")), ench.substring(ench.indexOf(":")));
+                enchants_short.put(ench_short.substring(0, ench_short.indexOf(":")), ench_short.substring(ench_short.indexOf(":")));
+            }
+            enchantsLoaded = true;
+        }
+        catch (Exception e) {
+            enchantsLoaded = false;
+        }
+        PitUtils.saveLogInfo(enchants.toString());
+        PitUtils.saveLogInfo(enchants_short.toString());
+
+
         if (new File(PIT_UTILS_PATH).isFile()) {
             try {
                 String[] content = new BufferedReader(new FileReader(PIT_UTILS_PATH)).readLine().split(";");
@@ -262,6 +275,7 @@ public class PitUtils {
                 CountingPlayers.setVars(content[6]);
                 saveLogInfo("counting players set");
                 LowLifeMystics.setVars(content[7]);
+                saveLogInfo("low life mystics set");
 
             }
             catch (Exception e) {

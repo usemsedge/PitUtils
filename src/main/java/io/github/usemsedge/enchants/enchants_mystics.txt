@@ -1,0 +1,151 @@
+damage_reduction:Protection
+less_damage_vs_diamond_weapons:Diamond Allergy
+less_damage_from_arrows:Ring Armor
+less_damage_when_high_bounty:Billy
+less_damage_nearby_players:"Not" Gladiator
+less_damage_on_grass:Cricket
+less_damage_when_swimming:McSwimmer
+less_damage_vs_bounties:David and Goliath
+eggs:Eggs
+regen_when_hit:Peroxide
+resistance_when_low:Last Stand
+regen_speed_when_low:Revitalize
+perma_speed:Gotta go fast
+tnt:TNT
+speed_when_hit_few_times:Counter-Offensive
+higher_max_hp:Hearts
+passive_health_regen:Boo-boo
+immune_true_damage:Mirror
+wood_blocks:Creative
+thorns:Prick
+power_against_crits:Critically Funky
+counter_bounty_hunter:Hunt the Hunter
+overheal_enchant:Excess
+respawn_with_resistance:Respawn: Resistance
+respawn_with_absorption:Respawn: Absorption
+refresh_speed_on_kill:Electrolytes
+superspeed_when_low:Danger Close
+absorption_on_kill:Golden Heart
+steaks_on_kill:Steaks
+snowballs:Snowballs
+martyrdom:Martyrdom
+wolf_pack:Wolf Pack
+snowmen:Snowmen Army
+the_blob:Pit Blob
+instaboom_tnt:Instaboom
+escape_pod:Escape Pod
+singularity:Singularity
+solitude:Solitude
+phoenix:Phoenix
+regen_when_ooc:Gomraw's Heart
+chance_dont_lose_life:Divine Miracle
+double_jump:Double-jump
+sneak_teleport:Assassin
+rgm:Retro-Gravity Microcosm
+plain_melee_damage:Sharp
+melee_damage_vs_bounties:Bounty Reaper
+melee_damage_vs_diamond:Diamond Stomp
+melee_damage_vs_bows:Beat the Spammers
+melee_damage_vs_low_hp:Punisher
+melee_damage_vs_high_hp:King Buster
+melee_damage_when_low:Pain Focus
+melee_damage_when_absorption:Gold and Boosted
+melee_damage_when_on_grass:Cricket
+melee_damage_when_close_low_players:Shark
+melee_damage_vs_leather:Fancy Raider
+increased_blocking:Bruiser
+melee_crit_midair:Berserker
+etspeed_on_kill:Speedy Kill
+resistance_on_kill:Counter-Janitor
+melee_heal_on_kill:Guts
+melee_combo_damage:Combo: Damage
+melee_combo_heal:Combo: Heal
+melee_combo_speed:Combo: Swift
+melee_weakness:Crush
+melee_heal_on_hit:Lifesteal
+melee_knockback:Knockback
+blocking_cancels_projectiles:Bullet Time
+melee_avenge:Revengeance
+melee_strike_after_block:Duelist
+melee_bleed:Hemorrhage
+melee_lightning:Combo: Perun's Wrath
+melee_execute:Executioner
+melee_speed_on_hit:Speedy Hit
+melee_launch:The Punch
+melee_gamble:Gamble
+melee_stun:Combo: Stun
+melee_literally_p2w:Billionaire
+melee_healer:Healer
+gain_arrows_on_hit:Bottomless Quiver
+jump_spammer:Jumpspammer
+bow_damage:Fletching
+first_shot:First Shot
+sniper:Sniper
+bow_spammer:Spammer and Proud
+damage_per_arrow:Arrow Armory
+punch_once_in_a_while:Push comes to shove
+parasite:Parasite
+bow_combo_speed:Faster than their shadow
+heal_on_shoot_self:What doesn't kill you
+bow_weakness_on_hit:Wasp
+mixed_combat:Mixed Combat
+bow_slow:Sprint Drain
+arrow_true_damage:Chipping
+volley:Volley
+instant_shot:Mega Longbow
+pin_down:Pin Down
+explosive_bow:Explosive
+pullbow:Pullbow
+homing:Robinhood
+bow_to_true_damage:True Shot
+explosive_chickens:Devil Chicks
+telebow:Telebow
+lucky_shot:Lucky Shot
+gold_per_kill:Gold Bump
+gold_boost:Gold Boost
+gold_strictly_kills:Moctezuma
+xp_per_kill:XP Bump
+xp_boost:XP Boost
+gold_per_hit:Strike Gold
+gold_per_crit:Critically Rich
+increase_gold_pickup:Pebble
+combo_xp:Combo: XP
+streak_xp:Sweaty
+increase_armor_drops:Lodbrok
+pickpocket:Pitpocket
+pants_radar:Pants Radar
+gold_per_diamond_piece:Sierra
+gold_break_obsidian:Purple Gold
+max_bounty_self_claim:Self-checkout
+contract_rewards:Negotiator
+fishing_rod_enchant:Club Rod
+luck_of_the_pond:Luck of the Pond
+rogue:Rogue
+fishing_rod_kb:Rodback
+rod_true_damage:Grandmaster
+water_bucket:Portable Pond
+fishers_unite:Unite
+trophy:Trophy
+tough_crew:Tough Crew
+stereo:Stereo
+fractional_reserve:Fractional Reserve
+pit_mba:Pit MBA
+paparazzi:Paparazzi
+hidden_jewel:Hidden Jewel Pants
+worm:Worm
+aegis:Aegis
+trash_panda:Trash Panda
+melee_hidden_jewel:Hidden Jewel Sword
+somber:Somber
+spite:Spite
+sanguisuge:Sanguisuge
+misery:Misery
+needless_suffering:Needless Suffering
+mind_assault:Mind Assault
+grim_reaper:Grim Reaper
+hedge_fund:Hedge Fund
+golden_handcuffs:Golden Handcuffs
+heartripper:Heartripper
+venom:Combo: Venom
+nostalgia:Nostalgia
+lycanthropy:Lycanthropy

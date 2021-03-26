@@ -1,3 +1,0 @@
-damage_reduction:Protection
-less_damage_vs_diamond_weapons:Diamond Allergy
-less_damage_from_arrows:Ring Armor
