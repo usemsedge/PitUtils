@@ -242,9 +242,11 @@ public class PitUtils {
                 enchants_short.put(ench_short.substring(0, ench_short.indexOf(":")), ench_short.substring(ench_short.indexOf(":")));
             }
             enchantsLoaded = true;
+            PitUtils.saveLogInfo("loaded the enchants");
         }
         catch (Exception e) {
             enchantsLoaded = false;
+            PitUtils.saveLogInfo("failed to load enchants, " + e.toString());
         }
         PitUtils.saveLogInfo(enchants.toString());
         PitUtils.saveLogInfo(enchants_short.toString());
