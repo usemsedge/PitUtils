@@ -252,14 +252,12 @@ public class PitUtils {
                 }
             }
             enchantsLoaded = true;
-            PitUtils.saveLogInfo("enchants loadde\n");
+            PitUtils.saveLogInfo("enchants loadde: here is the list of things\n\n" + enchants.toString() + "\n\n");
         }
         catch (Exception e) {
             enchantsLoaded = false;
             PitUtils.saveLogInfo("enchants failed to load\n");
         }
-
-
         /*
         try {
             BufferedReader enchants_reader = new BufferedReader(new FileReader("enchants/enchants_mystics.txt"));
