@@ -241,8 +241,9 @@ public class PitUtils {
             int ptr = 0;
             StringBuilder current = new StringBuilder();
             while ((ptr = is.read()) != -1) {
-                PitUtils.saveLogInfo("\n" + ptr);
+                PitUtils.saveLogInfo("\n" + current);
                 if (ptr == 10) {
+                    PitUtils.saveLogInfo("newline\n");
                     enchants.put(current.substring(0, current.indexOf(":")), current.substring(current.indexOf(":")));
                     current = new StringBuilder();
                 }
@@ -251,9 +252,11 @@ public class PitUtils {
                 }
             }
             enchantsLoaded = true;
+            PitUtils.saveLogInfo("enchants loadde\n");
         }
         catch (Exception e) {
             enchantsLoaded = false;
+            PitUtils.saveLogInfo("enchants failed to load\n");
         }
 
 
