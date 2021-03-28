@@ -5,6 +5,8 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -234,8 +236,32 @@ public class PitUtils {
         MinecraftForge.EVENT_BUS.register(new PitUtilsEventHandler());
 
         try {
-            BufferedReader enchants_reader = new BufferedReader(new FileReader(new File("enchants/enchants_mystics.txt")));
-            BufferedReader enchants_short_reader = new BufferedReader(new FileReader(new File("enchants/enchants_mystics_short.txt")));
+            URL enchants_url = new URL("https://raw.githubusercontent.com/usemsedge/PitUtils/main/enchants_mystics.txt");
+            InputStream is = enchants_url.openStream();
+            int ptr = 0;
+            StringBuilder current = new StringBuilder();
+            while ((ptr = is.read()) != -1) {
+                PitUtils.saveLogInfo("\n" + ptr);
+                if (ptr == 10) {
+                    enchants.put(current.substring(0, current.indexOf(":")), current.substring(current.indexOf(":")));
+                    current = new StringBuilder();
+                }
+                else {
+                    current.append((char) ptr);
+                }
+            }
+            enchantsLoaded = true;
+        }
+        catch (Exception e) {
+            enchantsLoaded = false;
+        }
+
+
+        /*
+        try {
+            BufferedReader enchants_reader = new BufferedReader(new FileReader("enchants/enchants_mystics.txt"));
+            BufferedReader enchants_short_reader = new BufferedReader(new FileReader("enchants/enchants_mystics_short.txt"));
+            PitUtils.saveLogInfo("enchant files found");
             String ench, ench_short;
             while ((ench = enchants_reader.readLine()) != null && (ench_short = enchants_short_reader.readLine()) != null) {
                 enchants.put(ench.substring(0, ench.indexOf(":")), ench.substring(ench.indexOf(":")));
@@ -249,7 +275,7 @@ public class PitUtils {
             PitUtils.saveLogInfo("failed to load enchants, " + e.toString());
         }
         PitUtils.saveLogInfo(enchants.toString());
-        PitUtils.saveLogInfo(enchants_short.toString());
+        PitUtils.saveLogInfo(enchants_short.toString());*/
 
 
         if (new File(PIT_UTILS_PATH).isFile()) {
