@@ -258,25 +258,30 @@ public class PitUtils {
             enchantsLoaded = false;
             PitUtils.saveLogInfo("enchants failed to load\n");
         }
-        /*
+
         try {
-            BufferedReader enchants_reader = new BufferedReader(new FileReader("enchants/enchants_mystics.txt"));
-            BufferedReader enchants_short_reader = new BufferedReader(new FileReader("enchants/enchants_mystics_short.txt"));
-            PitUtils.saveLogInfo("enchant files found");
-            String ench, ench_short;
-            while ((ench = enchants_reader.readLine()) != null && (ench_short = enchants_short_reader.readLine()) != null) {
-                enchants.put(ench.substring(0, ench.indexOf(":")), ench.substring(ench.indexOf(":")));
-                enchants_short.put(ench_short.substring(0, ench_short.indexOf(":")), ench_short.substring(ench_short.indexOf(":")));
+            URL enchants_url = new URL("https://raw.githubusercontent.com/usemsedge/PitUtils/main/enchants_mystics_short.txt");
+            InputStream is = enchants_url.openStream();
+            int ptr = 0;
+            StringBuilder current = new StringBuilder();
+            while ((ptr = is.read()) != -1) {
+                PitUtils.saveLogInfo("\n" + current);
+                if (ptr == 10) {
+                    PitUtils.saveLogInfo("newline\n");
+                    enchants_short.put(current.substring(0, current.indexOf(":")), current.substring(current.indexOf(":")));
+                    current = new StringBuilder();
+                }
+                else {
+                    current.append((char) ptr);
+                }
             }
             enchantsLoaded = true;
-            PitUtils.saveLogInfo("loaded the enchants");
+            PitUtils.saveLogInfo("enchants short loaded: here is the list of things\n\n" + enchants_short.toString() + "\n\n");
         }
         catch (Exception e) {
             enchantsLoaded = false;
-            PitUtils.saveLogInfo("failed to load enchants, " + e.toString());
+            PitUtils.saveLogInfo("enchants short failed to load\n");
         }
-        PitUtils.saveLogInfo(enchants.toString());
-        PitUtils.saveLogInfo(enchants_short.toString());*/
 
 
         if (new File(PIT_UTILS_PATH).isFile()) {
