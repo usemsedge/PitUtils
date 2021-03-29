@@ -38,8 +38,8 @@ import scala.tools.nsc.doc.model.ModelFactory;
 
 @Mod(modid = PitUtils.MODID, version = PitUtils.VERSION)
 public class PitUtils {
-    private HashMap<String,String> enchants = new HashMap<>();
-    private HashMap<String,String> enchants_short = new HashMap<>();
+    static HashMap<String,String> enchants = new HashMap<>();
+    static HashMap<String,String> enchants_short = new HashMap<>();
     static final String MODID = "PitUtils";
     static final String VERSION = "1.0";
     private static final String PIT_UTILS_PATH = "PitUtils.dat";
@@ -97,13 +97,13 @@ public class PitUtils {
         return loreBuilder.toString();
     }
 
-    static ArrayList<String> getEnchants(ItemStack item) {
+    static HashMap<String, Integer> getEnchants(ItemStack item) {
 
-        ArrayList<String> enchants = new ArrayList<>();
+        HashMap<String, Integer> enchants = new HashMap<>();
 
         NBTTagList list = item.getTagCompound().getCompoundTag("ExtraAttributes").getTagList("CustomEnchants", 10);
         for (int i = 0; i < list.tagCount(); i++) {
-            enchants.add(list.getCompoundTagAt(i).getString("Key"));
+            enchants.put(list.getCompoundTagAt(i).getString("Key"), Integer.parseInt(list.getCompoundTagAt(i).getString("Level")));
         }
         PitUtils.saveLogInfo(item.getDisplayName() + " has this string for ehcnats " + enchants.toString() + " and has this for its enchanttaglist " + list.toString() + "\n");
 

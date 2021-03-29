@@ -37,7 +37,7 @@ public class LowLifeMystics {
 
     }
 
-    static void checkAllLives() {
+    static ArrayList<String> checkAllLives() {
         ArrayList<ItemStack> inv = new ArrayList<>();
         ItemStack[] invItems = Minecraft.getMinecraft().thePlayer.inventory.mainInventory.clone();
         Collections.addAll(inv, invItems);
@@ -46,7 +46,10 @@ public class LowLifeMystics {
         
         ItemStack item;
         String itemName;
-        int lives, swords = 0, pants = 0, bows = 0, armor = 0, items = 0;
+        int lives;
+        StringBuilder enchantName = new StringBuilder();
+        ArrayList<String> itemNames = new ArrayList<>();
+        HashMap<String, Integer> enchants = new HashMap<>();
         for (int i = 0; i < inv.size(); i++) {
             try {
                 item = inv.get(i);
@@ -54,19 +57,36 @@ public class LowLifeMystics {
                 lives = getLives(item);
                                                                   
                 if (lives <= livesToAlert) {
-                    if (itemName.contains("Pants")) {
-                        pants += 1;
-                    } else if (itemName.contains("Sword")) {
-                        swords += 1;
-                    } else if (itemName.contains("Bow")) {
-                        bows += 1;
-                    } else if (itemName.contains("Golden Helmet") ||
-                            itemName.contains("Archangel") ||
-                            itemName.contains("Armageddon")) {
-                        armor += 1;
-                    } else {
-                        items += 1;
+                    enchantName = new StringBuilder();
+                    if (itemName.contains("Arch")) {
+                        enchantName.append("Archangel Chestplate");
                     }
+                    else if (itemName.contains("Arma")) {
+                        enchantName.append("Armageddon Boots");
+                    }
+                    else if (itemName.contains("Golden")) {
+                        enchantName.append("Golden Helmet");
+                    }
+                    else {
+                            //an actual mystic item
+                        enchants = PitUtils.getEnchants(item);
+                        enchantName.append(itemName.substring(2)); //format code
+                        for (String key : enchants.keySet()) {
+                            if (PitUtils.enchantsLoaded) {
+                                if (PitUtils.useShortEnchants) {
+                                    enchantName.append(" ").append(PitUtils.enchants_short.get(key)).append(" ").append(enchants.get(key));
+                                }
+                                else {
+                                    enchantName.append(" ").append(PitUtils.enchants.get(key)).append(" ").append(enchants.get(key));
+                                }
+                            }
+                            else {
+                                enchantName.append(" ").append(key).append(" ").append(enchants.get(key));
+                            }
+                        }
+                    }
+                    enchantName.append(" is on ").append(lives).append(" lives");
+                    itemNames.add(enchantName.toString());
                 }
             }
             catch (Exception e) {
@@ -76,30 +96,13 @@ public class LowLifeMystics {
             PitUtils.saveLogInfo("\n");
 
         }
-        lowLifeArmor = armor;
-        lowLifeItems = items;
-        lowLifeSwords = swords;
-        lowLifeBows = bows;
-        lowLifePants = pants;
+        return itemNames;
+
     }
     static void renderStats(FontRenderer renderer) {
-        List<String> strings = new ArrayList<>();
-        strings.add("Low Life Mystics");
-        if (lowLifeArmor > 0) {
-            strings.add("Armor Pieces: " + lowLifeArmor);
-        }
-        if (lowLifePants > 0) {
-            strings.add("Mystic Pants: " + lowLifePants);
-        }
-        if (lowLifeSwords > 0) {
-            strings.add("Mystic Swords: " + lowLifeSwords);
-        }
-        if (lowLifeBows > 0) {
-            strings.add("Mystic Bows: " + lowLifeBows);
-        }
-        if (lowLifeItems > 0) {
-            strings.add("Other Items: " + lowLifeItems);
-        }
+        ArrayList<String> strings = checkAllLives();
+        strings.add(0, "Low Life Mystics");
+
         if (strings.size() == 1) {
             strings.add("None");
         }
