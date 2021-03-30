@@ -93,7 +93,6 @@ public class PitUtils {
         for (int i = 0; i < list.tagCount(); i++) {
             loreBuilder.append(" " + list.getStringTagAt(i));
         }
-        PitUtils.saveLogInfo(item.getDisplayName() + " | " + loreBuilder + "\n");
         return loreBuilder.toString();
     }
 
@@ -103,10 +102,8 @@ public class PitUtils {
 
         NBTTagList list = item.getTagCompound().getCompoundTag("ExtraAttributes").getTagList("CustomEnchants", 10);
         for (int i = 0; i < list.tagCount(); i++) {
-            enchants.put(list.getCompoundTagAt(i).getString("Key"), Integer.parseInt(list.getCompoundTagAt(i).getString("Level")));
+            enchants.put(list.getCompoundTagAt(i).getString("Key"), list.getCompoundTagAt(i).getInteger("Level"));
         }
-        PitUtils.saveLogInfo(item.getDisplayName() + " has this string for ehcnats " + enchants.toString() + " and has this for its enchanttaglist " + list.toString() + "\n");
-
         return enchants;
     }
 
@@ -241,10 +238,8 @@ public class PitUtils {
             int ptr = 0;
             StringBuilder current = new StringBuilder();
             while ((ptr = is.read()) != -1) {
-                PitUtils.saveLogInfo("\n" + current);
                 if (ptr == 10) {
-                    PitUtils.saveLogInfo("newline\n");
-                    enchants.put(current.substring(0, current.indexOf(":")), current.substring(current.indexOf(":")));
+                    enchants.put(current.substring(0, current.indexOf(":")), current.substring(current.indexOf(":") + 1));
                     current = new StringBuilder();
                 }
                 else {
@@ -252,7 +247,10 @@ public class PitUtils {
                 }
             }
             enchantsLoaded = true;
-            PitUtils.saveLogInfo("enchants loadde: here is the list of things\n\n" + enchants.toString() + "\n\n");
+            PitUtils.saveLogInfo("enchants loaded: here is the list of things\n\n");
+            for (String k : enchants.keySet()) {
+                PitUtils.saveLogInfo(k + ":" + enchants.get(k) + "\n");
+            }
         }
         catch (Exception e) {
             enchantsLoaded = false;
@@ -265,10 +263,8 @@ public class PitUtils {
             int ptr = 0;
             StringBuilder current = new StringBuilder();
             while ((ptr = is.read()) != -1) {
-                PitUtils.saveLogInfo("\n" + current);
                 if (ptr == 10) {
-                    PitUtils.saveLogInfo("newline\n");
-                    enchants_short.put(current.substring(0, current.indexOf(":")), current.substring(current.indexOf(":")));
+                    enchants_short.put(current.substring(0, current.indexOf(":")), current.substring(current.indexOf(":") + 1));
                     current = new StringBuilder();
                 }
                 else {
@@ -276,7 +272,10 @@ public class PitUtils {
                 }
             }
             enchantsLoaded = true;
-            PitUtils.saveLogInfo("enchants short loaded: here is the list of things\n\n" + enchants_short.toString() + "\n\n");
+            PitUtils.saveLogInfo("enchants short loaded: here is the list of things\n\n");
+            for (String k : enchants_short.keySet()) {
+                PitUtils.saveLogInfo(k + ":" + enchants_short.get(k) + "\n");
+            }
         }
         catch (Exception e) {
             enchantsLoaded = false;

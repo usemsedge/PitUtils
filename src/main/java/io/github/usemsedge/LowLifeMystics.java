@@ -27,11 +27,9 @@ public class LowLifeMystics {
             int slash = itemNBT.indexOf("/");
             int colon = itemNBT.indexOf(":");
             String lives = itemNBT.substring(colon + 4, slash - 2); //lives look like      Lives: §c12§8/46 (§8 is a color code)
-            PitUtils.saveLogInfo("Lives on item: |||" + lives + "|||.\\n");
             return Integer.parseInt(lives);
         }
         else {
-            PitUtils.saveLogInfo("fresh item\n");
             return Integer.MAX_VALUE; //it's fresh
         }
 
@@ -57,6 +55,7 @@ public class LowLifeMystics {
                 lives = getLives(item);
                                                                   
                 if (lives <= livesToAlert) {
+
                     enchantName = new StringBuilder();
                     if (itemName.contains("Arch")) {
                         enchantName.append("Archangel Chestplate");
@@ -91,9 +90,7 @@ public class LowLifeMystics {
             }
             catch (Exception e) {
                 //no item int hat slot
-                PitUtils.saveLogInfo(new Date().getTime() + "|" + e.toString() + "|" + i + "\n");
             }
-            PitUtils.saveLogInfo("\n");
 
         }
         return itemNames;

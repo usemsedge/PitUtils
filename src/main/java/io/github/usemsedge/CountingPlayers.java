@@ -22,7 +22,6 @@ public class CountingPlayers {
     static int sharkLevel = 0;
     static int playersWithin12Under6 = 0;
 
-
     static boolean isWearingSybil = false;
     static int sybilLevel = 0;
 
