@@ -9,11 +9,11 @@ Personal Perm List  (Makes a perm list, or a permanent target list, and checks i
 Auto L  (Automatically say L when something happens.)  
 Item Cooldowns  (Tracks item cooldowns and prevents you from using too many.)  
 Player Count Checker (Shows how much enchants like shark, notglad, and soli proc.)  
-
-
-Things to do later:  
-Hopper Checker (Scans lobby for nons with high killstreaks.)  
 Low-Life Mystic Checker (Tells you if any mystics are low lives.)  
+
+Things to do:
+Hopper Checker (Scans lobby for nons with high killstreaks.)  
+night quests lmao  
 Telebow Cooldown  (and other mystics)  
 
 Type /pit for the list of commands
