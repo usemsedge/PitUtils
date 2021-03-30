@@ -22,18 +22,17 @@ public class CountingPlayers {
     static int sharkLevel = 0;
     static int playersWithin12Under6 = 0;
 
-
     static boolean isWearingSybil = false;
     static int sybilLevel = 0;
 
-    static int[] guiLocation = new int[]{2, 100};
+    static int[] guiLocation = new int[]{300, 2};
     static boolean toggled = true;
     static int color = 0x00ffff;
     static String align = "left";
 
     static void checkGear() {
         try {
-            String pants = PitUtils.getNBT(Minecraft.getMinecraft().thePlayer.inventory.armorInventory[1]);
+            String pants = PitUtils.getLore(Minecraft.getMinecraft().thePlayer.inventory.armorInventory[1]);
 
             if (pants.contains("Solitude III")) {
                 isWearingSoli = true;
@@ -41,7 +40,7 @@ public class CountingPlayers {
             } else if (pants.contains("Solitude II")) {
                 isWearingSoli = true;
                 soliLevel = 2;
-            } else if (pants.contains("Solitude I")) {
+            } else if (pants.contains("Solitude")) {
                 isWearingSoli = true;
                 soliLevel = 1;
             } else {
@@ -55,7 +54,7 @@ public class CountingPlayers {
             } else if (pants.contains("Gladiator II")) {
                 isWearingNotGlad = true;
                 notGladLevel = 2;
-            } else if (pants.contains("Gladiator I")) {
+            } else if (pants.contains("Gladiator")) {
                 isWearingNotGlad = true;
                 notGladLevel = 1;
             } else {
@@ -63,10 +62,25 @@ public class CountingPlayers {
                 notGladLevel = 0;
             }
 
-            //if (pants.contains("Sybil I")) will get different levels of sybill one day
+            if (pants.contains("Sybil III")) {
+                isWearingSybil = true;
+                sybilLevel = 3;
+            }
+            if (pants.contains("Sybil II")) {
+                isWearingSybil = true;
+                sybilLevel = 2;
+            }
+            if (pants.contains("Sybil")) {
+                isWearingSybil = true;
+                sybilLevel = 1;
+            }
+            else {
+                isWearingSybil = false;
+                sybilLevel = -1;
+            }
 
 
-            String sword = PitUtils.getNBT(Minecraft.getMinecraft().thePlayer.getHeldItem());
+            String sword = PitUtils.getLore(Minecraft.getMinecraft().thePlayer.getHeldItem());
 
             if (sword.contains("Shark III")) {
                 isHoldingShark = true;
@@ -74,7 +88,7 @@ public class CountingPlayers {
             } else if (sword.contains("Shark II")) {
                 isHoldingShark = true;
                 sharkLevel = 2;
-            } else if (sword.contains("Shark I")) {
+            } else if (sword.contains("Shark")) {
                 isHoldingShark = true;
                 sharkLevel = 1;
             } else {
@@ -132,10 +146,10 @@ public class CountingPlayers {
                 bPlayersWithin12Under6 += 1;
             }
         }
-        playersWithin7 = bPlayersWithin7;
-        playersWithin12 = bPlayersWithin12;
+        playersWithin7 = bPlayersWithin7 + 1 + sybilLevel;
+        playersWithin12 = bPlayersWithin12 + 1 + sybilLevel;
         if (playersWithin12 > 10) {playersWithin12 = 10;}
-        playersWithin12Under6 = bPlayersWithin12Under6;
+        playersWithin12Under6 = bPlayersWithin12Under6 + 1 + sybilLevel;
     }
 
 

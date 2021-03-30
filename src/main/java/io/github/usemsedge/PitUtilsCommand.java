@@ -3,9 +3,12 @@ package io.github.usemsedge;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
@@ -86,7 +89,8 @@ public class PitUtilsCommand extends CommandBase {
                         PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit myst pos (x) (x) (changes the location of the mystic drop display");
                     }
 
-                } else if (args[0].equalsIgnoreCase("cd")) {
+                }
+                else if (args[0].equalsIgnoreCase("cd")) {
 
                     if (args.length == 2 && args[1].equalsIgnoreCase("toggle")) {
                         Cooldown.toggled ^= true;
@@ -139,7 +143,8 @@ public class PitUtilsCommand extends CommandBase {
                         PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit cd color (color) (changes the cooldown display to the color)");
                         PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit cd pos (x) (x) (changes the location of the cooldown display");
                     }
-                } else if (args[0].equalsIgnoreCase("l")) {
+                }
+                else if (args[0].equalsIgnoreCase("l")) {
                     if (args.length == 2 && args[1].equalsIgnoreCase("toggle")) {
                         AutoL.toggled ^= true;
                         PitUtils.messagePlayer(EnumChatFormatting.GREEN +
@@ -185,7 +190,8 @@ public class PitUtilsCommand extends CommandBase {
                         PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit l remove (ban|bounty|perm) (don't say L when this happens)");
                         PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit l add (ban|bounty|perm) (say L when this happens)");
                     }
-                } else if (args[0].equalsIgnoreCase("perm")) {
+                }
+                else if (args[0].equalsIgnoreCase("perm")) {
                     if (args.length == 3 && args[1].equalsIgnoreCase("add")) {
                         if (PitUtils.checkUsername(args[2])) {
                             if (PitUtils.permList.contains(args[2])) {
@@ -271,7 +277,8 @@ public class PitUtilsCommand extends CommandBase {
                     }
 
 
-                } else if (args[0].equalsIgnoreCase("dark")) {
+                }
+                else if (args[0].equalsIgnoreCase("dark")) {
 
                     if (args.length == 2 && args[1].equalsIgnoreCase("toggle")) {
                         DarkChecker.toggled ^= true;
@@ -280,9 +287,11 @@ public class PitUtilsCommand extends CommandBase {
                                 "Dark Pants Display has been toggled " +
                                 EnumChatFormatting.DARK_GREEN +
                                 (DarkChecker.toggled ? "on" : "off"));
-                    } else if (args.length == 3 && args[1].equalsIgnoreCase("align")) {
+                    }
+                    else if (args.length == 3 && args[1].equalsIgnoreCase("align")) {
                         DarkChecker.align = (args[2].equalsIgnoreCase("right")) ? "right" : "left";
-                    } else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
+                    }
+                    else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
                         char[] c = args[2].toCharArray();
 
                         char[] x = Arrays.copyOfRange(c, c.length - 6, c.length);
@@ -295,7 +304,8 @@ public class PitUtilsCommand extends CommandBase {
                             return;
                         }
                         DarkChecker.color = Integer.decode("0x" + number);
-                    } else if (args.length == 4 && args[1].equalsIgnoreCase("pos")) {
+                    }
+                    else if (args.length == 4 && args[1].equalsIgnoreCase("pos")) {
 
                         if (PitUtils.isInteger(args[2]) &&
                                 PitUtils.isInteger(args[3])) {
@@ -306,7 +316,8 @@ public class PitUtilsCommand extends CommandBase {
                             PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "Changes the location of the display");
                             PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit dark pos (x) (y)");
                         }
-                    } else if (args.length == 2 && args[1].equalsIgnoreCase("chat")) {
+                    }
+                    else if (args.length == 2 && args[1].equalsIgnoreCase("chat")) {
 
                         DarkChecker.sayInChat ^= true;
                         PitUtils.messagePlayer(EnumChatFormatting.GREEN +
@@ -314,7 +325,8 @@ public class PitUtilsCommand extends CommandBase {
                                 EnumChatFormatting.DARK_GREEN +
                                 (DarkChecker.toggled ? "on" : "off"));
 
-                    } else {
+                    }
+                    else {
                         PitUtils.messagePlayer(EnumChatFormatting.BLACK + "__________________________");
                         PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "If toggled on, people in your lobby wearing dark pants will show up");
                         PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit dark [command] [argument]");
@@ -324,8 +336,6 @@ public class PitUtilsCommand extends CommandBase {
                         PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit dark pos (x) (y) (sets the locatino of the display)");
                         PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit dark chat (turns on or off saying the dark people in chat constantly)");
                     }
-
-
                 }
                 else if (args[0].equalsIgnoreCase("count")) {
                         if (args.length == 2 && args[1].equalsIgnoreCase("toggle")) {
@@ -371,7 +381,63 @@ public class PitUtilsCommand extends CommandBase {
                             PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit count pos (x) (y) (sets the locatino of the display)");
                         }
                 }
-                    else if (args[0].equalsIgnoreCase("tips")) {
+                else if (args[0].equalsIgnoreCase("low")) {
+                    if (args.length == 2 && args[1].equalsIgnoreCase("toggle")) {
+                        LowLifeMystics.toggled ^= true;
+                        PitUtils.messagePlayer(EnumChatFormatting.GREEN +
+                                "Low Life Mystics has been toggled " +
+                                EnumChatFormatting.DARK_GREEN +
+                                (LowLifeMystics.toggled ? "on" : "off"));
+                    } else if (args.length == 3 && args[1].equalsIgnoreCase("align")) {
+                        LowLifeMystics.align = (args[2].equalsIgnoreCase("right")) ? "right" : "left";
+                    } else if (args.length == 3 && args[1].equalsIgnoreCase("color")) {
+                        char[] c = args[2].toCharArray();
+
+                        char[] x = Arrays.copyOfRange(c, c.length - 6, c.length);
+                        String number = String.copyValueOf(x);
+
+                        if (!PitUtils.isInteger(number, 16)) {
+                            PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "Changes the color of the display");
+                            PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit low color (color)");
+                            PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "(color) should be substituted for a 6-character hex value like 00ffff");
+                            return;
+                        }
+                        LowLifeMystics.color = Integer.decode("0x" + number);
+                    } else if (args.length == 4 && args[1].equalsIgnoreCase("pos")) {
+
+                        if (PitUtils.isInteger(args[2]) &&
+                                PitUtils.isInteger(args[3])) {
+
+                            LowLifeMystics.guiLocation[0] = Integer.parseInt(args[2]);
+                            LowLifeMystics.guiLocation[1] = Integer.parseInt(args[3]);
+                        } else {
+                            PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "Changes the location of the display");
+                            PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit low pos (x) (y)");
+                        }
+                    } else if (args.length == 3 && args[1].equalsIgnoreCase("limit")) {
+
+                        if (PitUtils.isInteger(args[2])) {
+                            LowLifeMystics.livesToAlert = Integer.parseInt(args[2]);
+                            PitUtils.messagePlayer("Lives to alert changed to " + LowLifeMystics.livesToAlert);
+                        }
+                        else {
+                            PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "Changes the lives to alert at");
+                            PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "Correct usage: /pit low limit (lives)");
+                        }
+
+                    } else {
+                        PitUtils.messagePlayer(EnumChatFormatting.BLACK + "__________________________");
+                        PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "If toggled on, shows your mystics that are low lives");
+                        PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit low [command] [argument]");
+                        PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit low toggle (turns on or off the display");
+                        PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit low color (color) (changes the color of the display)");
+                        PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit low align (right|left) (aligns the text right or left");
+                        PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit low pos (x) (y) (sets the locatino of the display)");
+                        PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit low limit (lives) (sets the # of lives to alert at)");
+                    }
+
+                }
+                else if (args[0].equalsIgnoreCase("tips")) {
                     PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "Features:");
                     PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "All features are toggleable and customizable.");
                     PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "Mystic Counter: Tracks your mystic drops compared to your kills.");
@@ -381,7 +447,24 @@ public class PitUtilsCommand extends CommandBase {
                     PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "Dark Checker: See if there are players in darks in your server.");
                     PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "Contact me at cityblock#7498 or on the github/forge if you find bugs or need help.");
                     PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "https://github.com/usemsedge/PitUtils");
-                } else {
+                }
+                else if (args[0].equalsIgnoreCase("enchants")) {
+                    if (args.length == 2) {
+                        PitUtils.useShortEnchants = args[1].equalsIgnoreCase("short");
+                        PitUtils.messagePlayer(EnumChatFormatting.GREEN + "Enchant names will now be " + ((PitUtils.useShortEnchants) ? "short" : "normal"));
+                    }
+                }
+                /*
+                else if (args[0].equalsIgnoreCase("getenchants")) {
+                    try {
+                        ItemStack i = Minecraft.getMinecraft().thePlayer.getHeldItem();
+                        PitUtils.messagePlayer(PitUtils.getEnchants(i));
+                    }
+                    catch (Exception e) {
+
+                    }
+                }*/
+                else {
                     PitUtils.messagePlayer(EnumChatFormatting.BLACK + "___________________________");
                     PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "Pit Utils is a QOL mod for The Hypixel Pit.");
                     PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pitutils (/pit) [subsection] for more information");
@@ -391,6 +474,7 @@ public class PitUtilsCommand extends CommandBase {
                     PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit perm (your perm list)");
                     PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit dark (dark pant users)");
                     PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit count (# of players near you)");
+                    PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit enchants (short|normal) (changes the names of the enchants (Critically Funky VS cf))");
                     PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit tips");
                     PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit help");
                 }
@@ -405,6 +489,7 @@ public class PitUtilsCommand extends CommandBase {
                 PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit perm (your perm list)");
                 PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit dark (dark pant users)");
                 PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit count (# of players near you)");
+                PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit low (low life mystic alert)");
                 PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit tips");
                 PitUtils.messagePlayer(EnumChatFormatting.LIGHT_PURPLE + "/pit help");
             }

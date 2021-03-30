@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
@@ -61,6 +62,7 @@ public class PitUtilsEventHandler {
                 DarkChecker.playersUsingDarksInServer = DarkChecker.checkForDarks();
                 CountingPlayers.checkGear();
                 CountingPlayers.updateCount();
+                LowLifeMystics.checkAllLives();
 
                 tick = 0;
             }
@@ -128,6 +130,9 @@ public class PitUtilsEventHandler {
         }
         if (CountingPlayers.toggled) {
             CountingPlayers.renderStats(renderer);
+        }
+        if (LowLifeMystics.toggled) {
+            LowLifeMystics.renderStats(renderer);
         }
     }
 }

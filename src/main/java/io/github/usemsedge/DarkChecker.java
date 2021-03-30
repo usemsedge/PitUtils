@@ -7,10 +7,11 @@ import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class DarkChecker {
-    static final List<String> DARK_ENCHANTS = Arrays.asList("Venom", "Misery", "Spite", "Needless Suffering", "Grim Reaper", "Nostalgia", "Hedge Fund", "Heartripper", "Sanguisuge", "Lycanthropy", "Mind Assault", "Golden Handcuffs");
+    static final List<String> DARK_ENCHANTS = Arrays.asList("spite", "sanguisuge", "misery", "needless_suffering", "mind_assault", "grim_reaper", "hedge_fund", "golden_handcuffs", "heartripper", "venom", "nostalgia", "lycanthropy");
 
     static boolean toggled = true;
     static int[] guiLocation = new int[]{100, 2};
@@ -26,34 +27,51 @@ public class DarkChecker {
         List<List<String>> playersUsingDarks = new ArrayList<>();
         List<EntityPlayer> players = Minecraft.getMinecraft().theWorld.playerEntities;
         List<String> p;
+        HashMap<String, Integer> enchants;
         for (EntityPlayer player : players) {
             try {
                 item = player.inventory.armorInventory[1]; //pants?? third slot in r
                 if ((item.getDisplayName().contains("Dark") || item.getDisplayName().contains("Evil")) && item.getDisplayName().contains("Tier")) {
-                    //enchanted dark pants, must have tier I in it
                     p = new ArrayList<>();
                     p.add(player.getName());
-                    if (PitUtils.getNBT(item).contains("Tier I ")) {
-                        p.add("Plain Somber");
-                    }
-                    else {
+                    enchants = PitUtils.getEnchants(item);
 
-                        for (String enchant : DARK_ENCHANTS) {
-                            if (PitUtils.getNBT(item).contains(enchant)) {
-                                p.add(enchant);
-                                break;
+                    //plain sombers
+                    if (enchants.size() == 1) {
+                        if (PitUtils.enchantsLoaded) {
+                            if (PitUtils.useShortEnchants) {
+                                p.add(PitUtils.enchants_short.get("somber"));
+                            }
+                            else {
+                                p.add(PitUtils.enchants.get("somber"));
+                            }
+                        } else {
+                            p.add("somber");
+                        }
+
+                    }
+
+                    //tier 2 darks
+                    else {
+                        for (String i : enchants.keySet()) {
+                            if (!i.equalsIgnoreCase("somber")) {
+                                if (PitUtils.enchantsLoaded) {
+                                    if (PitUtils.useShortEnchants) {
+                                        p.add(PitUtils.enchants_short.get(i));
+                                    } else {
+                                        p.add(PitUtils.enchants.get(i));
+
+                                    }
+                                } else {
+                                    p.add(i);
+                                }
                             }
                         }
-                        if (p.size() == 1) {
-                            p.add("Other");
-                        }
-                        p.add(PitUtils.getNBT(item));
                     }
                     playersUsingDarks.add(p);
-
                 }
             }
-            catch (Exception e) {} //no pants
+            catch (Exception ignored) {} //no pants
         }
         return playersUsingDarks;
     }

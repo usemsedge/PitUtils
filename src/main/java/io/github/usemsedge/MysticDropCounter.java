@@ -20,13 +20,11 @@ public class MysticDropCounter {
         if (msg.contains("MYSTIC ITEM!") && !msg.contains(":") && msg.contains("dropped")) {
             mysticDrops++;
             sinceLastMysticDrop = 0;
-            PitUtils.messagePlayer(msg);
         }
 
         else if (msg.contains("KILL!") && !msg.contains(":") && msg.contains("[") && msg.contains("]")) {
             killCount += 1;
             sinceLastMysticDrop += 1;
-            PitUtils.messagePlayer(msg);
 
         }
     }
