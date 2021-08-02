@@ -25,6 +25,8 @@ public class MysticDropCounter {
         else if (msg.contains("KILL!") && !msg.contains(":") && msg.contains("[") && msg.contains("]")) {
             killCount += 1;
             sinceLastMysticDrop += 1;
+            PitUtils.saveLogInfo(msg);
+            PitUtils.messagePlayer(msg);
 
         }
     }
